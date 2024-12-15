@@ -1,11 +1,26 @@
-<header>
-  <img src="<%= relative_url '/images/logo.svg' %>" alt="Logo" />
-</header>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/">
+      <img src="<%= relative_url '/images/logo.png' %>" alt="Logo" />
+    </a>
 
-<nav>
-  <ul>
-    <li><a href="<%= relative_url '/' %>">Home</a></li>
-    <li><a href="<%= relative_url '/about' %>">About</a></li>
-    <li><a href="<%= relative_url '/posts' %>">Posts</a></li>
-  </ul>
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="<%= relative_url '/tournament-registration' %>">
+        Inscription au tournoi
+      </a>
+
+      <a class="navbar-item" href="<%= relative_url '/about' %>">
+        À propos
+      </a>
+    </div>
+  </div>
 </nav>

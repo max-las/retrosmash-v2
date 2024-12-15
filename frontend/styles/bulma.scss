@@ -1,0 +1,9 @@
+$default-navbar-padding-vertical: 1rem;
+$custom-navbar-height: 10rem;
+
+@forward "~bulma/sass" with (
+  $navbar-height: $custom-navbar-height,
+  $navbar-item-img-max-height: $custom-navbar-height - ($default-navbar-padding-vertical * 2),
+  $navbar-background-color: transparent,
+  $footer-background-color: transparent
+);

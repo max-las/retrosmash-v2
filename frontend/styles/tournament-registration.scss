@@ -1,0 +1,8 @@
+@use "./bulma";
+
+.form-iframe {
+  border-radius: bulma.$card-radius;
+  border-color: bulma.$yellow;
+  border-style: solid;
+  border-width: thick;
+}

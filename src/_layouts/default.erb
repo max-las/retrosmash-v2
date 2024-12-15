@@ -3,13 +3,15 @@
   <head>
     <%= render "head", metadata: site.metadata, title: data.title %>
   </head>
-  <body class="<%= data.layout %> <%= data.page_class %>">
-    <%= render Shared::Navbar.new(metadata: site.metadata, resource: resource) %>
+  <body class="is-flex is-flex-direction-column">
+    <div class="container is-flex is-flex-direction-column is-justify-content-flex-end">
+      <%= render Shared::Navbar.new(metadata: site.metadata, resource: resource) %>
 
-    <main>
-      <%= yield %>
-    </main>
+      <main class="is-flex-grow-1">
+        <%= yield %>
+      </main>
 
-    <%= render "footer", metadata: site.metadata %>
+      <%= render "footer", metadata: site.metadata %>
+    </div>
   </body>
 </html>
