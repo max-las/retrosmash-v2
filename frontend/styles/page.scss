@@ -1,13 +1,7 @@
 @use "./bulma";
 
-.title-separator {
-  border-radius: bulma.$card-radius;
-  border-color: bulma.$yellow;
-  border-style: solid;
-  border-width: thin;
-}
-
 .form-iframe {
   border: none;
   border-radius: bulma.$card-radius;
+  box-shadow: bulma.$card-shadow;
 }
