@@ -1,3 +1,7 @@
 @use "./bulma";
-@use "./default";
-@use "./page";
+@use "./helpers";
+
+@use "./layouts/base";
+@use "./layouts/page";
+
+@use "./pages/home";
