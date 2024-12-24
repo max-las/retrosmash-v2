@@ -32,3 +32,8 @@ template_engine: erb
 # timezone: America/Los_Angeles
 # pagination:
 #   enabled: true
+
+collections:
+  nav_pages:
+    output: true
+    sort_by: rank

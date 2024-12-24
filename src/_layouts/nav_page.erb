@@ -1,0 +1,11 @@
+---
+layout: base
+---
+
+<%= render Shared::Navbar.new(pages: collections.nav_pages.resources) %>
+
+<main class="is-flex-grow-1">
+  <h1 class="title"><%= data.title %></h1>
+
+  <%= yield %>
+</main>

@@ -14,13 +14,11 @@
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="<%= relative_url '/tournament-registration' %>">
-        Inscription au tournoi
-      </a>
-
-      <a class="navbar-item" href="<%= relative_url '/about' %>">
-        À propos
-      </a>
+      <% @pages.each do |page| %>
+        <a class="navbar-item" href="<%= page.relative_url %>">
+          <%= page.data.title %>
+        </a>
+      <% end %>
     </div>
   </div>
 </nav>

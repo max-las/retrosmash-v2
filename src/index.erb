@@ -1,7 +1,18 @@
 ---
-layout: home
+layout: page
 ---
 
 <img class="home-logo mb-6" src="<%= relative_url '/images/logo.png' %>" alt="Logo" />
-<a class="button is-large is-link" href="<%= relative_url '/tournament-registration' %>">Entrer</a>
 
+<div class="columns">
+  <% collections.nav_pages.resources.each do |page| %>
+    <div class="column">
+      <a class="button is-large is-link is-outlined" href="<%= page.relative_url %>">
+        <span class="icon">
+          <span class="material-symbols-outlined"><%= page.data.icon %></span>
+        </span>
+        <span><%= page.data.title %></span>
+      </a>
+    </div>
+  <% end %>
+</div>
