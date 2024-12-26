@@ -4,7 +4,7 @@
     <%= render "head", metadata: site.metadata, title: data.title %>
   </head>
   <body class="is-flex is-flex-direction-column">
-    <div class="container p-2 is-flex is-flex-direction-column is-justify-content-flex-end">
+    <div class="container is-flex is-flex-direction-column is-justify-content-flex-end">
       <%= yield %>
 
       <%= render "footer", metadata: site.metadata %>

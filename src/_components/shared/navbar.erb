@@ -1,8 +1,10 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="/">
-      <img src="<%= relative_url '/images/logo.png' %>" alt="Logo" />
-    </a>
+    <div class="navbar-item">
+      <a href="/">
+        <img src="<%= relative_url '/images/logo.png' %>" alt="Logo" />
+      </a>
+    </div>
 
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
@@ -15,9 +17,14 @@
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
       <% @pages.each do |page| %>
-        <a class="navbar-item" href="<%= page.relative_url %>">
-          <%= page.data.title %>
-        </a>
+        <div class="navbar-item">
+          <a class="icon-text" href="<%= page.relative_url %>">
+            <span class="icon">
+              <span class="material-symbols-outlined"><%= page.data.icon %></span>
+            </span>
+            <span><%= page.data.title %></span>
+          </a>
+        </div>
       <% end %>
     </div>
   </div>

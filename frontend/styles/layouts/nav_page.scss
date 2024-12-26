@@ -1,5 +1,26 @@
 @use "../bulma";
 
+.navbar-item {
+  a {
+    color: inherit;
+
+    &:hover {
+      border-bottom: medium solid bulma.$blue;
+    }
+  }
+}
+
+.navbar-brand {
+  .navbar-item {
+    a {
+      &:hover {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+
 .form-iframe {
   border: none;
   border-radius: bulma.$card-radius;
