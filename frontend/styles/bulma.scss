@@ -1,8 +1,3 @@
-$default-navbar-padding-vertical: 1rem;
-$custom-navbar-height: 10rem;
-
 @forward "~bulma/versions/bulma-no-dark-mode" with (
-  $navbar-height: $custom-navbar-height,
-  $navbar-item-img-max-height: $custom-navbar-height - ($default-navbar-padding-vertical * 2),
   $footer-background-color: transparent
 );

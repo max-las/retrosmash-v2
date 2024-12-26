@@ -1,3 +1,16 @@
 .home-logo {
-  height: 300px;
+  max-height: 18rem;
+}
+
+.navbar {
+  &--home {
+    min-height: unset;
+    height: fit-content;
+
+    .navbar-item {
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+  }
 }

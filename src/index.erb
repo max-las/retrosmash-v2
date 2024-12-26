@@ -2,17 +2,50 @@
 layout: page
 ---
 
-<img class="home-logo mb-6" src="<%= relative_url '/images/logo.png' %>" alt="Logo" />
+<section class="hero is-link my-6">
+  <div class="hero-body">
+    <div class="columns">
+      <div class="column is-narrow">
+        <img class="home-logo" src="<%= asset_path 'images/logo.png' %>" alt="Retrosmash logo" />
+      </div>
+      <div class="column">
+        <div class="h-100 is-flex is-flex-direction-column is-justify-content-center">
+          <p class="title">Jeux vidéos et jeux de société en Dordogne</p>
+          <nav class="navbar navbar--home" role="navigation" aria-label="main navigation">
+            <div class="navbar-menu">
+              <div class="navbar-start">
+                <% collections.nav_pages.resources.each do |page| %>
+                  <% next if page.relative_url == '/tournament-registration/' %>
 
-<div class="columns">
-  <% collections.nav_pages.resources.each do |page| %>
-    <div class="column">
-      <a class="button is-large is-link is-outlined" href="<%= page.relative_url %>">
-        <span class="icon">
-          <span class="material-symbols-outlined"><%= page.data.icon %></span>
-        </span>
-        <span><%= page.data.title %></span>
-      </a>
+                  <div class="navbar-item">
+                    <a class="button is-large is-outlined" href="<%= page.relative_url %>">
+                      <span class="icon">
+                        <span class="material-symbols-outlined"><%= page.data.icon %></span>
+                      </span>
+                      <span><%= page.data.title %></span>
+                    </a>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
     </div>
-  <% end %>
+  </div>
+</section>
+
+
+<div class="card" style="width: 300px; position: fixed; top: 20px; right: 20px;">
+  <header class="card-header">
+    <p class="card-header-title">Prochainement</p>
+  </header>
+  <div class="card-image">
+    <figure class="image">
+      <img src="<%= asset_path 'images/flyers/test.jpg' %>">
+    </figure>
+  </div>
+  <footer class="card-footer">
+    <a href="<%= relative_url '/tournament-registration/' %>" class="card-footer-item">S'inscrire</a>
+  </footer>
 </div>

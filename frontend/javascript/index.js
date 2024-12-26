@@ -4,6 +4,10 @@ import { Application } from "@hotwired/stimulus"
 // Import all JavaScript & CSS files from src/_components
 import components from "$components/**/*.{js,jsx,js.rb,css}"
 
+// Import all images from frontend/images
+import images from '../images/**/*.{jpg,jpeg,png,svg,webp}'
+Object.entries(images).forEach(image => image)
+
 console.info("Bridgetown is loaded!")
 
 window.Stimulus = Application.start()

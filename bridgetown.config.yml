@@ -36,4 +36,5 @@ template_engine: erb
 collections:
   nav_pages:
     output: true
+    permalink: /:name/
     sort_by: rank

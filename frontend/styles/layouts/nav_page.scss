@@ -1,25 +1,36 @@
 @use "../bulma";
 
-.navbar-item {
-  a {
-    color: inherit;
+$custom-navbar-height: 10rem; // so the logo is more visible
 
-    &:hover {
-      border-bottom: medium solid bulma.$blue;
+.navbar {
+  &--nav-page {
+    min-height: $custom-navbar-height;
+
+    .navbar-item {
+      a {
+        color: inherit;
+    
+        &:hover {
+          border-bottom: medium solid bulma.$blue;
+        }
+      }
+
+      img {
+        max-height: $custom-navbar-height - (bulma.$navbar-padding-vertical * 2);
+      }
     }
-  }
-}
-
-.navbar-brand {
-  .navbar-item {
-    a {
-      &:hover {
-        border-bottom: none;
+    
+    .navbar-brand {
+      .navbar-item {
+        a {
+          &:hover {
+            border-bottom: none;
+          }
+        }
       }
     }
   }
 }
-
 
 .form-iframe {
   border: none;
