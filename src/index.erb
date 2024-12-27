@@ -1,51 +1,79 @@
 ---
-layout: page
+layout: base
 ---
 
-<section class="hero is-link my-6">
-  <div class="hero-body">
-    <div class="columns">
-      <div class="column is-narrow">
-        <img class="home-logo" src="<%= asset_path 'images/logo.png' %>" alt="Retrosmash logo" />
-      </div>
-      <div class="column">
-        <div class="h-100 is-flex is-flex-direction-column is-justify-content-center">
-          <p class="title">Jeux vidéos et jeux de société en Dordogne</p>
-          <nav class="navbar navbar--home" role="navigation" aria-label="main navigation">
-            <div class="navbar-menu">
-              <div class="navbar-start">
-                <% collections.nav_pages.resources.each do |page| %>
-                  <% next if page.relative_url == '/tournament-registration/' %>
-
-                  <div class="navbar-item">
-                    <a class="button is-large is-outlined" href="<%= page.relative_url %>">
-                      <span class="icon">
-                        <span class="material-symbols-outlined"><%= page.data.icon %></span>
-                      </span>
-                      <span><%= page.data.title %></span>
-                    </a>
-                  </div>
-                <% end %>
+<body>
+  <main class="home-layer">
+    <div class="hero">
+      <div class="hero-body">
+        <div class="columns">
+          <div class="column is-3"></div>
+          <div class="column is-6"></div>
+          <div class="column is-3">
+            <section class="z-1">
+              <div class="card">
+                <header class="card-header">
+                  <p class="card-header-title icon-text has-text-primary">
+                    <span class="icon">
+                      <span class="material-symbols-outlined">event</span>
+                    </span>
+                    <span>Prochainement</span>
+                  </p>
+                </header>
+                <div class="card-image">
+                  <figure class="image">
+                    <img src="<%= asset_path 'images/flyers/test.jpg' %>">
+                  </figure>
+                </div>
+                <footer class="card-footer">
+                  <a class="card-footer-item icon-text has-text-link" href="<%= relative_url '/tournament-registration/' %>">
+                    <span class="icon">
+                      <span class="material-symbols-outlined">trophy</span>
+                    </span>
+                    <span>S'inscrire</span>
+                  </a>
+                </footer>
               </div>
-            </div>
-          </nav>
+            </section>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
+    <div class="home-layer home-layer--over">
+      <section class="hero is-link">
+        <div class="hero-body">
+          <div class="columns">
+            <div class="column is-3">
+              <img class="home-logo" src="<%= asset_path 'images/logo.png' %>" alt="Retrosmash logo" />
+            </div>
+            <div class="column is-6">
+              <div class="height-100 is-flex is-flex-direction-column is-justify-content-center">
+                <p class="title">Jeux vidéos et jeux de société en Dordogne</p>
+                <nav class="navbar navbar--home" role="navigation" aria-label="main navigation">
+                  <div class="navbar-menu">
+                    <div class="navbar-start">
+                      <% collections.nav_pages.resources.each do |page| %>
+                        <% next if page.relative_url == '/tournament-registration/' %>
 
-<div class="card" style="width: 300px; position: fixed; top: 20px; right: 20px;">
-  <header class="card-header">
-    <p class="card-header-title">Prochainement</p>
-  </header>
-  <div class="card-image">
-    <figure class="image">
-      <img src="<%= asset_path 'images/flyers/test.jpg' %>">
-    </figure>
-  </div>
-  <footer class="card-footer">
-    <a href="<%= relative_url '/tournament-registration/' %>" class="card-footer-item">S'inscrire</a>
-  </footer>
-</div>
+                        <div class="navbar-item">
+                          <a class="button is-large is-outlined" href="<%= page.relative_url %>">
+                            <span class="icon">
+                              <span class="material-symbols-outlined"><%= page.data.icon %></span>
+                            </span>
+                            <span><%= page.data.title %></span>
+                          </a>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+            </div>
+            <div class="column is-3"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>

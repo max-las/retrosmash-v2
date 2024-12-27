@@ -1,0 +1,26 @@
+.navbar {
+  &--home {
+    min-height: unset;
+    height: fit-content;
+
+    .navbar-item {
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+  }
+}
+
+.home-layer {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &--over {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
