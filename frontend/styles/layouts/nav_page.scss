@@ -7,24 +7,38 @@ $custom-navbar-height: 10rem; // so the logo is more visible
     min-height: $custom-navbar-height;
 
     .navbar-item {
-      a {
-        color: inherit;
-    
-        &:hover {
-          border-bottom: medium solid bulma.$blue;
-        }
-      }
-
       img {
         max-height: $custom-navbar-height - (bulma.$navbar-padding-vertical * 2);
       }
+
+      .icon-text {
+        .text {
+          border-bottom: medium solid bulma.$yellow;
+        }
+      }
+
+      &--active {
+        .icon-text {
+          .text {
+            border-bottom: medium solid bulma.$red;
+          }
+        }
+      }
     }
-    
-    .navbar-brand {
+
+    &:hover {
       .navbar-item {
-        a {
-          &:hover {
-            border-bottom: none;
+        .icon-text {
+          .text {
+            border-bottom: medium solid bulma.$yellow;
+          }
+        }
+  
+        &:hover {
+          .icon-text {
+            .text {
+              border-bottom: medium solid bulma.$red;
+            }
           }
         }
       }

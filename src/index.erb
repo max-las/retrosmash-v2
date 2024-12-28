@@ -3,45 +3,9 @@ layout: base
 ---
 
 <body>
-  <main class="home-layer">
-    <div class="hero">
-      <div class="hero-body">
-        <div class="columns">
-          <div class="column is-3"></div>
-          <div class="column is-6"></div>
-          <div class="column is-3">
-            <section class="z-1">
-              <div class="card">
-                <header class="card-header">
-                  <p class="card-header-title icon-text has-text-primary">
-                    <span class="icon">
-                      <span class="material-symbols-outlined">event</span>
-                    </span>
-                    <span>Prochainement</span>
-                  </p>
-                </header>
-                <div class="card-image">
-                  <figure class="image">
-                    <img src="<%= asset_path 'images/flyers/test.jpg' %>">
-                  </figure>
-                </div>
-                <footer class="card-footer">
-                  <a class="card-footer-item icon-text has-text-link" href="<%= relative_url '/tournament-registration/' %>">
-                    <span class="icon">
-                      <span class="material-symbols-outlined">trophy</span>
-                    </span>
-                    <span>S'inscrire</span>
-                  </a>
-                </footer>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="home-layer home-layer--over">
-      <section class="hero is-link">
+  <main>
+    <div class="home-layer">
+      <section class="hero is-link z-1">
         <div class="hero-body">
           <div class="columns">
             <div class="column is-3">
@@ -74,6 +38,44 @@ layout: base
           </div>
         </div>
       </section>
+    </div>
+
+    <div class="home-layer home-layer--absolute">
+      <div class="hero">
+        <div class="hero-body">
+          <div class="columns">
+            <div class="column is-3"></div>
+            <div class="column is-6"></div>
+            <div class="column is-3">
+              <section class="z-2">
+                <div class="card">
+                  <header class="card-header">
+                    <p class="card-header-title icon-text has-text-primary">
+                      <span class="icon">
+                        <span class="material-symbols-outlined">event</span>
+                      </span>
+                      <span>Prochainement</span>
+                    </p>
+                  </header>
+                  <div class="card-image">
+                    <figure class="image">
+                      <img src="<%= asset_path 'images/flyers/test.jpg' %>">
+                    </figure>
+                  </div>
+                  <footer class="card-footer">
+                    <a class="card-footer-item icon-text has-text-link" href="<%= relative_url '/tournament-registration/' %>">
+                      <span class="icon">
+                        <span class="material-symbols-outlined">trophy</span>
+                      </span>
+                      <span>S'inscrire</span>
+                    </a>
+                  </footer>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </body>
