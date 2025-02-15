@@ -1,0 +1,7 @@
+@use "../bulma";
+
+.form-iframe {
+  border: none;
+  border-radius: bulma.$card-radius;
+  box-shadow: bulma.$card-shadow;
+}

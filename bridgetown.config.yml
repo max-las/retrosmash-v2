@@ -34,7 +34,7 @@ template_engine: erb
 #   enabled: true
 
 collections:
-  nav_pages:
+  sections:
     output: true
     permalink: /:name/
     sort_by: rank

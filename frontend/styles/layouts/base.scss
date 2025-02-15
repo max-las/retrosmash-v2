@@ -1,3 +1,31 @@
+@use "../bulma";
+
 body {
   min-height: 100vh;
+}
+
+$custom-navbar-height: 10rem; // so the logo is more visible
+
+.navbar {
+  min-height: $custom-navbar-height;
+
+  .navbar-item {
+    img {
+      max-height: $custom-navbar-height - (bulma.$navbar-padding-vertical * 2);
+    }
+  }
+}
+
+.navbar-hr {
+  padding-left: bulma.$navbar-padding-horizontal;
+  padding-right: bulma.$navbar-padding-horizontal;
+  width: 100vw;
+
+  hr {
+    height: 1px;
+    margin: 0;
+    border: none;
+    width: 100%;
+    background: linear-gradient( to right, red 20%, yellow 20%, yellow 36%, green 36%, green 60%, blue 60%, blue 100% );
+  }
 }

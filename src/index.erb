@@ -2,80 +2,26 @@
 layout: base
 ---
 
-<body>
-  <main>
-    <div class="home-layer">
-      <section class="hero is-link z-1">
-        <div class="hero-body">
-          <div class="columns">
-            <div class="column is-3">
-              <img class="home-logo" src="<%= asset_path 'images/logo.png' %>" alt="Retrosmash logo" />
-            </div>
-            <div class="column is-6">
-              <div class="height-100 is-flex is-flex-direction-column is-justify-content-center">
-                <p class="title">Jeux vidéos et jeux de société en Dordogne</p>
-                <nav class="navbar navbar--home" role="navigation" aria-label="main navigation">
-                  <div class="navbar-menu">
-                    <div class="navbar-start">
-                      <% collections.nav_pages.resources.each do |page| %>
-                        <% next if page.relative_url == '/tournament-registration/' %>
-
-                        <div class="navbar-item">
-                          <a class="button is-large is-outlined" href="<%= page.relative_url %>">
-                            <span class="icon">
-                              <span class="material-symbols-outlined"><%= page.data.icon %></span>
-                            </span>
-                            <span><%= page.data.title %></span>
-                          </a>
-                        </div>
-                      <% end %>
-                    </div>
-                  </div>
-                </nav>
-              </div>
-            </div>
-            <div class="column is-3"></div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <div class="home-layer home-layer--absolute">
-      <div class="hero">
-        <div class="hero-body">
-          <div class="columns">
-            <div class="column is-3"></div>
-            <div class="column is-6"></div>
-            <div class="column is-3">
-              <section class="z-2">
-                <div class="card">
-                  <header class="card-header">
-                    <p class="card-header-title icon-text has-text-primary">
-                      <span class="icon">
-                        <span class="material-symbols-outlined">event</span>
-                      </span>
-                      <span>Prochainement</span>
-                    </p>
-                  </header>
-                  <div class="card-image">
-                    <figure class="image">
-                      <img src="<%= asset_path 'images/flyers/test.jpg' %>">
-                    </figure>
-                  </div>
-                  <footer class="card-footer">
-                    <a class="card-footer-item icon-text has-text-link" href="<%= relative_url '/tournament-registration/' %>">
-                      <span class="icon">
-                        <span class="material-symbols-outlined">trophy</span>
-                      </span>
-                      <span>S'inscrire</span>
-                    </a>
-                  </footer>
-                </div>
-              </section>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-</body>
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title icon-text has-text-primary">
+      <span class="icon">
+        <span class="material-symbols-outlined">event</span>
+      </span>
+      <span>Prochainement</span>
+    </p>
+  </header>
+  <div class="card-image">
+    <figure class="image">
+      <img src="<%= asset_path 'images/flyers/test.jpg' %>">
+    </figure>
+  </div>
+  <footer class="card-footer">
+    <a class="card-footer-item icon-text has-text-link" href="<%= relative_url '/tournament-registration/' %>">
+      <span class="icon">
+        <span class="material-symbols-outlined">trophy</span>
+      </span>
+      <span>S'inscrire</span>
+    </a>
+  </footer>
+</div>

@@ -1,4 +1,4 @@
-<nav class="navbar navbar--nav-page is-link" role="navigation" aria-label="main navigation">
+<nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <div class="navbar-item">
       <a href="/">
@@ -20,7 +20,9 @@
         <div class="navbar-item">
           <a class="icon-text pb-2" href="<%= page.relative_url %>">
             <span class="icon">
-              <span class="material-symbols-outlined"><%= page.data.icon %></span>
+              <span class="material-symbols-outlined has-text-<%= page.data.color %>">
+                <%= page.data.icon %>
+              </span>
             </span>
             <span class="text"><%= page.data.title %></span>
           </a>
@@ -29,3 +31,7 @@
     </div>
   </div>
 </nav>
+
+<div class="navbar-hr">
+  <hr>
+</div>

@@ -4,5 +4,15 @@
     <%= render "head", metadata: site.metadata, title: data.title %>
   </head>
 
-  <%= yield %>
+  <body class="is-flex is-flex-direction-column">
+    <%= render Shared::Navbar.new(pages: collections.sections.resources) %>
+
+    <div class="container is-fluid is-flex is-flex-direction-column is-justify-content-flex-end">
+      <main class="is-flex-grow-1">
+        <%= yield %>
+      </main>
+
+      <%= render "footer", metadata: site.metadata %>
+    </div>
+  </body>
 </html>
