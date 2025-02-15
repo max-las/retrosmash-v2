@@ -1,16 +1,3 @@
-$off-white: #ECE9D8;
-$xp-blue: #0051EE;
-$xp-red: #FF7B5F;
-$xp-green: #30D332;
-$xp-orange: #FFC73C;
-
 @forward "~bulma/versions/bulma-no-dark-mode" with (
-  $body-family: "Arial, sans-serif",
-  $body-background-color: $off-white,
-  $navbar-background-color: $off-white,
-  $footer-background-color: transparent,
-  $success: $xp-green,
-  $info: $xp-blue,
-  $warning: $xp-orange,
-  $danger: $xp-red
+  $footer-background-color: transparent
 );
