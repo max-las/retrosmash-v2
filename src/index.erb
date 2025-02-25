@@ -2,11 +2,11 @@
 layout: base
 ---
 
-<div class="columns">
-  <div class="column is-8">
-    <div class="is-flex is-justify-content-center is-align-items-center h-100">
+<div class="row">
+  <div class="col-8">
+    <div class="d-flex justify-content-center align-items-center h-100">
       <div>
-        <p class="is-size-2 has-text-weight-bold mb-5">
+        <p class="display-3">
           Jeux vidéos et jeux de société en Dordogne
         </p>
         <p>
@@ -16,30 +16,14 @@ layout: base
     </div>
   </div>
 
-  <div class="column">
-    <div class="is-flex is-justify-content-center is-align-items-center">
-      <div class="card flyer">
-        <header class="card-header">
-          <p class="card-header-title icon-text">
-            <span class="icon has-text-danger">
-              <span class="material-icons">push_pin</span>
-            </span>
-            <span>Prochainement</span>
-          </p>
-        </header>
-        <div class="card-image">
-          <figure class="image">
-            <img src="<%= asset_path 'images/flyers/test.jpg' %>">
-          </figure>
+  <div class="col">
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="card upcoming-flyer">
+        <img src="<%= asset_path 'images/flyers/test.jpg' %>" class="card-img-top" alt="kawaii festival">
+        <div class="card-body">
+          <h5 class="card-title">Prochainement</h5>
+          <a href="#" class="btn btn-primary">S'inscrire</a>
         </div>
-        <footer class="card-footer">
-          <a class="card-footer-item icon-text has-text-link" href="<%= relative_url '/tournament-registration/' %>">
-            <span class="icon has-text-warning">
-              <span class="material-icons">emoji_events</span>
-            </span>
-            <span>S'inscrire</span>
-          </a>
-        </footer>
       </div>
     </div>
   </div>

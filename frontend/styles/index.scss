@@ -1,8 +1,8 @@
-@use "./bulma";
+@import "./bootstrap";
 
-@use "./helpers";
+@import "./helpers";
 
-@use "./layouts/base";
-@use "./layouts/section";
+@import "./layouts/base";
+@import "./layouts/section";
 
-@use "./pages/home";
+@import "./pages/home";

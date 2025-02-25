@@ -1,33 +1,26 @@
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <div class="navbar-item">
-      <a href="/">
-        <img src="<%= asset_path 'images/logo.png' %>"" alt="Logo" />
-      </a>
-    </div>
-
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img src="<%= asset_path 'images/logo.png' %>" class="nav-logo" alt="Logo" />
     </a>
-  </div>
-
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      <% @pages.each do |page| %>
-        <div class="navbar-item">
-          <a class="icon-text pb-2" href="<%= page.relative_url %>">
-            <span class="icon">
-              <span class="material-icons has-text-<%= page.data.color %> mr-3">
-                <%= page.data.icon %>
-              </span>
-            </span>
-            <span class="has-text-weight-medium"><%= page.data.title %></span>
-          </a>
-        </div>
-      <% end %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <% @pages.each do |page| %>
+          <li class="navbar-item">
+            <a class="nav-link" href="<%= page.relative_url %>">
+              <div class="d-flex align-items-center">
+                <span class="material-icons text-<%= page.data.color %> me-2">
+                  <%= page.data.icon %>
+                </span>
+                <%= page.data.title %>
+              </div>
+            </a>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div>
 </nav>

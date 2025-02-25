@@ -2,14 +2,11 @@
 layout: base
 ---
 
-<section class="section">
+<h1 class="fs-2"><%= data.title %></h1>
+<% if data.subtitle.present? %>
+  <p class="lead"><%= data.subtitle %></p>
+<% end %>
 
-  <h1 class="title"><%= data.title %></h1>
-  <% if data.subtitle.present? %>
-    <h2 class="subtitle"><%= data.subtitle %></h2>
-  <% end %>
-
-  <%= yield %>
-</section>
+<%= yield %>
 
 

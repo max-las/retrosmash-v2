@@ -4,11 +4,11 @@
     <%= render "head", metadata: site.metadata, title: data.title %>
   </head>
 
-  <body class="is-flex is-flex-direction-column">
+  <body class="d-flex flex-column">
     <%= render Shared::Navbar.new(pages: collections.sections.resources) %>
 
-    <div class="container is-fluid is-flex is-flex-direction-column is-justify-content-flex-end">
-      <main class="is-flex-grow-1">
+    <div class="flex-grow-1 d-flex flex-column justify-content-end px-5">
+      <main class="flex-grow-1">
         <%= yield %>
       </main>
 
