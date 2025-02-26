@@ -42,6 +42,3 @@ collections:
     output: true
     permalink: /:collection/:name/
     sort_by: title
-  game_collections:
-    output: true
-    permalink: /:collection/:name.json

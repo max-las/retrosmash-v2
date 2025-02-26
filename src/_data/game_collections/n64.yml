@@ -1,7 +1,7 @@
 version: 0.1
 games:
-  - name: Diddy Kong Racing
+  - title: Diddy Kong Racing
     players: 4
 
-  - name: Mario Kart 64
+  - title: Mario Kart 64
     players: 4
