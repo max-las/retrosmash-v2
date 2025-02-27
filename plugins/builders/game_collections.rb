@@ -1,29 +1,58 @@
 class Builders::GameCollections < SiteBuilder
-  LETTERS = ('a'..'z').to_a.freeze
-  NOT_LETTER = '#'.freeze
+  LETTERS = ('A'..'Z').to_a.freeze
+  SPECIAL_LETTER = '#'.freeze
+  URL_FRIENDLY_SPECIAL_LETTER = '_'.freeze
+  EXTENDED_LETTERS = [SPECIAL_LETTER, *LETTERS].freeze
   COUNT_PER_PAGE = 6.freeze
 
   def build
     hook :site, :post_read do
       site.data.game_collections.each do |console, game_collection|
         add_resource :pages, "consoles/#{console}/game-collection/version.txt" do
-          content game_collection["version"]
+          content game_collection['version']
         end
+
+        games = game_collection['games']
+
+        add_transliterated_titles(games)
+        sort(games)
         add_resource :pages, "consoles/#{console}/game-collection/collection.json" do
-          content raw game_collection["games"].to_json
+          content raw games.to_json
         end
-        group_by_letter_and_paginate(game_collection["games"]).each do |letter, paginated_games|
-          paginated_games.each_with_index do |games, index|
-            page = index + 1
-            add_resource :pages, "consoles/#{console}/game-collection/#{letter}/#{page}.html" do
-              layout 'games_page'
-              page page
-              games games
+
+        grouped_games = group_by_letter_and_paginate(games)
+
+        EXTENDED_LETTERS.each do |letter|
+          paginated_games = grouped_games[letter]
+          if paginated_games.nil?
+            add_games_page_resource(console:, letter:, page: 1, games: [])
+          else
+            paginated_games.each_with_index do |page_games, page_index|
+              add_games_page_resource(console:, letter:, page: page_index + 1, games: page_games)
             end
           end
         end
       end
     end
+  end
+
+  def add_games_page_resource(console:, letter:, page:, games:)
+    path = "consoles/#{console}/game-collection/#{url_friendly(letter)}/#{page}"
+    add_resource :pages, "#{path}.html" do
+      permalink "#{path}/"
+      layout 'games_page'
+      letter letter
+      page page
+      games games
+    end
+  end
+
+  def add_transliterated_titles(games)
+    games.each { |game| game['transliterated_title'] = I18n.transliterate(game['title']) }
+  end
+
+  def sort(games)
+    games.sort_by! { |game| game['transliterated_title'] }
   end
 
   def group_by_letter_and_paginate(games)
@@ -32,9 +61,13 @@ class Builders::GameCollections < SiteBuilder
   end
 
   def letter(game)
-    formatted_first_char = I18n.transliterate(game["title"]).chr.downcase
-    return formatted_first_char if LETTERS.include?(formatted_first_char)
+    first_char = game['transliterated_title'].chr.upcase
+    return first_char if LETTERS.include?(first_char)
 
-    NOT_LETTER
+    SPECIAL_LETTER
+  end
+
+  def url_friendly(letter)
+    letter == SPECIAL_LETTER ? URL_FRIENDLY_SPECIAL_LETTER : letter
   end
 end

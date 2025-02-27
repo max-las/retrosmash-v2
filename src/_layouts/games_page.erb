@@ -1,6 +1,12 @@
-<h1>Page <%= data.page %></h1>
-<ul>
-  <% data.games.each do |game| %>
-    <li><%= game["title"] %></li>
-  <% end %>
-</ul>
+<h1>Lettre <%= data.letter %></h1>
+<h2>Page <%= data.page %></h2>
+
+<% if data.games.empty? %>
+  <p>Aucun jeu pour cette lettre</p>
+<% else %>
+  <ul>
+    <% data.games.each do |game| %>
+      <li><%= game["title"] %></li>
+    <% end %>
+  </ul>
+<% end %>
