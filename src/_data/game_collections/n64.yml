@@ -1,7 +1,13 @@
+# version should be incremented each time the list is updated
+
+# slug will be used to match associated assets, like cover images
+# slug may be computed by opening bin/bridgetown console, and calling .parameterize on the title
+
 version: 0.1
 games:
-  - title: Diddy Kong Racing
-    players: 4
-
-  - title: Mario Kart 64
-    players: 4
+- slug: diddy-kong-racing
+  title: Diddy Kong Racing
+  players: 4
+- slug: mario-kart-64
+  title: Mario Kart 64
+  players: 4
