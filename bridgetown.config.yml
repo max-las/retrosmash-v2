@@ -33,6 +33,9 @@ template_engine: erb
 # pagination:
 #   enabled: true
 
+autoload_paths:
+  - models
+
 collections:
   sections:
     output: true
@@ -40,5 +43,6 @@ collections:
     sort_by: rank
   consoles:
     output: true
-    permalink: /:collection/:name/
+    permalink: /:collection/:slug/
     sort_by: title
+  

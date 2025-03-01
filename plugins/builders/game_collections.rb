@@ -7,8 +7,9 @@ class Builders::GameCollections < SiteBuilder
 
   def build
     hook :site, :post_read do
-      site.data.game_collections.each do |console, game_collection|
-        add_resource :pages, "consoles/#{console}/game-collection/version.txt" do
+      site.collections.consoles.resources.each do |console|
+        game_collection = site.data.game_collections[console.data.slug]
+        add_resource :pages, "consoles/#{console.data.slug}/game-collection/version.txt" do
           content game_collection['version']
         end
 
@@ -16,7 +17,7 @@ class Builders::GameCollections < SiteBuilder
 
         add_transliterated_titles(games)
         sort(games)
-        add_resource :pages, "consoles/#{console}/game-collection/collection.json" do
+        add_resource :pages, "consoles/#{console.data.slug}/game-collection/collection.json" do
           content raw games.to_json
         end
 
@@ -37,13 +38,14 @@ class Builders::GameCollections < SiteBuilder
   end
 
   def add_games_page_resource(console:, letter:, page:, games:)
-    path = "consoles/#{console}/game-collection/#{url_friendly(letter)}/#{page}"
+    path = "consoles/#{console.data.slug}/game-collection/#{url_friendly(letter)}/#{page}"
     add_resource :pages, "#{path}.html" do
       permalink "#{path}/"
       layout 'games_page'
+      title console.data.title
       letter letter
       page page
-      games games
+      games games.map { |game| Game.new(**game, console:) }
     end
   end
 

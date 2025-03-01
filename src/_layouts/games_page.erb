@@ -1,12 +1,29 @@
+---
+layout: section
+---
+
 <h1>Lettre <%= data.letter %></h1>
 <h2>Page <%= data.page %></h2>
 
 <% if data.games.empty? %>
   <p>Aucun jeu pour cette lettre</p>
 <% else %>
-  <ul>
+  <div class="d-flex flex-wrap justify-content-between">
     <% data.games.each do |game| %>
-      <li><%= game["title"] %></li>
+      <div class="card game-card mb-3">
+        <img
+          src="<%= asset_path game.cover_path %>"
+          class="card-img-top"
+          alt="<%= game.cover_alt %>">
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= game.title %>
+          </h5>
+          <p class="card-text">
+            <%= "#{game.players} joueurs" %>
+          </p>
+        </div>
+      </div>
     <% end %>
-  </ul>
+  </div>
 <% end %>
