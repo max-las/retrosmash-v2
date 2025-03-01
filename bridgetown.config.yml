@@ -42,7 +42,6 @@ collections:
     permalink: /:name/
     sort_by: rank
   consoles:
-    output: true
-    permalink: /:collection/:slug/
+    output: false
     sort_by: title
   

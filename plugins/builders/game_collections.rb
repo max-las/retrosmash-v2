@@ -1,10 +1,4 @@
 class Builders::GameCollections < SiteBuilder
-  LETTERS = ('A'..'Z').to_a.freeze
-  SPECIAL_LETTER = '#'.freeze
-  URL_FRIENDLY_SPECIAL_LETTER = '_'.freeze
-  EXTENDED_LETTERS = [SPECIAL_LETTER, *LETTERS].freeze
-  COUNT_PER_PAGE = 6.freeze
-
   def build
     hook :site, :post_read do
       site.collections.consoles.resources.each do |console|
@@ -21,16 +15,18 @@ class Builders::GameCollections < SiteBuilder
           content raw games.to_json
         end
 
-        grouped_games = group_by_letter_and_paginate(games)
+        games.map! { |game| Game.new(**game, console:) }
 
-        EXTENDED_LETTERS.each do |letter|
-          paginated_games = grouped_games[letter]
-          if paginated_games.nil?
-            add_games_page_resource(console:, letter:, page: 1, games: [])
-          else
-            paginated_games.each_with_index do |page_games, page_index|
-              add_games_page_resource(console:, letter:, page: page_index + 1, games: page_games)
-            end
+        grouped_games = group_by_letter_and_paginate(games)
+        console.data.available_letters = grouped_games.keys
+        grouped_games.each do |letter, paginated_games|
+          paginated_games.each_with_index do |page_games, page_index|
+            add_games_page_resource(
+              console:,
+              letter:,
+              page: page_index + 1,
+              games: page_games
+            )
           end
         end
       end
@@ -38,38 +34,31 @@ class Builders::GameCollections < SiteBuilder
   end
 
   def add_games_page_resource(console:, letter:, page:, games:)
-    path = "consoles/#{console.data.slug}/game-collection/#{url_friendly(letter)}/#{page}"
-    add_resource :pages, "#{path}.html" do
-      permalink "#{path}/"
-      layout 'games_page'
-      title console.data.title
-      letter letter
-      page page
-      games games.map { |game| Game.new(**game, console:) }
+    paths = [console.letter_relative_url(letter, page:)]
+    paths << console.relative_url if page == 1 && letter == console.data.available_letters.first
+    paths.each do |path|
+      add_resource :pages, File.join(path, 'index.html') do
+        layout 'console_and_games'
+        title console.data.title
+        console console
+        letter letter
+        page page
+        games games.map { |game| Game.new(**game, console:) }
+      end
     end
   end
 
-  def add_transliterated_titles(games)
-    games.each { |game| game['transliterated_title'] = I18n.transliterate(game['title']) }
+  def add_transliterated_titles(games_data)
+    games_data.each { |game| game['transliterated_title'] = I18n.transliterate(game['title']) }
   end
 
-  def sort(games)
-    games.sort_by! { |game| game['transliterated_title'] }
+  def sort(games_data)
+    games_data.sort_by! { |game| game['transliterated_title'] }
   end
 
   def group_by_letter_and_paginate(games)
-    games_by_letter = games.group_by { |game| letter(game) }
-    games_by_letter.transform_values { |games| games.each_slice(COUNT_PER_PAGE).to_a }
-  end
-
-  def letter(game)
-    first_char = game['transliterated_title'].chr.upcase
-    return first_char if LETTERS.include?(first_char)
-
-    SPECIAL_LETTER
-  end
-
-  def url_friendly(letter)
-    letter == SPECIAL_LETTER ? URL_FRIENDLY_SPECIAL_LETTER : letter
+    games.group_by(&:letter).transform_values do |letter_games|
+      letter_games.each_slice(Game::COUNT_PER_PAGE).to_a
+    end
   end
 end

@@ -1,0 +1,24 @@
+---
+layout: section
+---
+
+<%= render Shared::LettersNav.new(console: data.console, current_letter: data.letter) %>
+
+<div class="d-flex flex-wrap justify-content-between">
+  <% data.games.each do |game| %>
+    <div class="card game-card mb-3">
+      <img
+        src="<%= asset_path game.cover_path %>"
+        class="card-img-top"
+        alt="<%= game.cover_alt %>">
+      <div class="card-body">
+        <h5 class="card-title">
+          <%= game.title %>
+        </h5>
+        <p class="card-text">
+          <%= "#{game.players} joueurs" %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
