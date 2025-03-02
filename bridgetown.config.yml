@@ -34,7 +34,8 @@ template_engine: erb
 #   enabled: true
 
 autoload_paths:
-  - models
+  - path: models
+    eager: true
 
 collections:
   sections:

@@ -14,7 +14,7 @@ class Game < Bridgetown::Model::Base
   end
 
   def cover_path
-    "images/games/#{console.data.slug}/#{slug}.webp"
+    File.join('images/games', console.slug, "#{slug}.webp")
   end
 
   def cover_alt
