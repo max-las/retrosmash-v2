@@ -1,6 +1,6 @@
 class Console < Bridgetown::Model::Base
   def relative_url
-    File.join('consoles', slug, '/')
+    File.join('/consoles', slug, '/')
   end
 
   def letter_relative_url(letter, page: 1)

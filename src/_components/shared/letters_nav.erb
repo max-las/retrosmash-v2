@@ -1,7 +1,9 @@
-<% Game::EXTENDED_LETTERS.each do |letter| %>
-  <% if @console.available_letters.include?(letter) %>
-    <a href="<%= @console.letter_relative_url(letter) %>" class="btn btn-sm btn-light" role="button"><%= letter %></a>
-  <% else %>
-    <button type="button" class="btn btn-sm btn-light" disabled><%= letter %></button>
+<div class="mb-3">
+  <% Game::EXTENDED_LETTERS.each do |letter| %>
+    <% if @console.available_letters.include?(letter) %>
+      <a href="<%= @console.letter_relative_url(letter) %>" class="btn btn-sm btn-light" role="button"><%= letter %></a>
+    <% else %>
+      <button type="button" class="btn btn-sm btn-light" disabled><%= letter %></button>
+    <% end %>
   <% end %>
-<% end %>
+</div>
