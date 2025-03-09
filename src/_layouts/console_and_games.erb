@@ -8,7 +8,7 @@ layout: section
   <% data.games.each do |game| %>
     <div class="card game-card mb-3">
       <img
-        src="<%= asset_path game.cover_path %>"
+        src="<%= game.cover_path %>"
         class="card-img-top"
         alt="<%= game.cover_alt %>">
       <div class="card-body">
