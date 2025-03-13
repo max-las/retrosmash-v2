@@ -3,7 +3,11 @@ class Console < Bridgetown::Model::Base
     File.join('/consoles', slug, '/')
   end
 
-  def letter_relative_url(letter, page: 1)
+  def games_letter_relative_url(letter, page: 1)
     File.join(relative_url, Game.url_friendly_letter(letter), page.to_s, '/')
+  end
+
+  def logo_url
+    File.join('/images/console-logos', "#{slug}.webp")
   end
 end

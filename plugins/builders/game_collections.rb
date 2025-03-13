@@ -32,7 +32,7 @@ class Builders::GameCollections < SiteBuilder
   end
 
   def add_games_page_resource(console:, letter:, page:, games:)
-    paths = [console.letter_relative_url(letter, page:)]
+    paths = [console.games_letter_relative_url(letter, page:)]
     paths << console.relative_url if page == 1 && letter == console.available_letters.first
     paths.each do |path|
       add_resource :pages, File.join(path, 'index.html') do

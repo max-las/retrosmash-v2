@@ -28,13 +28,12 @@ check_supported() {
   return 0
 }
 
-for file in *; do
-  if test -f "$file"; then
-    filename="${file%.*}"
-    extension="${file##*.}"
-    check_supported "$extension"
-    if [ $? -eq 1 ]; then
-      convert "$file" -resize "x600>" -quality 80 "$output_dir/$filename.webp"
-    fi
+for file in `find $input_dir -type f`; do
+  filename_with_extension=$(basename "$file")
+  filename="${filename_with_extension%.*}"
+  extension="${filename_with_extension##*.}"
+  check_supported $extension
+  if [ $? -eq 1 ]; then
+    convert "$file" -resize "x600>" -quality 80 "$output_dir/$filename.webp"
   fi
 done
