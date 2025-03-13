@@ -4,9 +4,9 @@ layout: section
 
 <%= render Shared::LettersNav.new(console: data.console, current_letter: data.letter) %>
 
-<div class="d-flex flex-wrap justify-content-between">
+<div class="d-flex flex-wrap">
   <% data.games.each do |game| %>
-    <div class="card game-card mb-3">
+    <div class="card console-card mb-3">
       <img
         src="<%= game.cover_path %>"
         class="card-img-top"

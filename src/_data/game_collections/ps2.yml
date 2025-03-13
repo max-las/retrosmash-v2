@@ -1,0 +1,13 @@
+# version should be incremented each time the list is updated
+
+# slug will be used to match associated assets, like cover images
+# slug may be computed by opening bin/bridgetown console, and calling .parameterize on the title
+
+version: 0.1
+games:
+- slug: tekken-tag-tournament
+  title: Tekken Tag Tournament
+  players: 4
+- slug: digimon-rumble-arena-2
+  title: Digimon Rumble Arena 2
+  players: 4

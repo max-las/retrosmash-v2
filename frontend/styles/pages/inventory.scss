@@ -1,0 +1,13 @@
+.console-card {
+  $aspect-ratio: 16 / 9;
+  $max-height: 8rem;
+  $max-width: $max-height * $aspect-ratio;
+  max-height: $max-height;
+  max-width: $max-width;
+  aspect-ratio: $aspect-ratio;
+
+  &__logo {
+    max-height: 100%;
+    max-width: 100%;
+  }
+}

@@ -6,3 +6,11 @@ rank: 2
 title: Inventaire
 subtitle: Parcourez la liste des consoles et des jeux dont nous disposons
 ---
+
+<div class="d-flex flex-wrap">
+  <% collections.consoles.resources.map(&:model_with_data).each do |console| %>
+    <a href="<%= console.first_game_letter_path %>" class="console-card img-thumbnail d-flex justify-content-center align-items-center p-3 me-2">
+      <img src="<%= console.logo_path %>" class="console-card__logo" alt="<%= console.logo_alt %>">
+    </a>
+  <% end %>
+</div>

@@ -1,7 +1,7 @@
 class Builders::GameCollections < SiteBuilder
   def build
     hook :site, :post_read do
-      site.collections.consoles.resources.map(&:enhanced_model).each do |console|
+      site.collections.consoles.resources.map(&:model_with_data).each do |console|
         game_collection = site.data.game_collections[console.slug]
         add_resource :pages, File.join('consoles', console.slug, 'game-collection/version.txt') do
           content game_collection['version']
@@ -32,7 +32,7 @@ class Builders::GameCollections < SiteBuilder
   end
 
   def add_games_page_resource(console:, letter:, page:, games:)
-    paths = [console.games_letter_relative_url(letter, page:)]
+    paths = [console.game_letter_path(letter, page:)]
     paths << console.relative_url if page == 1 && letter == console.available_letters.first
     paths.each do |path|
       add_resource :pages, File.join(path, 'index.html') do
