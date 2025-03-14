@@ -12,7 +12,7 @@ class Console < Bridgetown::Model::Base
   end
 
   def logo_path
-    File.join('/images/console-logos', "#{slug}.webp")
+    File.join('/images/console-logos', "#{slug}.svg")
   end
 
   def logo_alt
