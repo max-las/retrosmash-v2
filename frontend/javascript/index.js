@@ -15,6 +15,8 @@ import * as TurboShadow from "turbo-shadow"
  */
 // import "./turbo_transitions.js"
 
+import * as bootstrap from "bootstrap"
+
 // Import all JavaScript & CSS files from src/_components
 import components from "$components/**/*.{js,jsx,js.rb,css}"
 
@@ -37,3 +39,4 @@ Object.entries(controllers).forEach(([filename, controller]) => {
     Stimulus.register(identifier, controller.default)
   }
 })
+

@@ -37,6 +37,10 @@ const esbuildOptions = {
   ],
   globOptions: {
     excludeFilter: /\.(dsd|lit)\.css$/
+  },
+  sassOptions: {
+    quietDeps: true,
+    silenceDeprecations: ['import']
   }
 }
 
