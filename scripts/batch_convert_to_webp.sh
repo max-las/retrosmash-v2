@@ -34,6 +34,6 @@ for file in `find $input_dir -type f`; do
   extension="${filename_with_extension##*.}"
   check_supported $extension
   if [ $? -eq 1 ]; then
-    convert "$file" -resize "x600>" -quality 80 "$output_dir/$filename.webp"
+    convert "$file" -resize "x500>" -quality 80 "$output_dir/$filename.webp"
   fi
 done

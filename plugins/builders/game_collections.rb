@@ -35,7 +35,9 @@ class Builders::GameCollections < SiteBuilder
     paths.each do |path|
       add_resource :pages, File.join(path, 'index.html') do
         layout 'game_page'
-        title game_page.console.title
+        title game_page.console.full_title
+        subtitle game_page.console.subtitle
+        breadcrumb game_page.console.breadcrumb
         game_page game_page
       end
     end

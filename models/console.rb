@@ -9,15 +9,35 @@ class Console < Bridgetown::Model::Base
     File.join('/consoles', slug, '/')
   end
 
+  def breadcrumb
+    {
+      'Accueil' => '/',
+      'Inventaire' => '/inventory/',
+      title => nil
+    }
+  end
+
   def first_available_game_letter
     @first_available_game_letter ||= game_letters.find(&:available?)
   end
 
   def logo_path
-    File.join('/images/console-logos', "#{slug}.svg")
+    File.join('/images/consoles', slug, 'logo.svg')
   end
 
   def logo_alt
     "logo de la #{title}"
+  end
+
+  def image_path
+    File.join('/images/consoles', slug, 'console.webp')
+  end
+
+  def image_alt
+    "console #{full_title}"
+  end
+
+  def subtitle
+    "Découvrez notre catalogue #{title}"
   end
 end

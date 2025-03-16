@@ -2,10 +2,30 @@
 layout: section
 ---
 
+<div class="card border-0 mb-2 console-summary-card">
+  <img
+    class="card-img-top"
+    src="<%= data.game_page.console.image_path %>"
+    alt="<%= data.game_page.console.image_alt %>">
+  <div class="card-body px-0 pb-0">
+    <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">Quantité</th>
+          <td><%= data.game_page.console.quantity %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h2 class="fs-3">Jeux disponibles</h2>
+<hr>
+
 <%= render Console::GameLettersNav.new(data.game_page) %>
 <%= render Console::GamePagesNav.new(data.game_page) %>
 
-<div class="d-flex flex-wrap">
+<div class="d-flex flex-wrap gap-2">
   <% data.game_page.games.each do |game| %>
     <div class="card game-card mb-3">
       <img
