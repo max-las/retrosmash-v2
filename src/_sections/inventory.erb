@@ -9,7 +9,7 @@ subtitle: Parcourez la liste des consoles et des jeux dont nous disposons
 
 <div class="d-flex flex-wrap gap-2">
   <% collections.consoles.resources.map(&:model_with_data).each do |console| %>
-    <a href="<%= console.first_game_letter_path %>">
+    <a href="<%= console.relative_url %>">
       <div class="card console-card">
         <div class="card-img-top console-card__logo-wrapper d-flex align-items-center justify-content-center p-3">
           <img src="<%= console.logo_path %>" class="console-card__logo" alt="<%= console.logo_alt %>">

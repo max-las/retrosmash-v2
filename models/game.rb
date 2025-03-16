@@ -1,16 +1,7 @@
 class Game < Bridgetown::Model::Base
-  LETTERS = ('A'..'Z').to_a.freeze
-  SPECIAL_LETTER = '#'.freeze
-  URL_FRIENDLY_SPECIAL_LETTER = '_'.freeze
-  EXTENDED_LETTERS = [SPECIAL_LETTER, *LETTERS].freeze
-  COUNT_PER_PAGE = 6.freeze
-
-  def self.url_friendly_letter(letter)
-    letter == SPECIAL_LETTER ? URL_FRIENDLY_SPECIAL_LETTER : letter
-  end
-
-  def letter  
-    @letter ||= compute_letter
+  def initialize(...)
+    super
+    self.game_letter = find_game_letter.tap { |game_letter| game_letter.games << self }
   end
 
   def cover_path
@@ -23,10 +14,8 @@ class Game < Bridgetown::Model::Base
 
   private
 
-  def compute_letter
-    first_char = transliterated_title.chr.upcase
-    return first_char if LETTERS.include?(first_char)
-
-    SPECIAL_LETTER
+  def find_game_letter
+    first_letter = transliterated_title.chr.upcase
+    console.game_letters.find { |game_letter| game_letter.letter == GameLetter.cast(first_letter) }
   end
 end

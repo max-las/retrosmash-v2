@@ -1,14 +1,16 @@
 class Console < Bridgetown::Model::Base
+  def initialize_game_letters
+    self.game_letters = GameLetter::EXTENDED_LETTERS.map do |letter|
+      GameLetter.new(console: self, letter:)
+    end
+  end
+
   def relative_url
     File.join('/consoles', slug, '/')
   end
 
-  def game_letter_path(letter, page: 1)
-    File.join(relative_url, Game.url_friendly_letter(letter), page.to_s, '/')
-  end
-
-  def first_game_letter_path
-    game_letter_path(available_letters.first)
+  def first_available_game_letter
+    @first_available_game_letter ||= game_letters.find(&:available?)
   end
 
   def logo_path

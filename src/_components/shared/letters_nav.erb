@@ -1,9 +1,0 @@
-<div class="mb-3 d-flex flex-wrap gap-1">
-  <% Game::EXTENDED_LETTERS.each do |letter| %>
-    <% if @console.available_letters.include?(letter) %>
-      <a href="<%= @console.game_letter_path(letter) %>" class="letter btn btn-sm btn-primary" role="button"><%= letter %></a>
-    <% else %>
-      <button type="button" class="letter btn btn-sm btn-light" disabled><%= letter %></button>
-    <% end %>
-  <% end %>
-</div>

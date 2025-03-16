@@ -1,0 +1,14 @@
+<div class="mb-3 d-flex flex-wrap gap-1">
+  <% @game_page.game_letter.game_pages.each do |game_page| %>
+    <a
+      href="<%= game_page.relative_url %>"
+      class="<%= class_names(
+        'btn btn-sm',
+        'btn-primary': game_page == @game_page,
+        'btn-outline-primary': game_page != @game_page
+      ) %>"
+      role="button">
+      <%= game_page.page %>
+    </a>
+  <% end %>
+</div>

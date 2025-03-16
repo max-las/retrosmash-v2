@@ -1,0 +1,18 @@
+<div class="mb-3 d-flex flex-wrap gap-1">
+  <% @game_page.console.game_letters.each do |game_letter| %>
+    <% if game_letter.available? %>
+      <a
+        href="<%= game_letter.relative_url %>"
+        class="<%= class_names(
+          'btn btn-sm',
+          'btn-primary': game_letter == @game_page.game_letter,
+          'btn-outline-primary': game_letter != @game_page.game_letter
+        ) %>"
+        role="button">
+        <%= game_letter.letter %>
+      </a>
+    <% else %>
+      <button type="button" class="letter btn btn-sm btn-light" disabled><%= game_letter.letter %></button>
+    <% end %>
+  <% end %>
+</div>
