@@ -18,11 +18,11 @@ Les logos en `svg` doivent être trouvés directement sur le web et peuvent éve
 Quand aux images trouvées en `jpg` ou `png`, elle peuvent être converties en `webp` à l'aide du script présent dans le dossier `scripts`. 
 
 # Consoles
-Les consoles sont définies dans des fichiers html rangés dans `src/_consoles/\<slug\>.html`. Par exemple, la GameCube est définie dans `src/_consoles/gc.html`.
+Les consoles sont définies dans des fichiers html rangés dans `src/_consoles/<slug>.html`. Par exemple, la GameCube est définie dans `src/_consoles/gc.html`.
 
 Pour en savoir plus sur les slugs, [lisez la section dédiée](#les-slugs).
 
-Contrairement à ce que laisse penser l'extension, ces fichiers ne contiennent pas de HTML mais uniquement des données au format YAML délimitée par deux `---`.
+Contrairement à ce que laisse penser l'extension, ces fichiers ne contiennent pas de HTML mais uniquement des données au format YAML délimitées par deux `---`.
 Par exemple, le contenu du fichier `src/_consoles/gc.html` pourrait ressembler à ceci :
 ```
 ---
@@ -38,11 +38,11 @@ Chaque console comprend les champs suivant :
 |full_title|Titre complet de la console, avec la marque (par exemple Nintendo GameCube)|
 |quantity|Nombre d'exemplaires disponibles|
 
-Chaque console doit également avoir une image de son logo, ainsi qu'une image de la console elle-même. L'image du logo doit être placée dans `src/images/consoles/\<slug\>/logo.svg`,
-et celle de la console dans `src/images/consoles/\<slug\>/console.webp`.
+Chaque console doit également avoir une image de son logo, ainsi qu'une image de la console elle-même. L'image du logo doit être placée dans `src/images/consoles/<slug>/logo.svg`,
+et celle de la console dans `src/images/consoles/<slug>/console.webp`.
 
 # Jeux
-Les jeux sont définis dans des fichiers de données au format YAML rangés dans `src/_data/\<slug de la console\>.yml`. Par exemple, les jeux de Nintendo 64 sont définis dans `src/_data/n64.yml`.
+Les jeux sont définis dans des fichiers de données au format YAML rangés dans `src/_data/<slug de la console>.yml`. Par exemple, les jeux de Nintendo 64 sont définis dans `src/_data/n64.yml`.
 
 Chaque fichier représente une *collection* de jeux, avec les champs suivants :
 |Champ|Description|
@@ -61,21 +61,24 @@ Chaque jeu comprend les champs suivants :
 ```
 "titre du jeu".parameterize
 ```
-Chaque jeu doit également avoir une image de sa boîte, qui doit être placée dans `src/images/consoles/\<slug de la console\>/games/<slug du jeu>.webp`.
+Chaque jeu doit également avoir une image de sa boîte, qui doit être placée dans `src/images/consoles/<slug de la console>/games/<slug du jeu>.webp`.
 
 # Resources
 
 ## Pour les images des consoles
-Wikipedia est tout indiqué. Ne pas hésiter à utiliser google images avec le filtre `site:wikipedia.org`.
+Wikipedia. Ne pas hésiter à utiliser google images avec le filtre `site:wikipedia.org`.
 
 ## Pour les images des jeux
 
 ### Nintendo
 https://gamesdb.launchbox-app.com/platforms/games/25-nintendo-64
+
 https://gamesdb.launchbox-app.com/platforms/games/31-nintendo-gamecube
 
 ### Playstation
 https://psxdatacenter.com/pal_list.html
+
 https://psxdatacenter.com/psx2/pal_list2.html
+
 https://github.com/xlenore/ps2-covers/
 
