@@ -6,17 +6,16 @@
 
 supported_extensions=("jpg" "jpeg" "png")
 input_dir="$1"
-output_dir="$input_dir/webp"
+output_dir="$(dirname "$0")/../src/images/test"
+
+while [ "${input_dir:0-1}" == "/" ]; do
+  input_dir=${input_dir%?} 
+done
 
 if [ ! -d "$input_dir" ]; then
   echo "input directory not found"
   exit
 fi
-
-if test -d "$output_dir"; then
-  rm -r "$output_dir"
-fi
-mkdir "$output_dir"
 
 check_supported() {
   extension="$1"
@@ -32,8 +31,12 @@ for file in `find $input_dir -type f`; do
   filename_with_extension=$(basename "$file")
   filename="${filename_with_extension%.*}"
   extension="${filename_with_extension##*.}"
+  relative_path_with_extension="${file#"$input_dir"}"
+  relative_path_without_extension="${relative_path_with_extension%".$extension"}"
   check_supported $extension
   if [ $? -eq 1 ]; then
-    convert "$file" -resize "x500>" -quality 80 "$output_dir/$filename.webp"
+    output_filepath="$output_dir/$relative_path_without_extension.webp"
+    mkdir -p $(dirname "$output_filepath")
+    convert "$file" -resize "x500>" -quality 80 "$output_filepath"
   fi
 done
