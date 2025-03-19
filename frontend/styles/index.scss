@@ -1,7 +1,10 @@
 @import "./bootstrap";
 
+@import "./shared";
+
 @import "./layouts/base";
 
 @import "./pages/home";
 @import "./pages/inventory";
 @import "./pages/console";
+@import "./pages/about";
