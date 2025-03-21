@@ -8,8 +8,6 @@ class Builders::GameCollections < SiteBuilder
         end
 
         games_data = game_collection['games']
-        add_transliterated_titles(games_data)
-        sort(games_data)
         add_resource :pages, File.join('/consoles', console.slug, 'game-collection/collection.json') do
           content raw games_data.to_json
         end
@@ -41,15 +39,5 @@ class Builders::GameCollections < SiteBuilder
         game_page game_page
       end
     end
-  end
-
-  def add_transliterated_titles(games_data)
-    games_data.each do |game_data|
-      game_data['transliterated_title'] = I18n.transliterate(game_data['title'])
-    end
-  end
-
-  def sort(games_data)
-    games_data.sort_by! { |game_data| game_data['transliterated_title'] }
   end
 end
