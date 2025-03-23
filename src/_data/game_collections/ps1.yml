@@ -1,8 +1,0 @@
-version: 0.1
-games:
-- slug: crash-team-racing
-  title: Crash Team Racing
-  players: 4
-- slug: asterix-maxi-delirium
-  title: Astérix Maxi-Delirium
-  players: 4

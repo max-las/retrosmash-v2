@@ -7,13 +7,13 @@ class Builders::GameCollections < SiteBuilder
           content game_collection['version']
         end
 
-        games_data = game_collection['games']
+        games_list = game_collection['games']
         add_resource :pages, File.join('/consoles', console.slug, 'game-collection/collection.json') do
-          content raw games_data.to_json
+          content raw games_list.to_json
         end
 
         console.initialize_game_letters
-        games_data.map! { |game_data| Game.new(**game_data, console:) }
+        games_list.map! { |game_data| Game.new(**game_data, console:) }
         console.game_letters.each do |game_letter|
           game_letter.paginate
           game_letter.game_pages.each do |game_page|

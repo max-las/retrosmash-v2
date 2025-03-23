@@ -1,8 +1,0 @@
-version: 0.1
-games:
-- slug: super-smash-bros-melee
-  title: Super Smash Bros. Melee
-  players: 4
-- slug: mario-kart-double-dash
-  title: "Mario Kart: Double Dash!!"
-  players: 4

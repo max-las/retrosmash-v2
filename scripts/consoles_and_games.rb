@@ -5,6 +5,8 @@ require 'active_support/core_ext'
 require 'shellwords'
 
 CONVERTABLE_IMAGE_EXTENSIONS = %w(jpg jpeg png)
+OUTPUT_DIR = 'src'
+CONSTRUCTION_DIR = File.join('under_construction', OUTPUT_DIR)
 
 @source_dir = ARGV[0]
 
@@ -17,9 +19,12 @@ unless File.directory?(@source_dir)
 end
 
 def run
+  FileUtils.remove_entry(CONSTRUCTION_DIR) if File.exist?(CONSTRUCTION_DIR)
   expanded_children(@source_dir).each do |child|
     add_console(child) if File.directory?(child)
   end
+  FileUtils.copy_entry(CONSTRUCTION_DIR, 'src')
+  FileUtils.remove_dir(CONSTRUCTION_DIR)
 end
 
 def expanded_children(dir)
@@ -47,21 +52,21 @@ def quote(string)
 end
 
 def create_console_resource(slug, data)
-  resource = File.join('future-src/_consoles', "#{slug}.html")
-  make_path(resource)
+  resource = make_file_path('_consoles', "#{slug}.html")
   File.write(resource, "#{data.to_yaml}---")
 end
 
-def make_path(file_path)
-  FileUtils.mkpath(File.dirname(file_path))
+def make_file_path(*segments)
+  File.join(CONSTRUCTION_DIR, *segments).tap do |output_path|
+    FileUtils.mkpath(File.dirname(output_path))
+  end
 end
 
 def convert_console_image(console_dir, console_slug)
   image = find_convertable_image(console_dir, 'console')
   raise "missing console image in #{quote(console_dir)}" if image.nil?
 
-  output_image = File.join('future-src/images/consoles', console_slug, 'console.webp')
-  make_path(output_image)
+  output_image = make_file_path('images/consoles', console_slug, 'console.webp')
   `convert #{Shellwords.escape(image)} -resize "x500>" -quality 80 #{Shellwords.escape(output_image)}`
 end
 
@@ -77,8 +82,7 @@ def copy_console_logo(console_dir, console_slug)
   logo = File.join(console_dir, 'logo.svg')
   raise "missing console logo in #{quote(console_dir)}" unless File.file?(logo)
 
-  output_logo = File.join('future-src/images/consoles', console_slug, 'logo.svg')
-  make_path(output_logo)
+  output_logo = make_file_path('images/consoles', console_slug, 'logo.svg')
   FileUtils.cp(logo, output_logo)
 end
 
@@ -87,13 +91,13 @@ def add_game_collections(console_dir, console_slug)
   raise "missing games directory in #{quote(console_dir)}" unless File.directory?(games_dir)
   
   games = build_games_list(games_dir, console_slug)
-  game_collection_path = File.join('future-src/_data/game_collections', "#{console_slug}.json")
-  previous_game_collection = parse_json_file(game_collection_path)
+  game_collection_path = File.join('_data/game_collections', "#{console_slug}.json")
+  previous_game_collection = parse_json_file(File.join(OUTPUT_DIR, game_collection_path))
   return if games == previous_game_collection&.fetch('games')
 
   game_collection = { 'version' => Time.now.to_i, 'games' => games }
-  make_path(game_collection_path)
-  File.write(game_collection_path, game_collection.to_json)
+  output_game_collection_path = make_file_path(game_collection_path)
+  File.write(output_game_collection_path, game_collection.to_json)
 end
 
 def build_games_list(games_dir, console_slug)
@@ -125,8 +129,7 @@ def convert_game_image(game_dir, game_slug, console_slug)
   image = find_convertable_image(game_dir, 'cover')
   raise "missing game image in #{quote(game_dir)}" if image.nil?
 
-  output_image = File.join('future-src/images/consoles', console_slug, 'games', "#{game_slug}.webp")
-  make_path(output_image)
+  output_image = make_file_path('images/consoles', console_slug, 'games', "#{game_slug}.webp")
   `convert #{Shellwords.escape(image)} -resize "x500>" -quality 80 #{Shellwords.escape(output_image)}`
 end
 

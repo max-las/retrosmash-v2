@@ -1,8 +1,0 @@
-version: 0.1
-games:
-- slug: diddy-kong-racing
-  title: Diddy Kong Racing
-  players: 4
-- slug: mario-kart-64
-  title: Mario Kart 64
-  players: 4
