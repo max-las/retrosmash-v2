@@ -24,8 +24,9 @@ layout: section
 
 <div
   data-controller="game-collection"
-  data-game-collection-collection-url-value="<%= data.game_page.console.game_collection_path %>"
-  data-game-collection-version-url-value="<%= data.game_page.console.game_collection_version_path %>">
+  data-game-collection-console-slug-value="<%= data.game_page.console.slug %>"
+  data-game-collection-version-url-value="<%= data.game_page.console.game_collection_version_path %>"
+  data-game-collection-collection-url-value="<%= data.game_page.console.game_collection_path %>">
 </div>
 
 <%= render Console::GameLettersNav.new(data.game_page) %>
