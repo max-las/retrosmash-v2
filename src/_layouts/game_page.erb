@@ -22,6 +22,12 @@ layout: section
 <h2 class="fs-3">Jeux disponibles</h2>
 <hr>
 
+<div
+  data-controller="game-collection"
+  data-game-collection-collection-url-value="<%= data.game_page.console.game_collection_path %>"
+  data-game-collection-version-url-value="<%= data.game_page.console.game_collection_version_path %>">
+</div>
+
 <%= render Console::GameLettersNav.new(data.game_page) %>
 <%= render Console::GamePagesNav.new(data.game_page) %>
 

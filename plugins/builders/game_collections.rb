@@ -3,12 +3,12 @@ class Builders::GameCollections < SiteBuilder
     hook :site, :post_read do
       site.collections.consoles.resources.map(&:model_with_data).each do |console|
         game_collection = site.data.game_collections[console.slug]
-        add_resource :pages, File.join('/consoles', console.slug, 'game-collection/version.txt') do
+        add_resource :pages, console.game_collection_version_path do
           content game_collection['version']
         end
 
         games_list = game_collection['games']
-        add_resource :pages, File.join('/consoles', console.slug, 'game-collection/collection.json') do
+        add_resource :pages, console.game_collection_path do
           content raw games_list.to_json
         end
 

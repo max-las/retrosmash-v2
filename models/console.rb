@@ -40,4 +40,12 @@ class Console < Bridgetown::Model::Base
   def subtitle
     "Découvrez notre catalogue #{title}"
   end
+
+  def game_collection_path
+    File.join(relative_url, 'game-collection/collection.json')
+  end
+
+  def game_collection_version_path
+    File.join(relative_url, 'game-collection/version.txt')
+  end
 end
