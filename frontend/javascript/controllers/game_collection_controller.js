@@ -1,4 +1,5 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
+import { db } from "../db";
 
 export default class extends Controller {
   static values = {
