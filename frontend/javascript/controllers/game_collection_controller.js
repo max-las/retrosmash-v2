@@ -14,35 +14,37 @@ export default class extends Controller {
 
   async syncCollection() {
     const version = await this.fetchVersion();
-    const gameCollection = await findOrCreateCollection(version);
+    const gameCollection = await this.findOrCreateCollection(version);
     if (gameCollection.active) { return; }
 
-    await db.gameCollections.update(version, { active: true });
-    clearInactiveCollections();
+    await db.gameCollections.update(gameCollection.id, { active: true });
+    this.clearInactiveCollections();
   }
 
   async findOrCreateCollection(version) {
-    const gameCollection = await db.gameCollections.get(version);
+    const gameCollection = await db.gameCollections.get({
+      console_slug: this.consoleSlugValue,
+      version
+    });
     if (gameCollection) { return gameCollection; }
 
-    const [newGameCollection] = await Promise.all([
-      this.addCollection(version),
-      this.addGames(version)
-    ]);
-    return newGameCollection;
-  }
-
-  async addCollection(version) {
-    await db.gameCollections.add({
-      version,
+    const gameCollectionId = await db.gameCollections.add({
       console_slug: this.consoleSlugValue,
+      version,
       active: false
     });
+    await this.addGames(gameCollectionId);
+    return await db.gameCollections.get(gameCollectionId);
   }
 
-  async addGames(version) {
+  async addGames(gameCollectionId) {
     const games = await this.fetchGames();
-    await Promise.all(games.map((game) => this.addGame(game, version)));
+    await Promise.all(
+      games.map((game) => {
+        game.game_collection_id = gameCollectionId
+        return db.games.add(game);
+      })
+    );
   }
 
   async fetchVersion() {
@@ -56,17 +58,14 @@ export default class extends Controller {
   }
 
   async clearInactiveCollections() {
-    const inactiveVersions = await db.gameCollections.where({ active: false }).primaryKeys();
+    const inactiveCollectionIds =
+      await db.gameCollections
+              .where({ console_slug: this.consoleSlugValue, active: false })
+              .primaryKeys();
     await Promise.all([
-      db.gameCollections.where('version').anyOf(inactiveVersions).delete(),
-      db.games.where('game_collection_version').anyOf(inactiveVersions).delete()
+      db.gameCollections.where('id').anyOf(inactiveCollectionIds).delete(),
+      db.games.where('game_collection_id').anyOf(inactiveCollectionIds).delete()
     ])
-  }
-
-  async addGame(game, version) {
-    game.game_collection_version = version
-    game.console_slug = this.consoleSlugValue;
-    await db.games.add(game);
   }
 
   async getActiveCollection() {
