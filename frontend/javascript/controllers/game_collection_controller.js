@@ -17,7 +17,7 @@ export default class extends Controller {
     const gameCollection = await this.findOrCreateCollection(version);
     if (gameCollection.active) { return; }
 
-    await db.gameCollections.update(gameCollection.id, { active: true });
+    await db.gameCollections.update(gameCollection.id, { active: 1 });
     this.clearInactiveCollections();
   }
 
@@ -31,7 +31,7 @@ export default class extends Controller {
     const gameCollectionId = await db.gameCollections.add({
       console_slug: this.consoleSlugValue,
       version,
-      active: false
+      active: 0
     });
     await this.addGames(gameCollectionId);
     return await db.gameCollections.get(gameCollectionId);
@@ -60,15 +60,15 @@ export default class extends Controller {
   async clearInactiveCollections() {
     const inactiveCollectionIds =
       await db.gameCollections
-              .where({ console_slug: this.consoleSlugValue, active: false })
+              .where({ console_slug: this.consoleSlugValue, active: 0 })
               .primaryKeys();
     await Promise.all([
       db.gameCollections.where('id').anyOf(inactiveCollectionIds).delete(),
       db.games.where('game_collection_id').anyOf(inactiveCollectionIds).delete()
-    ])
+    ]);
   }
 
   async getActiveCollection() {
-    return await db.gameCollections.get({ console_slug: this.consoleSlugValue, active: true });
+    return await db.gameCollections.get({ console_slug: this.consoleSlugValue, active: 1 });
   }
 }
