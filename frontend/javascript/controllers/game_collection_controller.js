@@ -6,7 +6,7 @@ export default class extends Controller {
     collectionUrl: String,
     versionUrl: String,
     consoleSlug: String
-  }
+  };
 
   connect() {
     this.syncCollection();
@@ -41,7 +41,7 @@ export default class extends Controller {
     const games = await this.fetchGames();
     await Promise.all(
       games.map((game) => {
-        game.game_collection_id = gameCollectionId
+        game.game_collection_id = gameCollectionId;
         return db.games.add(game);
       })
     );
