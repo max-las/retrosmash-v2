@@ -13,7 +13,7 @@ class Builders::GameCollections < SiteBuilder
         end
 
         console.initialize_game_letters
-        games_list.map! { |game_data| Game.new(**game_data, console:) }
+        games_list.map! { |game_data| Game.from_data(data: game_data, console:) }
         console.game_letters.each do |game_letter|
           game_letter.paginate
           game_letter.game_pages.each do |game_page|

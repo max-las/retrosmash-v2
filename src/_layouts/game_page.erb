@@ -34,19 +34,6 @@ layout: section
 
 <div class="d-flex flex-wrap gap-2">
   <% data.game_page.games.each do |game| %>
-    <div class="card game-card mb-3">
-      <img
-        src="<%= game.cover_path %>"
-        class="card-img-top"
-        alt="<%= game.cover_alt %>">
-      <div class="card-body">
-        <h5 class="card-title fs-5 text-truncate">
-          <%= game.title %>
-        </h5>
-        <p class="card-text">
-          <%= "#{game.players} joueurs" %>
-        </p>
-      </div>
-    </div>
+    <%= render_js_model_template(:gameCard, game) %>
   <% end %>
 </div>

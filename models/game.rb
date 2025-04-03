@@ -1,15 +1,14 @@
 class Game < Bridgetown::Model::Base
-  def initialize(...)
-    super
+  def self.from_data(data:, console:)
+    new(**data, source_data: data, console:).tap(&:set_game_letter)
+  end
+
+  def set_game_letter
     self.game_letter = find_game_letter.tap { |game_letter| game_letter.games << self }
   end
 
-  def cover_path
-    File.join('/images/consoles', console.slug, 'games', "#{slug}.webp")
-  end
-
-  def cover_alt
-    "couverture de #{title}"
+  def to_json
+    source_data.merge(console_slug: console.slug).to_json
   end
 
   private
