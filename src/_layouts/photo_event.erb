@@ -1,0 +1,14 @@
+---
+layout: section
+---
+
+<div class="d-flex flex-wrap justify-content-start gap-2">
+  <% data.photos.each do |photo_name| %>
+    <div class="d-flex align-items-center">
+      <img
+        src="<%= File.join('/images/photo-events', data.slug, 'thumbnails', "#{photo_name}.webp") %>"
+        class="event-photo"
+        alt="<%= photo_name %>">
+    </div>
+  <% end %>
+</div>

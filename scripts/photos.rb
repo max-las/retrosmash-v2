@@ -11,6 +11,13 @@ end
 def add_photo_event(event_dir)
   data = parse_photo_event_data(event_dir)
   data['slug'] = data['title'].parameterize
+  data['layout'] = 'photo_event'
+  data['section_title'] = 'Galerie photo'
+  data['breadcrumb'] = {
+    'Accueil' => '/',
+    'Galerie photo' => '/gallery/',
+    data['title'] => nil
+  }
   convert_event_logo(event_dir, data['slug'])
   add_photos(event_dir, data)
   create_photo_event_resource(data)

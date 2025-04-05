@@ -3,9 +3,12 @@
 @import "./shared";
 
 @import "./layouts/base";
+@import "./layouts/game_page";
+@import "./layouts/photo_event";
 
-@import "./pages/home";
-@import "./pages/inventory";
-@import "./pages/console";
-@import "./pages/about";
-@import "./pages/practical";
+@import "./sections/about";
+@import "./sections/gallery";
+@import "./sections/home";
+@import "./sections/inventory";
+@import "./sections/tournament_registration";
+@import "./sections/practical";

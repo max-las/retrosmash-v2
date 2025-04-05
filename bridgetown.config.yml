@@ -40,9 +40,13 @@ autoload_paths:
 collections:
   sections:
     output: true
-    permalink: /:name/
+    permalink: /:slug/
     sort_by: rank
   consoles:
     output: false
+    sort_by: title
+  photo_events:
+    output: true
+    permalink: /photo-events/:slug/
     sort_by: title
   

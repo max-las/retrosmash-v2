@@ -7,4 +7,13 @@ title: Galerie photo
 subtitle: Découvrez les photos prises lors de nos précédents événements
 ---
 
-
+<div class="d-flex flex-wrap gap-4">
+  <% collections.photo_events.resources.each do |photo_event| %>
+    <a href="<%= photo_event.relative_url %>">
+      <img
+        src="<%= File.join('/images/photo-events', photo_event.data.slug, 'logo.webp') %>"
+        class="photo-event-card border rounded"
+        alt="<%= photo_event.data.title %>">
+    </a>
+  <% end %>
+</div>

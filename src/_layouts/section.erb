@@ -16,10 +16,13 @@ layout: base
   </nav>
 <% end %>
 
-<h1 class="fs-2"><%= data.title %></h1>
-<% if data.subtitle.present? %>
-  <p class="lead"><%= data.subtitle %></p>
+<h1 class="fs-2"><%= data.section_title || data.title %></h1>
+<% subtitle = data.section_title.present? ? data.title : data.subtitle %>
+<% if subtitle.present? %>
+  <p class="lead"><%= subtitle %></p>
 <% end %>
+
+<hr>
 
 <%= yield %>
 

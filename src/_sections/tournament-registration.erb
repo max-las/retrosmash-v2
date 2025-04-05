@@ -4,9 +4,14 @@ color: warning
 layout: section
 rank: 1
 title: Inscription au tournoi
-subtitle: "Ici, vous pouvez vous inscrire au prochain tournoi Retrosmash ! Il vous suffit de remplir le formulaire ci-dessous :"
+subtitle: "Ici, vous pouvez vous inscrire au prochain tournoi Retrosmash !"
 ---
 
-<div class="wide-section">
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfUqwX6hkUy7UcUubAQFYQFYGyJPWi3uU9zW_dcJBNo14N9Vg/viewform?embedded=true" width="100%" height="554" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
+<div class="row">
+  <div class="col-12 col-lg-7 order-lg-2">
+    <img src="<%= asset_path 'images/flyers/test.jpg' %>" class="tournament-registration-flyer" alt="kawaii festival">
+  </div>
+  <div class="col-12 col-lg-5 order-lg-1">
+    <iframe class="tournament-registration-form" src="https://docs.google.com/forms/d/e/1FAIpQLSfUqwX6hkUy7UcUubAQFYQFYGyJPWi3uU9zW_dcJBNo14N9Vg/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
+  </div>
 </div>
