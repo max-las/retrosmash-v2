@@ -9,10 +9,23 @@ export const gameCard = (game) => {
         <h5 class="card-title fs-5 text-truncate">
           ${game.title}
         </h5>
-        <p class="card-text">
-          ${game.players} joueurs
-        </p>
+        <table class="table table-sm mb-0">
+          <tr>
+            <td>${game.players} joueurs</td>
+          </tr>
+          ${pegi(game)}
+        </table>
       </div>
     </div>
+  `;
+};
+
+const pegi = (game) => {
+  if (!game.pegi) { return ''; }
+
+  return /*html*/`
+    <tr>
+      <td>PEGI ${game.pegi}</td>
+    </tr>
   `;
 };
