@@ -7,6 +7,7 @@ require 'shellwords'
 CONVERTABLE_IMAGE_EXTENSIONS = %w(jpg jpeg png)
 OUTPUT_DIR = 'src'
 CONSTRUCTION_DIR = File.join('under_construction', OUTPUT_DIR)
+FILTER_GAMES_ON = %w(players)
 
 @source_dir = ARGV[0]
 
@@ -33,11 +34,11 @@ end
 
 def add_console(console_dir)
   data = parse_console_data(console_dir)
-  slug = data['title'].parameterize
-  create_console_resource(slug, data)
-  convert_console_image(console_dir, slug)
-  copy_console_logo(console_dir, slug)
-  add_game_collections(console_dir, slug)
+  data['slug'] = data['title'].parameterize
+  convert_console_image(console_dir, data['slug'])
+  copy_console_logo(console_dir, data['slug'])
+  add_game_collection(console_dir, data)
+  create_console_resource(data)
 end
 
 def parse_console_data(console_dir)
@@ -51,9 +52,9 @@ def quote(string)
   "\"#{string}\""
 end
 
-def create_console_resource(slug, data)
-  resource = make_file_path('_consoles', "#{slug}.html")
-  File.write(resource, "#{data.to_yaml}---")
+def create_console_resource(console_data)
+  resource = make_file_path('_consoles', "#{console_data['slug']}.html")
+  File.write(resource, "#{console_data.to_yaml}---")
 end
 
 def make_file_path(*segments)
@@ -86,12 +87,12 @@ def copy_console_logo(console_dir, console_slug)
   FileUtils.cp(logo, output_logo)
 end
 
-def add_game_collections(console_dir, console_slug)
+def add_game_collection(console_dir, console_data)
   games_dir = File.join(console_dir, 'games')
   raise "missing games directory in #{quote(console_dir)}" unless File.directory?(games_dir)
   
-  games = build_games_list(games_dir, console_slug)
-  game_collection_path = File.join('_data/game_collections', "#{console_slug}.json")
+  games = build_games_list(games_dir, console_data)
+  game_collection_path = File.join('_data/game_collections', "#{console_data['slug']}.json")
   previous_game_collection = parse_json_file(File.join(OUTPUT_DIR, game_collection_path))
   return if games == previous_game_collection&.fetch('games')
 
@@ -100,10 +101,13 @@ def add_game_collections(console_dir, console_slug)
   File.write(output_game_collection_path, game_collection.to_json)
 end
 
-def build_games_list(games_dir, console_slug)
+def build_games_list(games_dir, console_data)
   games = []
   expanded_children(games_dir).each do |child|
-    add_game(games, child, console_slug) if File.directory?(child)
+    add_game(games, child, console_data['slug']) if File.directory?(child)
+  end
+  FILTER_GAMES_ON.each do |filter|
+    console_data["available_#{filter}_filters"] = games.pluck(filter).uniq.sort
   end
   games.sort_by! { |game| game['transliterated_title'] }
 end
