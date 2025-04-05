@@ -1,6 +1,6 @@
 class Game < Bridgetown::Model::Base
   def self.from_data(data:, console:)
-    new(**data, source_data: data, console:).tap(&:set_game_letter)
+    new(**data, data:, console:).tap(&:set_game_letter)
   end
 
   def set_game_letter
@@ -8,7 +8,7 @@ class Game < Bridgetown::Model::Base
   end
 
   def to_json
-    source_data.merge(console_slug: console.slug).to_json
+    data.merge(console_slug: console.slug).to_json
   end
 
   private
