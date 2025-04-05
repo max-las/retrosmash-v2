@@ -1,35 +1,13 @@
 # This scripts has been designed for Ubuntu with imagemagick installed via `sudo apt install imagemagick`
 
-require 'active_support'
-require 'active_support/core_ext'
-require 'shellwords'
+require_relative '_shared.rb'
 
-CONVERTABLE_IMAGE_EXTENSIONS = %w(jpg jpeg png)
-OUTPUT_DIR = 'src'
-CONSTRUCTION_DIR = File.join('under_construction', OUTPUT_DIR)
 FILTER_GAMES_ON = %w(players)
 
-@source_dir = ARGV[0]
-
-if @source_dir.blank?
-  raise 'input directory must be specified'
-end
-
-unless File.directory?(@source_dir)
-  raise 'specified directory not found'
-end
-
 def run
-  FileUtils.remove_entry(CONSTRUCTION_DIR) if File.exist?(CONSTRUCTION_DIR)
   expanded_children(@source_dir).each do |child|
     add_console(child) if File.directory?(child)
   end
-  FileUtils.copy_entry(CONSTRUCTION_DIR, 'src')
-  FileUtils.remove_dir(CONSTRUCTION_DIR)
-end
-
-def expanded_children(dir)
-  Dir.children(dir).map { |child| File.join(dir, child) }
 end
 
 def add_console(console_dir)
@@ -48,19 +26,9 @@ def parse_console_data(console_dir)
   YAML.load_file(data_file)
 end
 
-def quote(string)
-  "\"#{string}\""
-end
-
 def create_console_resource(console_data)
   resource = make_file_path('_consoles', "#{console_data['slug']}.html")
   File.write(resource, "#{console_data.to_yaml}---")
-end
-
-def make_file_path(*segments)
-  File.join(CONSTRUCTION_DIR, *segments).tap do |output_path|
-    FileUtils.mkpath(File.dirname(output_path))
-  end
 end
 
 def convert_console_image(console_dir, console_slug)
@@ -69,14 +37,6 @@ def convert_console_image(console_dir, console_slug)
 
   output_image = make_file_path('images/consoles', console_slug, 'console.webp')
   `convert #{Shellwords.escape(image)} -resize "x500>" -quality 80 #{Shellwords.escape(output_image)}`
-end
-
-def find_convertable_image(dir, filename)
-  CONVERTABLE_IMAGE_EXTENSIONS.each do |extension|
-    candidate = File.join(dir, "#{filename}.#{extension}")
-    return candidate if File.file?(candidate)
-  end
-  nil
 end
 
 def copy_console_logo(console_dir, console_slug)
@@ -144,4 +104,4 @@ def parse_json_file(file_path)
   JSON.parse(File.read(file_path))
 end
 
-run
+run_with_context
