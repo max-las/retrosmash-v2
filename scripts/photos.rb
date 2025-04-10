@@ -1,6 +1,6 @@
 # This scripts has been designed for Ubuntu with imagemagick installed via `sudo apt install imagemagick`
 
-require_relative '_shared.rb'
+require_relative '_shared'
 
 def run
   expanded_children(@source_dir).each do |child|
@@ -26,7 +26,7 @@ end
 def parse_photo_event_data(event_dir)
   data_file = File.join(event_dir, 'data.yml')
   raise "missing event data in #{quote(event_dir)}" unless File.file?(data_file)
-    
+
   YAML.load_file(data_file)
 end
 
@@ -46,10 +46,11 @@ end
 def add_photos(event_dir, event_data)
   photos_dir = File.join(event_dir, 'photos')
   raise "missing photos directory in #{quote(event_dir)}" unless File.directory?(photos_dir)
-  
+
   event_data['photos'] = []
   expanded_children(photos_dir).each do |child|
     raise "found incompatible file #{quote(child)} in #{quote(photos_dir)}" unless convertable_image?(child)
+
     add_photo(child, event_data)
   end
 end

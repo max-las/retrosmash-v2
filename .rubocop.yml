@@ -1,0 +1,16 @@
+AllCops:
+  Exclude:
+   - Gemfile
+   - Rakefile
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false

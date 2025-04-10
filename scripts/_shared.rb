@@ -4,8 +4,8 @@ require 'active_support'
 require 'active_support/core_ext'
 require 'shellwords'
 
-CONVERTABLE_IMAGE_EXTENSIONS = %w(jpg jpeg png)
-OUTPUT_DIR = 'src'
+CONVERTABLE_IMAGE_EXTENSIONS = %w[jpg jpeg png].freeze
+OUTPUT_DIR = 'src'.freeze
 CONSTRUCTION_DIR = File.join('under_construction', OUTPUT_DIR)
 
 @source_dir = ARGV[0]

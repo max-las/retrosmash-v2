@@ -1,0 +1,13 @@
+---
+version: 1744313893
+games:
+- title: Astérix Maxi-Delirium
+  players: 4
+  slug: asterix-maxi-delirium
+  transliterated_title: Asterix Maxi-Delirium
+  letter: A
+- title: Crash Team Racing
+  players: 4
+  slug: crash-team-racing
+  transliterated_title: Crash Team Racing
+  letter: C

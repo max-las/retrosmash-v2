@@ -1,0 +1,13 @@
+---
+version: 1744313894
+games:
+- title: Diddy Kong Racing
+  players: 4
+  slug: diddy-kong-racing
+  transliterated_title: Diddy Kong Racing
+  letter: D
+- title: Mario Kart 64
+  players: 4
+  slug: mario-kart-64
+  transliterated_title: Mario Kart 64
+  letter: M

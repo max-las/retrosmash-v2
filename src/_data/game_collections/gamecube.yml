@@ -1,0 +1,15 @@
+---
+version: 1744313896
+games:
+- title: 'Mario Kart: Double Dash!!'
+  players: 4
+  pegi: 3+
+  slug: mario-kart-double-dash
+  transliterated_title: 'Mario Kart: Double Dash!!'
+  letter: M
+- title: Super Smash Bros. Melee
+  players: 4
+  pegi: 3+
+  slug: super-smash-bros-melee
+  transliterated_title: Super Smash Bros. Melee
+  letter: S

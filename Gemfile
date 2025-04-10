@@ -36,3 +36,5 @@ gem "puma", "< 7"
 # gem "nokolexbor", "~> 0.4"
 
 gem "node-runner", "~> 1.2"
+
+gem "rubocop", "~> 1.75"
