@@ -3,14 +3,17 @@ AllCops:
    - Gemfile
    - Rakefile
 
-Style/FrozenStringLiteralComment:
+Metrics/AbcSize:
   Enabled: false
 
 Metrics/MethodLength:
   Enabled: false
 
-Style/IfUnlessModifier:
+Style/Documentation:
   Enabled: false
 
-Style/Documentation:
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/IfUnlessModifier:
   Enabled: false

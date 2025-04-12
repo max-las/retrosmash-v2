@@ -1,12 +1,6 @@
 class Console < Bridgetown::Model::Base
-  def initialize_game_letters
-    self.game_letters = GameLetter::EXTENDED_LETTERS.map do |letter|
-      GameLetter.new(console: self, letter:)
-    end
-  end
-
   def relative_url
-    File.join('/consoles', slug, '/')
+    File.join('/consoles/', slug, '/')
   end
 
   def breadcrumb
@@ -17,12 +11,8 @@ class Console < Bridgetown::Model::Base
     }
   end
 
-  def first_available_game_letter
-    @first_available_game_letter ||= game_letters.find(&:available?)
-  end
-
   def logo_path
-    File.join('/images/consoles', slug, 'logo.svg')
+    File.join('/images/consoles/', slug, '/logo.svg')
   end
 
   def logo_alt
@@ -30,7 +20,7 @@ class Console < Bridgetown::Model::Base
   end
 
   def image_path
-    File.join('/images/consoles', slug, 'console.webp')
+    File.join('/images/consoles/', slug, '/console.webp')
   end
 
   def image_alt
@@ -41,11 +31,15 @@ class Console < Bridgetown::Model::Base
     "Découvrez notre catalogue #{title}"
   end
 
-  def game_collection_path
-    File.join(relative_url, 'game-collection/collection.json')
+  def game_collection_version_path
+    File.join(relative_url, '/game-collection/version.txt')
   end
 
-  def game_collection_version_path
-    File.join(relative_url, 'game-collection/version.txt')
+  def game_collection_chunk_path(index)
+    File.join(relative_url, '/game-collection/chunks/', "/#{index}.json")
+  end
+
+  def game_collection_path
+    File.join(relative_url, '/game-collection/full.json')
   end
 end
