@@ -1,4 +1,13 @@
 class Console < Bridgetown::Model::Base
+  def full_name
+    prefix = "#{publisher} "
+    prefix + name.delete_prefix(prefix)
+  end
+
+  def subtitle
+    "Découvrez notre catalogue #{name}"
+  end
+
   def relative_url
     File.join('/consoles/', slug, '/')
   end
@@ -7,7 +16,7 @@ class Console < Bridgetown::Model::Base
     {
       'Accueil' => '/',
       'Inventaire' => '/inventory/',
-      title => nil
+      name => nil
     }
   end
 
@@ -16,7 +25,7 @@ class Console < Bridgetown::Model::Base
   end
 
   def logo_alt
-    "logo de la #{title}"
+    "logo de la #{name}"
   end
 
   def image_path
@@ -24,11 +33,7 @@ class Console < Bridgetown::Model::Base
   end
 
   def image_alt
-    "console #{full_title}"
-  end
-
-  def subtitle
-    "Découvrez notre catalogue #{title}"
+    "console #{full_name}"
   end
 
   def game_collection_version_path

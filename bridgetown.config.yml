@@ -43,7 +43,7 @@ collections:
     permalink: /:slug/
     sort_by: rank
   consoles:
-    output: false
+    output: true
     sort_by: title
   photo_events:
     output: true

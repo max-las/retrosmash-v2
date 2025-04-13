@@ -14,7 +14,7 @@ end
 
 def add_console(console_dir)
   data = parse_console_data(console_dir)
-  data['slug'] = data['title'].parameterize
+  enrich_console_data(data)
   convert_console_image(console_dir, data['slug'])
   copy_console_logo(console_dir, data['slug'])
   add_game_collection(console_dir, data)
@@ -26,6 +26,11 @@ def parse_console_data(console_dir)
   raise "missing console data in #{quote(console_dir)}" unless File.file?(data_file)
 
   YAML.load_file(data_file)
+end
+
+def enrich_console_data(data)
+  data['layout'] = 'console'
+  data['slug'] = data['name'].parameterize
 end
 
 def create_console_resource(console_data)

@@ -4,7 +4,7 @@ module Builders
 
     def build
       hook :site, :post_read do
-        site.collections.consoles.resources.map(&:model_with_data).each do |console|
+        site.collections.consoles.resources.map(&:model).each do |console|
           game_collection = site.data.game_collections[console.slug]
           add_resource :pages, console.game_collection_version_path do
             content game_collection['version']
@@ -15,7 +15,7 @@ module Builders
             content raw games_list.to_json
           end
 
-          games_list.each_slice(GAMES_CHUNK_SIZE) do |chunk, index|
+          games_list.each_slice(GAMES_CHUNK_SIZE).with_index do |chunk, index|
             if index.zero?
               console.first_games_chunk = chunk.map do |game_data|
                 Game.new(**game_data, data: game_data, console:)

@@ -3,6 +3,9 @@ AllCops:
    - Gemfile
    - Rakefile
 
+Lint/MissingSuper:
+  Enabled: false
+
 Metrics/AbcSize:
   Enabled: false
 

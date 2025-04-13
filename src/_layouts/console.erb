@@ -5,14 +5,14 @@ layout: section
 <div class="card border-0 mb-2 console-summary-card">
   <img
     class="card-img-top"
-    src="<%= data.game_page.console.image_path %>"
-    alt="<%= data.game_page.console.image_alt %>">
+    src="<%= resource.model.image_path %>"
+    alt="<%= resource.model.image_alt %>">
   <div class="card-body px-0 pb-0">
     <table class="table">
       <tbody>
         <tr>
           <th scope="row">Consoles disponibles</th>
-          <td><%= data.game_page.console.quantity %></td>
+          <td><%= resource.model.quantity %></td>
         </tr>
       </tbody>
     </table>
@@ -28,7 +28,7 @@ layout: section
     <form class="dropdown-menu p-4">
       <h6 class="dropdown-header px-0">Nombre de joueurs</h6>
       <div class="mb-3">
-        <% data.game_page.console.available_players_filters.each do |players| %>
+        <% resource.model.available_players_filters.each do |players| %>
           <% id = "players_filter_#{players}_checkbox" %>
           <div class="form-check">
             <input type="checkbox" class="form-check-input" id="<%= id %>">
@@ -47,16 +47,15 @@ layout: section
 
 <div
   data-controller="game-collection"
-  data-game-collection-console-slug-value="<%= data.game_page.console.slug %>"
-  data-game-collection-version-url-value="<%= data.game_page.console.game_collection_version_path %>"
-  data-game-collection-collection-url-value="<%= data.game_page.console.game_collection_path %>">
+  data-game-collection-console-slug-value="<%= resource.model.slug %>"
+  data-game-collection-version-url-value="<%= resource.model.game_collection_version_path %>"
+  data-game-collection-collection-url-value="<%= resource.model.game_collection_path %>">
 </div>
 
-<%= render Console::GameLettersNav.new(data.game_page) %>
-<%= render Console::GamePagesNav.new(data.game_page) %>
+<%= render Consoles::LetterFiltersComponent.new(resource.model) %>
 
 <div class="d-flex flex-wrap gap-2">
-  <% data.game_page.games.each do |game| %>
+  <% resource.model.first_games_chunk.each do |game| %>
     <%= render_js_model_template(:gameCard, game) %>
   <% end %>
 </div>
