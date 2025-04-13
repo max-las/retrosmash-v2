@@ -4,7 +4,8 @@ Chaque console comprend les champs suivant :
 |Champ|Description|
 |-----|-----------|
 |title|Titre au plus simple de la console (par exemple GameCube)|
-|full_title|Titre complet de la console, avec la marque (par exemple Nintendo GameCube)|
+|publisher|L'entreprise ayant vendu la console (par exemple Nintendo)|
+|generation|La génération de la console sous forme de chiffre (par exemple 6 pour la GameCube)|
 |quantity|Nombre d'exemplaires disponibles|
 
 # Jeux
@@ -14,6 +15,7 @@ Chaque jeu comprend les champs suivants :
 |-----|-----------|
 |title|Titre du jeu|
 |players|Nombre de joueurs|
+|pegi|PEGI (facultatif)|
 
 # Resources
 

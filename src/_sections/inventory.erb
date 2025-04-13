@@ -7,17 +7,21 @@ title: Inventaire
 subtitle: Parcourez la liste des consoles et des jeux dont nous disposons
 ---
 
-<div class="d-flex flex-wrap gap-2">
-  <% collections.consoles.resources.map(&:model_with_data).each do |console| %>
-    <a href="<%= console.relative_url %>">
-      <div class="card console-card">
-        <div class="card-img-top console-card__logo-wrapper d-flex align-items-center justify-content-center p-3">
-          <img src="<%= console.logo_path %>" class="console-card__logo" alt="<%= console.logo_alt %>">
+<% collections.consoles.resources.map(&:model).group_by(&:publisher).each do |publisher, consoles| %>
+  <h2 class="fs-3"><%= publisher %></h2>
+
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    <% consoles.sort_by(&:generation).each do |console| %>
+      <a href="<%= console.relative_url %>">
+        <div class="card console-card">
+          <div class="card-img-top console-card__logo-wrapper d-flex align-items-center justify-content-center p-3">
+            <img src="<%= console.logo_path %>" class="console-card__logo" alt="<%= console.logo_alt %>">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-center"><%= console.name %></h5>
+          </div>
         </div>
-        <div class="card-body">
-          <h5 class="card-title text-center"><%= console.title %></h5>
-        </div>
-      </div>
-    </a>
-  <% end %>
-</div>
+      </a>
+    <% end %>
+  </div>
+<% end %>
