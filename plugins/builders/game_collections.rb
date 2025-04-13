@@ -4,7 +4,12 @@ module Builders
 
     def build
       hook :site, :post_read do
-        site.collections.consoles.resources.map(&:model).each do |console|
+        site.collections.consoles.resources.each do |console_resource|
+          console = console_resource.model
+
+          console_resource.data.title = console.full_name
+          console_resource.data.subtitle = console.subtitle
+
           game_collection = site.data.game_collections[console.slug]
           add_resource :pages, console.game_collection_version_path do
             content game_collection['version']
