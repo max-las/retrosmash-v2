@@ -7,8 +7,7 @@ module Builders
         site.collections.consoles.resources.each do |console_resource|
           console = console_resource.model
 
-          console_resource.data.title = console.full_name
-          console_resource.data.subtitle = console.subtitle
+          console_resource.data.merge!(console.section_data)
 
           game_collection = site.data.game_collections[console.slug]
           add_resource :pages, console.game_collection_version_path do

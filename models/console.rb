@@ -1,23 +1,23 @@
 class Console < Bridgetown::Model::Base
+  def section_data
+    {
+      title: full_name,
+      subtitle: "Découvrez notre catalogue #{name}",
+      breadcrumb: {
+        'Accueil' => '/',
+        'Inventaire' => '/inventory/',
+        name => nil
+      }
+    }
+  end
+
   def full_name
     prefix = "#{publisher} "
     prefix + name.delete_prefix(prefix)
   end
 
-  def subtitle
-    "Découvrez notre catalogue #{name}"
-  end
-
   def relative_url
     File.join('/consoles/', slug, '/')
-  end
-
-  def breadcrumb
-    {
-      'Accueil' => '/',
-      'Inventaire' => '/inventory/',
-      name => nil
-    }
   end
 
   def logo_path
