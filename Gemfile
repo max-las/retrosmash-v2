@@ -38,3 +38,5 @@ gem "puma", "< 7"
 gem "node-runner", "~> 1.2"
 
 gem "rubocop", "~> 1.75"
+
+gem "rmagick", "~> 6.1"

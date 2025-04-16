@@ -43,7 +43,7 @@ def convert_console_image(console_dir, console_slug)
   raise "missing console image in #{quote(console_dir)}" if image.nil?
 
   output_image = make_file_path('images/consoles', console_slug, 'console.webp')
-  `convert #{Shellwords.escape(image)} -resize "x500>" -quality 80 #{Shellwords.escape(output_image)}`
+  convert_and_resize_image(input_path: image, output_path: output_image, height: 500, quality: 80)
 end
 
 def copy_console_logo(console_dir, console_slug)
@@ -106,7 +106,7 @@ def convert_game_image(game_dir, game_slug, console_slug)
   raise "missing game image in #{quote(game_dir)}" if image.nil?
 
   output_image = make_file_path('images/consoles', console_slug, 'games', "#{game_slug}.webp")
-  `convert #{Shellwords.escape(image)} -resize "x500>" -quality 80 #{Shellwords.escape(output_image)}`
+  convert_and_resize_image(input_path: image, output_path: output_image, height: 500, quality: 80)
 end
 
 def parse_potential_yaml_file(file_path)

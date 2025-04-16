@@ -40,7 +40,7 @@ def convert_event_logo(event_dir, event_slug)
   raise "missing event logo in #{quote(event_dir)}" if image.nil?
 
   output_image = make_file_path('images/photo-events', event_slug, 'logo.webp')
-  `convert #{Shellwords.escape(image)} -resize "x500>" -quality 80 #{Shellwords.escape(output_image)}`
+  convert_and_resize_image(input_path: image, output_path: output_image, height: 500, quality: 80)
 end
 
 def add_photos(event_dir, event_data)
@@ -60,8 +60,8 @@ def add_photo(photo, event_data)
   event_data['photos'] << photo_name
   output_image = make_file_path('images/photo-events', event_data['slug'], 'photos', "#{photo_name}.webp")
   output_thumbnail_image = make_file_path('images/photo-events', event_data['slug'], 'thumbnails', "#{photo_name}.webp")
-  `convert #{Shellwords.escape(photo)} -resize "x900>" -quality 90 #{Shellwords.escape(output_image)}`
-  `convert #{Shellwords.escape(photo)} -resize "x400>" -quality 75 #{Shellwords.escape(output_thumbnail_image)}`
+  convert_and_resize_image(input_path: photo, output_path: output_image, height: 900, quality: 90)
+  convert_and_resize_image(input_path: photo, output_path: output_thumbnail_image, height: 400, quality: 75)
 end
 
 run_with_context

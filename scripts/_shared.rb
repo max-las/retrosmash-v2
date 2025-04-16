@@ -2,7 +2,7 @@
 
 require 'active_support'
 require 'active_support/core_ext'
-require 'shellwords'
+require 'rmagick'
 
 CONVERTABLE_IMAGE_EXTENSIONS = %w[jpg jpeg png].freeze
 OUTPUT_DIR = 'src'.freeze
@@ -49,4 +49,16 @@ end
 
 def convertable_image?(filename)
   File.file?(filename) && CONVERTABLE_IMAGE_EXTENSIONS.include?(File.extname(filename).delete('.'))
+end
+
+def convert_and_resize_image(input_path:, output_path:, height:, quality:)
+  image = Magick::ImageList.new(input_path).first
+  original_width = image.columns
+  original_height = image.rows
+  if original_height > height
+    aspect_ratio = original_width / original_height
+    width = (height * aspect_ratio).round
+    image.scale!(width, height)
+  end
+  image.write(output_path) { |options| options.quality = quality }
 end
