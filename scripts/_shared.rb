@@ -56,7 +56,7 @@ def convert_and_resize_image(input_path:, output_path:, height:, quality:)
   original_width = image.columns
   original_height = image.rows
   if original_height > height
-    aspect_ratio = original_width / original_height
+    aspect_ratio = original_width.to_f / original_height
     width = (height * aspect_ratio).round
     image.scale!(width, height)
   end
