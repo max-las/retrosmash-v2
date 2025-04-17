@@ -5,11 +5,11 @@ layout: section
 <div
   id="<%= "#{resource.model.slug}-gallery" %>"
   class="d-flex flex-wrap justify-content-start gap-2"
-  data-controller="photos">
-  <% resource.model.photos_with_paths.each do |photo| %>
+  data-controller="photoswipe">
+  <% resource.model.photos.each do |photo| %>
     <div class="d-flex align-items-center">
-      <a href="<%= photo[:path] %>">
-        <img class="event-photo" src="<%= photo[:thumbnail_path] %>" alt="<%= photo[:name] %>">
+      <a href="<%= photo.path %>" data-pswp-width="<%= photo.width %>" data-pswp-height="<%= photo.height %>">
+        <img class="event-photo" src="<%= photo.thumbnail_path %>" alt="<%= photo.name %>">
       </a>
     </div>
   <% end %>

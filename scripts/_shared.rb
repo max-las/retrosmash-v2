@@ -53,12 +53,13 @@ end
 
 def convert_and_resize_image(input_path:, output_path:, height:, quality:)
   image = Magick::ImageList.new(input_path).first
-  original_width = image.columns
-  original_height = image.rows
-  if original_height > height
-    aspect_ratio = original_width.to_f / original_height
+  dimensions = { width: image.columns, height: image.rows }
+  if dimensions[:height] > height
+    aspect_ratio = dimensions[:width].to_f / dimensions[:height]
     width = (height * aspect_ratio).round
     image.scale!(width, height)
+    dimensions = { width:, height: }
   end
   image.write(output_path) { |options| options.quality = quality }
+  dimensions
 end
