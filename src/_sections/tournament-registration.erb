@@ -9,7 +9,10 @@ subtitle: "Ici, vous pouvez vous inscrire au prochain tournoi Retrosmash !"
 
 <div class="row">
   <div class="col-12 col-lg-7 order-lg-2">
-    <img src="<%= asset_path 'images/flyers/test.jpg' %>" class="tournament-registration-flyer" alt="kawaii festival">
+    <img
+      src="<%= site.data.current_event['flyer_path'] %>"
+      class="tournament-registration-flyer"
+      alt="<%= site.data.current_event['name'] %>">
   </div>
   <div class="col-12 col-lg-5 order-lg-1">
     <iframe class="tournament-registration-form" src="https://docs.google.com/forms/d/e/1FAIpQLSfUqwX6hkUy7UcUubAQFYQFYGyJPWi3uU9zW_dcJBNo14N9Vg/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>

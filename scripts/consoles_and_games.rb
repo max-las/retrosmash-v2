@@ -1,10 +1,18 @@
-# This scripts has been designed for Ubuntu with imagemagick installed via `sudo apt install imagemagick`
-
 require_relative '_shared'
 
 FILTER_GAMES_ON = %w[players letter].freeze
 LETTERS = ('A'..'Z').to_a.freeze
 SPECIAL_LETTER = '#'.freeze
+
+@source_dir = ARGV[0]
+
+if @source_dir.blank?
+  raise 'input directory must be specified'
+end
+
+unless File.directory?(@source_dir)
+  raise 'specified directory not found'
+end
 
 def run
   expanded_children(@source_dir).each do |child|

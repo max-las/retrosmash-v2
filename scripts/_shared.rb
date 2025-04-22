@@ -8,16 +8,6 @@ CONVERTABLE_IMAGE_EXTENSIONS = %w[jpg jpeg png].freeze
 OUTPUT_DIR = 'src'.freeze
 CONSTRUCTION_DIR = File.join('under_construction', OUTPUT_DIR)
 
-@source_dir = ARGV[0]
-
-if @source_dir.blank?
-  raise 'input directory must be specified'
-end
-
-unless File.directory?(@source_dir)
-  raise 'specified directory not found'
-end
-
 def run_with_context
   FileUtils.remove_entry(CONSTRUCTION_DIR) if File.exist?(CONSTRUCTION_DIR)
   run
