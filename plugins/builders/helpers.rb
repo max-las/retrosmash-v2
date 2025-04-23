@@ -13,7 +13,7 @@ module Builders
         classes.join(' ')
       end
 
-      helper :render_js_model_template do |template_name, model|
+      helper :render_js_template_with_model do |template_name, model|
         model_name = model.model_name.name
         model_path = File.expand_path(File.join(JS_MODELS_DIR, "#{model_name}.js"))
         template_path = File.expand_path(File.join(JS_TEMPLATES_DIR, "#{template_name}.js"))

@@ -56,6 +56,7 @@ layout: section
 
 <div class="d-flex flex-wrap gap-2">
   <% resource.model.first_games_chunk.each do |game| %>
-    <%= render_js_model_template(:gameCard, game) %>
+    <%= render_js_template_with_model(:gameCard, game) %>
   <% end %>
+  <%= render_js_template_with_model(:gameCardPlaceholder, resource.model.first_games_chunk.first) %>
 </div>

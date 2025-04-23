@@ -8,16 +8,19 @@ export default class extends Controller {
     consoleSlug: String
   };
 
-  async connect() {
-    this.metadata = await this.fetchMetadata();
-    this.syncCollection();
+  connect() {
+    this.setActiveCollection();
+    this.fetchLatestCollection();
   }
 
-  async syncCollection() {
+  async fetchLatestCollection() {
+    this.metadata = await this.fetchMetadata();
+
     const gameCollection = await this.findOrCreateCollection();
-    if (gameCollection.active) { return; }
+    if (gameCollection.active) return;
 
     await db.gameCollections.update(gameCollection.id, { active: 1 });
+    this.setActiveCollection();
     this.clearInactiveCollections();
   }
 
@@ -26,7 +29,7 @@ export default class extends Controller {
       console_slug: this.consoleSlugValue,
       version: this.metadata.version
     });
-    if (gameCollection) { return gameCollection; }
+    if (gameCollection) return gameCollection;
 
     const gameCollectionId = await db.gameCollections.add({
       console_slug: this.consoleSlugValue,
@@ -68,7 +71,10 @@ export default class extends Controller {
     ]);
   }
 
-  async getActiveCollection() {
-    return await db.gameCollections.get({ console_slug: this.consoleSlugValue, active: 1 });
+  async setActiveCollection() {
+    this.activeCollection = await db.gameCollections.get({
+      console_slug: this.consoleSlugValue,
+      active: 1
+    });
   }
 }
