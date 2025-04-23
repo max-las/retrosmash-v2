@@ -4,33 +4,33 @@ import { db } from "../db";
 export default class extends Controller {
   static values = {
     collectionUrl: String,
-    versionUrl: String,
+    metadataUrl: String,
     consoleSlug: String
   };
 
-  connect() {
+  async connect() {
+    this.metadata = await this.fetchMetadata();
     this.syncCollection();
   }
 
   async syncCollection() {
-    const version = await this.fetchVersion();
-    const gameCollection = await this.findOrCreateCollection(version);
+    const gameCollection = await this.findOrCreateCollection();
     if (gameCollection.active) { return; }
 
     await db.gameCollections.update(gameCollection.id, { active: 1 });
     this.clearInactiveCollections();
   }
 
-  async findOrCreateCollection(version) {
+  async findOrCreateCollection() {
     const gameCollection = await db.gameCollections.get({
       console_slug: this.consoleSlugValue,
-      version
+      version: this.metadata.version
     });
     if (gameCollection) { return gameCollection; }
 
     const gameCollectionId = await db.gameCollections.add({
       console_slug: this.consoleSlugValue,
-      version,
+      version: this.metadata.version,
       active: 0
     });
     await this.addGames(gameCollectionId);
@@ -47,13 +47,13 @@ export default class extends Controller {
     );
   }
 
-  async fetchVersion() {
-    const response = await fetch(this.versionUrlValue, { method: "GET" });
-    return await response.text();
+  async fetchMetadata() {
+    const response = await fetch(this.metadataUrlValue, { method: "GET", cache: 'no-store' });
+    return await response.json();
   }
 
   async fetchGames() {
-    const response = await fetch(this.collectionUrlValue, { method: "GET" });
+    const response = await fetch(this.collectionUrlValue, { method: "GET", cache: 'no-store' });
     return await response.json();
   }
 

@@ -36,12 +36,12 @@ class Console < Bridgetown::Model::Base
     "console #{full_name}"
   end
 
-  def game_collection_version_path
-    File.join(relative_url, '/game-collection/version.txt')
+  def game_collection_metadata_path
+    File.join(relative_url, '/game-collection/metadata.json')
   end
 
   def game_collection_chunk_path(index)
-    File.join(relative_url, '/game-collection/chunks/', "/#{index}.json")
+    File.join(relative_url, '/game-collection/chunks/', "#{index}.json")
   end
 
   def game_collection_path
