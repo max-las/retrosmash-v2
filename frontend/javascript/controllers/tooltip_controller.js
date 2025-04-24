@@ -5,7 +5,6 @@ export default class extends Controller {
   static values =  { title: String };
 
   connect() {
-    console.log('connected');
     this.tooltip = new Tooltip(this.element, this.#options);
   }
 

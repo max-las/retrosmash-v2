@@ -1,7 +1,13 @@
 <div class="mb-3 d-flex flex-wrap gap-1">
   <% ['#', *('A'..'Z')].each do |letter| %>
     <% if @console.available_letter_filters.include?(letter) %>
-      <button type="button" class="letter btn btn-sm btn-outline-primary"><%= letter %></button>
+      <button
+        type="button"
+        class="letter btn btn-sm btn-outline-primary"
+        data-action="click->game-collection#filterByLetter"
+        data-game-collection-letter-param="<%= letter %>">
+        <%= letter %>
+      </button>
     <% else %>
       <button type="button" class="letter btn btn-sm btn-light" disabled><%= letter %></button>
     <% end %>

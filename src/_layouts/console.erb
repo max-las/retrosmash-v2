@@ -50,13 +50,12 @@ layout: section
   data-game-collection-console-slug-value="<%= resource.model.slug %>"
   data-game-collection-metadata-url-value="<%= resource.model.game_collection_metadata_path %>"
   data-game-collection-collection-url-value="<%= resource.model.game_collection_path %>">
-</div>
+  <%= render Consoles::LetterFiltersComponent.new(resource.model) %>
 
-<%= render Consoles::LetterFiltersComponent.new(resource.model) %>
-
-<div class="d-flex flex-wrap gap-2">
-  <% resource.model.first_games_chunk.each do |game| %>
-    <%= render_js_template_with_model(:gameCard, game) %>
-  <% end %>
-  <%= render_js_template_with_model(:gameCardPlaceholder, resource.model.first_games_chunk.first) %>
+  <div class="d-flex flex-wrap gap-2" data-game-collection-target="gamesList">
+    <% resource.model.first_games_chunk.each do |game| %>
+      <%= render_js_template_with_model(:gameCard, game) %>
+    <% end %>
+    <%= render_js_template_with_model(:gameCardPlaceholder, resource.model.first_games_chunk.first) %>
+  </div>
 </div>
