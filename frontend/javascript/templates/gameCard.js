@@ -6,7 +6,10 @@ export const gameCard = (game) => {
         class="card-img-top"
         alt="${game.coverAlt}">
       <div class="card-body">
-        <h5 class="card-title fs-5 text-truncate">
+        <h5
+          class="card-title fs-5 text-truncate"
+          data-controller="tooltip"
+          data-tooltip-title-value="${game.title}">
           ${game.title}
         </h5>
         <table class="table table-sm mb-0">
