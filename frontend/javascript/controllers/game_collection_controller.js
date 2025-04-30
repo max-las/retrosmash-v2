@@ -4,7 +4,7 @@ import { Game } from "../models/Game";
 import { gameCard } from "../templates/gameCard";
 
 export default class extends Controller {
-  static targets = ['gamesList'];
+  static targets = ['gamesList', 'filtersButton', 'filterCheckbox'];
 
   static values = {
     collectionUrl: String,
@@ -13,9 +13,64 @@ export default class extends Controller {
   };
 
   connect() {
-    this.filters = {};
+    this.filters = { letter: null, players: [] };
     this.#setActiveCollection();
     this.#fetchLatestCollection();
+  }
+
+  filterByLetter(event) {
+    const { letter } = event.params;
+    const currentButton = event.currentTarget;
+    if (this.filters.letter === letter) {
+      this.#deactivateButton(currentButton);
+      delete this.activeLetterButton;
+      delete this.filters.letter;
+    } else {
+      if (this.activeLetterButton) this.#deactivateButton(this.activeLetterButton);
+      this.#activateButton(currentButton);
+      this.activeLetterButton = currentButton;
+      this.filters.letter = letter;
+    }
+    this.#applyFilters();
+  }
+
+  applyPlayersFilters() {
+    this.#forceBackupFilterCheckboxes();
+
+    this.filters.players = [];
+    this.filterCheckboxTargets.forEach((checkbox) => {
+      if (checkbox.checked) {
+        const players = parseInt(checkbox.dataset.gameCollectionPlayersParam);
+        this.filters.players.push(players);
+      }
+    });
+
+    if (this.filters.players.length > 0) {
+      this.#activateButton(this.filtersButtonTarget);
+    } else {
+      this.#deactivateButton(this.filtersButtonTarget);
+    }
+
+    this.#applyFilters();
+  }
+
+  backupFilterCheckboxes() {
+    if (this.filterCheckboxesBackup) return;
+
+    this.#forceBackupFilterCheckboxes();
+  }
+
+  #forceBackupFilterCheckboxes() {
+    this.filterCheckboxesBackup = new Map();
+    this.filterCheckboxTargets.forEach((checkbox) => {
+      this.filterCheckboxesBackup.set(checkbox, checkbox.checked);
+    });
+  }
+
+  restoreFilterCheckboxes() {
+    this.filterCheckboxTargets.forEach((checkbox) => {
+      checkbox.checked = this.filterCheckboxesBackup.get(checkbox);
+    });
   }
 
   async #fetchLatestCollection() {
@@ -83,36 +138,25 @@ export default class extends Controller {
     });
   }
 
-  filterByLetter(event) {
-    const { letter } = event.params;
-    const currentButton = event.currentTarget;
-    if (this.filters.letter === letter) {
-      this.#disableLetterButton(currentButton);
-      delete this.activeLetterButton;
-      delete this.filters.letter;
-    } else {
-      if (this.activeLetterButton) this.#disableLetterButton(this.activeLetterButton);
-      this.#enableLetterButton(currentButton);
-      this.activeLetterButton = currentButton;
-      this.filters.letter = letter;
-    }
-    this.#applyFilters();
-  }
-
-  #disableLetterButton(button) {
+  #deactivateButton(button) {
     button.classList.remove('btn-primary');
     button.classList.add('btn-outline-primary');
   }
 
-  #enableLetterButton(button) {
+  #activateButton(button) {
     button.classList.remove('btn-outline-primary');
     button.classList.add('btn-primary');
   }
 
   async #applyFilters() {
     const whereClause = { game_collection_id: this.activeCollection.id };
-    if (this.filters.letter) whereClause.letter = this.filters.letter;
-    const games = db.games.where(whereClause);
+    if (this.filters.letter) {
+      whereClause.letter = this.filters.letter;
+    }
+    let games = db.games.where(whereClause);
+    if (this.filters.players.length > 0) {
+      games.filter((gameData) => this.filters.players.includes(gameData.players));
+    }
     await this.#renderGames(games);
   }
 

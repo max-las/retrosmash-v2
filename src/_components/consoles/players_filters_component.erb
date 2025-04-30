@@ -1,0 +1,37 @@
+<div class="dropdown">
+  <button
+    type="button"
+    class="btn btn-outline-primary dropdown-toggle"
+    data-bs-toggle="dropdown"
+    data-bs-auto-close="outside"
+    aria-expanded="false"
+    data-game-collection-target="filtersButton"
+    data-action="show.bs.dropdown->game-collection#backupFilterCheckboxes hide.bs.dropdown->game-collection#restoreFilterCheckboxes">
+    <i class="bi-funnel"></i>
+  </button>
+  <form class="dropdown-menu p-4">
+    <h6 class="dropdown-header px-0">Nombre de joueurs</h6>
+    <div class="mb-3">
+      <% @console.available_players_filters.each do |players| %>
+        <% id = "players_filter_#{players}_checkbox" %>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="<%= id %>"
+            data-game-collection-target="filterCheckbox"
+            data-game-collection-players-param="<%= players %>">
+          <label class="form-check-label" for="<%= id %>">
+            <%= "#{players} #{'joueurs'.pluralize(players)}" %>
+          </label>
+        </div>
+      <% end %>
+    </div>
+    <button
+      type="button"
+      class="btn btn-primary btn-sm"
+      data-action="click->game-collection#applyPlayersFilters">
+      Appliquer
+    </button>
+  </form>
+</div>

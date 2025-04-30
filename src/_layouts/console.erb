@@ -19,37 +19,19 @@ layout: section
   </div>
 </div>
 
-<div class="d-flex align-items-center justify-content-between">
-  <h2 class="fs-3 mb-0">Jeux disponibles</h2>
-  <div class="dropdown">
-    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-      <i class="bi-funnel"></i>
-    </button>
-    <form class="dropdown-menu p-4">
-      <h6 class="dropdown-header px-0">Nombre de joueurs</h6>
-      <div class="mb-3">
-        <% resource.model.available_players_filters.each do |players| %>
-          <% id = "players_filter_#{players}_checkbox" %>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="<%= id %>">
-            <label class="form-check-label" for="<%= id %>">
-              <%= "#{players} #{'joueurs'.pluralize(players)}" %>
-            </label>
-          </div>
-        <% end %>
-      </div>
-      <button type="submit" class="btn btn-primary btn-sm">Appliquer</button>
-    </form>
-  </div>
-</div>
-
-<hr>
-
 <div
   data-controller="game-collection"
   data-game-collection-console-slug-value="<%= resource.model.slug %>"
   data-game-collection-metadata-url-value="<%= resource.model.game_collection_metadata_path %>"
   data-game-collection-collection-url-value="<%= resource.model.game_collection_path %>">
+
+  <div class="d-flex align-items-center justify-content-between">
+    <h2 class="fs-3 mb-0">Jeux disponibles</h2>
+    <%= render Consoles::PlayersFiltersComponent.new(resource.model) %>
+  </div>
+
+  <hr>
+
   <%= render Consoles::LetterFiltersComponent.new(resource.model) %>
 
   <div class="d-flex flex-wrap gap-2" data-game-collection-target="gamesList">
