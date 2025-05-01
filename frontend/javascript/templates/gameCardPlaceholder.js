@@ -1,6 +1,6 @@
 export const gameCardPlaceholder = (game) => {
   return /*html*/`
-    <div class="card game-card mb-3 placeholder-glow" aria-hidden="true">
+    <div class="card game-card mb-3 placeholder-glow" aria-hidden="true" data-game-collection-target="gamePlaceholder">
       <div class="placeholder">
         <img src="${game.coverPath}" alt="placeholder" class="card-img-top invisible">
       </div>

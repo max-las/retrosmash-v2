@@ -1,4 +1,6 @@
 class Console < Bridgetown::Model::Base
+  GAMES_CHUNK_SIZE = 10
+
   def section_data
     {
       title: full_name,
