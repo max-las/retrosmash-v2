@@ -1,13 +1,13 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<base href="https://max-las.github.io/retrosmash-v2/">
+<base href="http://localhost:4000/">
 <% resource_title = strip_html(strip_newlines(title)) %>
 <title><% if resource_title != "Index" %><%= resource_title %> | <%= metadata.title %><% else %><%= metadata.title %>: <%= metadata.tagline %><% end %></title>
 
 <meta name="description" content="<%= metadata.description %>" />
 
-<link rel="stylesheet" href="<%= webpack_path :css %>" data-turbo-track="reload"/>
+<link rel="stylesheet" href=".<%= webpack_path :css %>" data-turbo-track="reload"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-<script src="<%= webpack_path :js %>" data-turbo-track="reload" defer></script>
+<script src=".<%= webpack_path :js %>" data-turbo-track="reload" defer></script>
 <%= live_reload_dev_js %>
