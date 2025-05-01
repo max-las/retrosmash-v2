@@ -41,14 +41,15 @@ def convertable_image?(filename)
   File.file?(filename) && CONVERTABLE_IMAGE_EXTENSIONS.include?(File.extname(filename).delete('.'))
 end
 
-def convert_and_resize_image(input_path:, output_path:, height:, quality:)
+def convert_and_resize_image(input_path:, output_path:, quality:, height: nil)
   image = Magick::ImageList.new(input_path).first
   dimensions = { width: image.columns, height: image.rows }
-  if dimensions[:height] > height
+  target_height = height || dimensions[:height]
+  if dimensions[:height] > target_height
     aspect_ratio = dimensions[:width].to_f / dimensions[:height]
-    width = (height * aspect_ratio).round
-    image.scale!(width, height)
-    dimensions = { width:, height: }
+    target_width = (target_height * aspect_ratio).round
+    image.scale!(target_width, target_height)
+    dimensions = { width: target_width, height: target_height }
   end
   image.write(output_path) { |options| options.quality = quality }
   dimensions
