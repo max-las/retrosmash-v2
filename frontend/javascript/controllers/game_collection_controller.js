@@ -8,12 +8,15 @@ export default class extends Controller {
 
   static values = {
     collectionUrl: String,
+    firstChunkUrl: String,
     metadataUrl: String,
     consoleSlug: String
   };
 
   connect() {
     this.filters = { letter: null, players: [] };
+    this.chunksLoadingEnabled = false;
+    this.lastLoadedChunk = -1;
     this.#setActiveCollection();
     this.#fetchLatestCollection();
   }
@@ -73,8 +76,28 @@ export default class extends Controller {
     });
   }
 
+  monitorScrollForChunks() {
+    if (!this.chunksLoadingEnabled) return;
+
+    const threshold = 200;
+    const scroll = window.scrollY + window.innerHeight;
+    if (scroll >= document.body.scrollHeight - threshold) {
+      this.#loadNextChunk();
+    }
+  }
+
+  async #loadNextChunk() {
+    this.chunksLoadingEnabled = false;
+    const chunkToLoad = this.lastLoadedChunk + 1;
+    const response = await fetch(this.#chunkUrl(chunkToLoad), { method: "GET" });
+    const games = await response.json();
+    await this.#renderChunkGames(games);
+    this.lastLoadedChunk = chunkToLoad;
+    this.chunksLoadingEnabled = this.lastLoadedChunk < this.metadata.chunks - 1;
+  }
+
   async #fetchLatestCollection() {
-    this.metadata = await this.#fetchMetadata();
+    await this.#fetchMetadata();
 
     const gameCollection = await this.#findOrCreateCollection();
     if (gameCollection.active) return;
@@ -101,7 +124,7 @@ export default class extends Controller {
   }
 
   async #addGames(gameCollectionId) {
-    const games = await this.#fetchGames();
+    const games = await this.#fetchAllGames();
     await Promise.all(
       games.map((game) => {
         game.game_collection_id = gameCollectionId;
@@ -112,10 +135,11 @@ export default class extends Controller {
 
   async #fetchMetadata() {
     const response = await fetch(this.metadataUrlValue, { method: "GET", cache: 'no-store' });
-    return await response.json();
+    this.metadata = await response.json();
+    this.chunksLoadingEnabled = true;
   }
 
-  async #fetchGames() {
+  async #fetchAllGames() {
     const response = await fetch(this.collectionUrlValue, { method: "GET", cache: 'no-store' });
     return await response.json();
   }
@@ -153,21 +177,31 @@ export default class extends Controller {
     if (this.filters.letter) {
       whereClause.letter = this.filters.letter;
     }
-    let games = db.games.where(whereClause);
+    const games = db.games.where(whereClause);
     if (this.filters.players.length > 0) {
       games.filter((gameData) => this.filters.players.includes(gameData.players));
     }
-    await this.#renderGames(games);
+    await this.#renderFilteredGames(games);
   }
 
-  async #renderGames(games) {
+  async #renderFilteredGames(games) {
     this.gamesListTarget.style.setProperty("min-height", `${this.gamesListTarget.offsetHeight}px`);
     this.gamesListTarget.innerHTML = '';
-    await games.each((gameData) => {
-      const game = new Game({ ...gameData, console_slug: this.consoleSlugValue });
-      const template = gameCard(game);
-      this.gamesListTarget.insertAdjacentHTML('beforeend', template);
-    });
+    await games.each(this.#renderGame.bind(this));
     this.gamesListTarget.style.removeProperty("min-height");
+  }
+
+  async #renderChunkGames(games) {
+    games.forEach(this.#renderGame.bind(this));
+  }
+
+  #renderGame(gameData) {
+    const game = new Game({ ...gameData, console_slug: this.consoleSlugValue });
+    const template = gameCard(game);
+    this.gamesListTarget.insertAdjacentHTML('beforeend', template);
+  }
+
+  #chunkUrl(chunk) {
+    return this.firstChunkUrlValue.replace(/0(?!.*0)/g, chunk);
   }
 }
