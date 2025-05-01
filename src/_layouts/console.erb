@@ -29,7 +29,6 @@ layout: section
   data-game-collection-first-chunk-url-value="<%= console.game_collection_chunk_path(0) %>"
   data-game-collection-chunk-size-value="<%= Console::GAMES_CHUNK_SIZE %>"
   data-action="scroll@document->game-collection#monitorScrollForChunks">
-
   <div class="d-flex align-items-center justify-content-between">
     <h2 class="fs-3 mb-0">Jeux disponibles</h2>
     <%= render Consoles::PlayersFiltersComponent.new(console) %>
