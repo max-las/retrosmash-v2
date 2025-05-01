@@ -6,8 +6,8 @@
 
 <meta name="description" content="<%= metadata.description %>" />
 
-<link rel="stylesheet" href=".<%= webpack_path :css %>" data-turbo-track="reload"/>
+<link rel="stylesheet" href="<%= webpack_path :css %>" data-turbo-track="reload"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-<script src=".<%= webpack_path :js %>" data-turbo-track="reload" defer></script>
+<script src="<%= webpack_path :js %>" data-turbo-track="reload" defer></script>
 <%= live_reload_dev_js %>

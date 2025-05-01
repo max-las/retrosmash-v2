@@ -342,7 +342,7 @@ module.exports = async (esbuildOptions, ...args) => {
     entryPoints: [...entryPoints, ...islands],
     entryNames: "[dir]/[name].[hash]",
     outdir: path.join(process.cwd(), `${bridgetownConfig.destination}/_bridgetown/static`),
-    publicPath: "/_bridgetown/static",
+    publicPath: "./_bridgetown/static",
     metafile: true,
     ...esbuildOptions,
   }).then(context => {
