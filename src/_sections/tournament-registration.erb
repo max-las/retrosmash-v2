@@ -8,13 +8,48 @@ subtitle: "Ici, vous pouvez vous inscrire au prochain tournoi Retrosmash !"
 ---
 
 <div class="row">
-  <div class="col-12 col-lg-7 order-lg-2">
+  <div class="col-12 col-md-4 col-lg-3">
     <img
       src="<%= site.data.current_event['flyer_path'] %>"
-      class="tournament-registration-flyer"
+      class="tournament-registration-flyer sticky-md-top"
       alt="<%= site.data.current_event['name'] %>">
   </div>
-  <div class="col-12 col-lg-5 order-lg-1">
-    <iframe class="tournament-registration-form" src="https://docs.google.com/forms/d/e/1FAIpQLScYUrQfasIeMpJCUnS8jyP3wGsRPi34inHLJpvKnHVxk3ncSw/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
+
+  <div class="col-12 col-md-8 col-lg-9">
+    <div class="registration-section">
+      <p>Lors d'un tournoi en duo, vous formez un binôme avec votre partenaire et affrontez les autres
+      binômes à travers différents jeux et consoles de toutes générations. Le binôme qui réalise le
+      meilleur score à la fin du temps imparti remporte la victoire !</p>
+      <p>Si vous savez déjà avec quel partenaire vous associer, sélectionnez <strong>Inscription en
+      duo.</strong> Sinon, pas de panique ! Sélectionnez <strong>Inscription en solo</strong>, et le
+      jour J vous serez aléatoirement associé à un autre joueur s'étant inscrit en solo 🤝</p>
+
+      <div class="accordion" id="registration-accordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Inscription en duo
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#registration-accordion">
+            <div class="accordion-body">
+              <iframe class="tournament-registration-form" src="https://docs.google.com/forms/d/e/1FAIpQLSfWsgSDQX1eBwrFBQ-iWRRdOQfkZL4icTp3H7zrWa-DGDMmpQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              Inscription en solo
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#registration-accordion">
+            <div class="accordion-body">
+              <iframe class="tournament-registration-form" src="https://docs.google.com/forms/d/e/1FAIpQLScYUrQfasIeMpJCUnS8jyP3wGsRPi34inHLJpvKnHVxk3ncSw/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
