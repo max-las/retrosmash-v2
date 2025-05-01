@@ -4,7 +4,7 @@ export class Game {
   }
 
   get coverPath() {
-    return `/images/consoles/${this.console_slug}/games/${this.slug}.webp`;
+    return `images/consoles/${this.console_slug}/games/${this.slug}.webp`;
   }
 
   get coverAlt() {

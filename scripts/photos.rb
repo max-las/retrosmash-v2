@@ -22,8 +22,8 @@ def add_photo_event(event_dir)
   data['layout'] = 'photo_event'
   data['section_title'] = 'Galerie photo'
   data['breadcrumb'] = {
-    'Accueil' => '/',
-    'Galerie photo' => '/gallery/',
+    'Accueil' => '.',
+    'Galerie photo' => 'gallery/',
     data['title'] => nil
   }
   convert_event_logo(event_dir, data['slug'])

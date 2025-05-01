@@ -6,8 +6,8 @@ class Console < Bridgetown::Model::Base
       title: full_name,
       subtitle: "Découvrez notre catalogue #{name}",
       breadcrumb: {
-        'Accueil' => '/',
-        'Inventaire' => '/inventory/',
+        'Accueil' => '.',
+        'Inventaire' => 'inventory/',
         name => nil
       }
     }
@@ -19,11 +19,11 @@ class Console < Bridgetown::Model::Base
   end
 
   def relative_url
-    File.join('/consoles/', slug, '/')
+    File.join('consoles/', slug, '/')
   end
 
   def logo_path
-    File.join('/images/consoles/', slug, '/logo.svg')
+    File.join('images/consoles/', slug, '/logo.svg')
   end
 
   def logo_alt
@@ -31,7 +31,7 @@ class Console < Bridgetown::Model::Base
   end
 
   def image_path
-    File.join('/images/consoles/', slug, '/console.webp')
+    File.join('images/consoles/', slug, '/console.webp')
   end
 
   def image_alt
