@@ -14,8 +14,9 @@ class Console < Bridgetown::Model::Base
   end
 
   def full_name
-    prefix = "#{publisher} "
-    prefix + name.delete_prefix(prefix)
+    return name if name.include?(publisher)
+
+    "#{publisher} #{name}"
   end
 
   def relative_url
