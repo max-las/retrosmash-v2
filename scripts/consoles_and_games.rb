@@ -64,7 +64,9 @@ end
 
 def add_game_collection(console_dir, console_data)
   games_dir = File.join(console_dir, 'games')
-  raise "missing games directory in #{quote(console_dir)}" unless File.directory?(games_dir)
+  unless File.directory?(games_dir)
+    return # raise "missing games directory in #{quote(console_dir)}"
+  end
 
   games = build_games_list(games_dir, console_data)
   game_collection_path = File.join('_data/game_collections', "#{console_data['slug']}.yml")

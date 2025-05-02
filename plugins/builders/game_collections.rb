@@ -8,6 +8,8 @@ module Builders
           console_resource.data.merge!(console.section_data)
 
           game_collection = site.data.game_collections[console.slug]
+          next if game_collection.blank?
+
           games_list = game_collection['games']
           add_resource :pages, console.game_collection_path do
             content raw games_list.to_json
