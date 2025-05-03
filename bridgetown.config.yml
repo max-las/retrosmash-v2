@@ -17,21 +17,9 @@
 # https://learnxinyminutes.com/docs/yaml/
 #
 
-url: "https://www.retrosmash.fr" # the base hostname & protocol for your site, e.g. https://example.com
-
 permalink: pretty
+
 template_engine: erb
-
-# Other options you might want to investigate:
-#
-base_path: "/" # the subpath of your site, e.g. /blog. If you set this option,
-# ensure you use the `relative_url` helper for all links and assets in your HTML.
-# If you're using esbuild for frontend assets, edit `esbuild.config.js` to
-# update `publicPath`.
-
-# timezone: America/Los_Angeles
-# pagination:
-#   enabled: true
 
 autoload_paths:
   - path: models
@@ -49,4 +37,27 @@ collections:
     output: true
     permalink: /photo-events/:slug/
     sort_by: title
-  
+
+# Other options you might want to investigate:
+#
+# timezone: America/Los_Angeles
+# pagination:
+#   enabled: true
+
+production:
+  url: "https://www.retrosmash.fr" # the base hostname & protocol for your site, e.g. https://example.com
+
+  base_path: "/" # the subpath of your site, e.g. /blog. If you set this option,
+  # ensure you use the `relative_url` helper for all links and assets in your HTML.
+  # If you're using esbuild for frontend assets, edit `esbuild.config.js` to
+  # update `publicPath`.
+
+development:
+  url: "http://localhost:4000" # the base hostname & protocol for your site, e.g. https://example.com
+
+  base_path: "/" # the subpath of your site, e.g. /blog. If you set this option,
+  # ensure you use the `relative_url` helper for all links and assets in your HTML.
+  # If you're using esbuild for frontend assets, edit `esbuild.config.js` to
+  # update `publicPath`.
+
+

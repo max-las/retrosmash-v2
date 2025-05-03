@@ -14,6 +14,7 @@ class Console < Bridgetown::Model::Base
   end
 
   def full_name
+    return attributes[:full_name] if attributes[:full_name].present?
     return name if name.include?(publisher)
 
     "#{publisher} #{name}"
