@@ -2,15 +2,16 @@
   "name": "retrosmash-v2",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "esbuild": "node esbuild.config.js --minify",
     "esbuild-dev": "node esbuild.config.js --watch"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin-js": "^4.2.0",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.25.11",
     "eslint": "^9.23.0",
-    "glob": "^10.3.3",
+    "glob": "^11.0.3",
     "globals": "^16.0.0",
     "postcss": "^8.4.29",
     "postcss-flexbugs-fixes": "^5.0.2",
