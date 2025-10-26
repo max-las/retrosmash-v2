@@ -24,10 +24,6 @@ class Console < Bridgetown::Model::Base
     File.join('consoles/', slug, '/')
   end
 
-  def logo_path
-    File.join('images/consoles/', slug, '/logo.svg')
-  end
-
   def logo_alt
     "logo de la #{name}"
   end

@@ -22,7 +22,7 @@ end
 
 def add_console(console_dir)
   data = parse_console_data(console_dir)
-  enrich_console_data(data)
+  enrich_console_data(console_dir, data)
   convert_console_image(console_dir, data['slug'])
   copy_console_logo(console_dir, data['slug'])
   add_game_collection(console_dir, data)
@@ -36,9 +36,11 @@ def parse_console_data(console_dir)
   YAML.load_file(data_file)
 end
 
-def enrich_console_data(data)
+def enrich_console_data(console_dir, data)
   data['layout'] = 'console'
   data['slug'] = data['name'].parameterize
+  logo = source_logo(console_dir)
+  data['logo_path'] = File.join('images/consoles/', data['slug'], File.basename(logo))
 end
 
 def create_console_resource(console_data)
@@ -55,11 +57,19 @@ def convert_console_image(console_dir, console_slug)
 end
 
 def copy_console_logo(console_dir, console_slug)
+  logo = source_logo(console_dir)
+  output_logo = make_file_path('images/consoles', console_slug, File.basename(logo))
+  FileUtils.cp(logo, output_logo)
+end
+
+def source_logo(console_dir)
   logo = File.join(console_dir, 'logo.svg')
+  return logo if File.file?(logo)
+
+  logo = File.join(console_dir, 'logo.webp')
   raise "missing console logo in #{quote(console_dir)}" unless File.file?(logo)
 
-  output_logo = make_file_path('images/consoles', console_slug, 'logo.svg')
-  FileUtils.cp(logo, output_logo)
+  logo
 end
 
 def add_game_collection(console_dir, console_data)
