@@ -1,0 +1,24 @@
+<div class="card game-card mb-3">
+  <img
+    src="<%= @cover_path %>"
+    class="card-img-top"
+    alt="<%= @cover_alt %>">
+  <div class="card-body">
+    <h5
+      class="card-title fs-5 text-truncate"
+      data-controller="tooltip"
+      data-tooltip-title-value="<%= @title %>">
+      <%= @title %>
+    </h5>
+    <table class="table table-sm mb-0">
+      <tr>
+        <td><%= @players %> joueurs</td>
+      </tr>
+      <% if @pegi.present? %>
+        <tr>
+          <td>PEGI <%= @pegi %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
