@@ -12,8 +12,13 @@
           <li class="navbar-item">
             <a class="nav-link" href="<%= page.relative_url %>">
               <div class="d-flex align-items-center">
-                <i class="bi bi-<%= page.data.icon %> text-<%= page.data.color %> me-2 fs-5"></i>
-                <%= page.data.title %>
+                <% if page.data.emphasis %>
+                  <i class="bi bi-<%= page.data.icon %> text-warning me-2 fs-5"></i>
+                  <strong><%= page.data.title %></strong>
+                <% else %>
+                  <i class="bi bi-<%= page.data.icon %> text-info me-2 fs-5"></i>
+                  <%= page.data.title %>
+                <% end %>
               </div>
             </a>
           </li>
