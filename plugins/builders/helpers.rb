@@ -1,5 +1,3 @@
-require 'node-runner'
-
 module Builders
   class Helpers < SiteBuilder
     JS_TEMPLATES_DIR = 'frontend/javascript/templates/'.freeze
