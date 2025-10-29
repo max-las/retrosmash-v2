@@ -1,5 +1,5 @@
 class GameCardComponent < Bridgetown::Component
-  def initialize(pages:)
-    @pages = pages
+  def initialize(**params)
+    @params = params
   end
 end
