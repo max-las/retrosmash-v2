@@ -208,8 +208,7 @@ export default class extends Controller {
 
   #renderGame(gameData) {
     const game = new Game({ ...gameData, console_slug: this.consoleSlugValue });
-    const template = gameCard(game);
-    this.gamesListTarget.insertAdjacentHTML('beforeend', template);
+    this.gamesListTarget.appendChild(gameCard(game));
   }
 
   #chunkUrl(chunk) {

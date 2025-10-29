@@ -1,18 +1,19 @@
 <div class="card game-card mb-3">
   <img
     src="<%= @params[:cover_path] %>"
+    alt="<%= @params[:cover_alt] %>"
     class="card-img-top"
-    alt="<%= @params[:cover_alt] %>">
+    data-handle="cover">
   <div class="card-body">
     <h5
       class="card-title fs-5 text-truncate"
       data-controller="tooltip"
       data-tooltip-title-value="<%= @params[:title] %>">
-      <span class="title-slot"><%= @params[:title] %></span>
+      <span data-slot="title"><%= @params[:title] %></span>
     </h5>
-    <table class="table table-sm mb-0">
+    <table class="table table-sm mb-0" data-slot="pegi">
       <tr>
-        <td><span class="players-slot"><%= @params[:players] %></span> joueurs</td>
+        <td><span data-slot="players"><%= @params[:players] %></span> joueurs</td>
       </tr>
       <% if @params[:pegi].present? %>
         <%= render GameCard::PegiComponent.new(pegi: @params[:pegi]) %>

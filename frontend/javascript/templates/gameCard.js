@@ -1,34 +1,28 @@
 export const gameCard = (game) => {
-  return /*html*/`
-    <div class="card game-card mb-3">
-      <img
-        src="${game.coverPath}"
-        class="card-img-top"
-        alt="${game.coverAlt}">
-      <div class="card-body">
-        <h5
-          class="card-title fs-5 text-truncate"
-          data-controller="tooltip"
-          data-tooltip-title-value="${game.title}">
-          ${game.title}
-        </h5>
-        <table class="table table-sm mb-0">
-          <tr>
-            <td>${game.players} joueurs</td>
-          </tr>
-          ${pegi(game)}
-        </table>
-      </div>
-    </div>
-  `;
+  const gameCard = document.getElementById('game-card-template').content.cloneNode(true);
+
+  const cover = grab(gameCard, 'cover');
+  cover.src = game.coverPath;
+  cover.alt = game.coverAlt;
+
+  insert(gameCard, 'title', game.title);
+  insert(gameCard, 'players', game.players);
+  insertPegi(gameCard, game);
+
+  return gameCard;
 };
 
-const pegi = (game) => {
-  if (!game.pegi) { return ''; }
+const insertPegi = (gameCard, game) => {
+  if (!game.pegi) return;
 
-  return /*html*/`
-    <tr>
-      <td>PEGI ${game.pegi}</td>
-    </tr>
-  `;
+  const pegi = document.getElementById('game-card--pegi-template').content.cloneNode(true);
+  insert(pegi, 'pegi', game.pegi);
+  insert(gameCard, 'pegi', pegi);
 };
+
+const insert = (parent, slotName, content) => {
+  const slot = parent.querySelector(`[data-slot="${slotName}"]`);
+  slot.append(content);
+};
+
+const grab = (parent, partName) => parent.querySelector(`[data-handle="${partName}"]`);
