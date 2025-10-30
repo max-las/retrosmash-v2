@@ -1,6 +1,4 @@
 class Console < Bridgetown::Model::Base
-  GAMES_CHUNK_SIZE = 10
-
   def section_data
     {
       title: full_name,
@@ -36,15 +34,11 @@ class Console < Bridgetown::Model::Base
     "console #{full_name}"
   end
 
-  def game_collection_metadata_path
-    File.join(relative_url, '/game-collection/metadata.json')
-  end
-
-  def game_collection_chunk_path(index)
-    File.join(relative_url, '/game-collection/chunks/', "#{index}.json")
+  def game_collection_version_path
+    File.join(relative_url, '/game-collection/version.txt')
   end
 
   def game_collection_path
-    File.join(relative_url, '/game-collection/full.json')
+    File.join(relative_url, '/game-collection/games.json')
   end
 end

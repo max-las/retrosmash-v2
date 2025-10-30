@@ -15,22 +15,12 @@ module Builders
             content raw games_list.to_json
           end
 
-          console.games = []
-          games_list.each_slice(Console::GAMES_CHUNK_SIZE).with_index do |chunk, index|
-            console.games.concat(
-              chunk.map do |game_data|
-                Game.new(**game_data, data: game_data, console:)
-              end
-            )
-
-            add_resource :pages, console.game_collection_chunk_path(index) do
-              content raw chunk.to_json
-            end
+          console.games = games_list.map do |game_data|
+            Game.new(**game_data, data: game_data, console:)
           end
-          chunks_count = (games_list.size.to_f / Console::GAMES_CHUNK_SIZE).ceil
-          add_resource :pages, console.game_collection_metadata_path do
-            metadata = { version: game_collection['version'], chunks: chunks_count }
-            content raw metadata.to_json
+
+          add_resource :pages, console.game_collection_version_path do
+            content game_collection['version']
           end
         end
       end

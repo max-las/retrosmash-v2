@@ -12,18 +12,14 @@ export default class extends Controller {
 
   static values = {
     collectionUrl: String,
-    metadataUrl: String,
+    versionUrl: String,
     consoleSlug: String
   };
 
   async connect() {
     this.filters = { letter: null, players: [] };
-    await Promise.all([this.#fetchMetadata(), this.#setActiveCollection()]);
+    await Promise.all([this.#fetchVersion(), this.#setActiveCollection()]);
     this.#fetchLatestCollection();
-    if (!this.activeCollection) return;
-
-    // const games = db.games.where({ game_collection_id: this.activeCollection.id });
-    // this.#renderGamesFromCollection(games);
   }
 
   filterByLetter(event) {
@@ -93,13 +89,13 @@ export default class extends Controller {
   async #findOrCreateCollection() {
     const gameCollection = await db.gameCollections.get({
       console_slug: this.consoleSlugValue,
-      version: this.metadata.version
+      version: this.version
     });
     if (gameCollection) return gameCollection;
 
     const gameCollectionId = await db.gameCollections.add({
       console_slug: this.consoleSlugValue,
-      version: this.metadata.version,
+      version: this.version,
       active: 0
     });
     await this.#addGames(gameCollectionId);
@@ -116,9 +112,9 @@ export default class extends Controller {
     );
   }
 
-  async #fetchMetadata() {
-    const response = await fetch(this.metadataUrlValue, { method: "GET", cache: 'no-store' });
-    this.metadata = await response.json();
+  async #fetchVersion() {
+    const response = await fetch(this.versionUrlValue, { method: "GET", cache: 'no-store' });
+    this.version = await response.text();
   }
 
   async #fetchAllGames() {
