@@ -1,5 +1,5 @@
 class GameCardComponent < Bridgetown::Component
-  def initialize(**params)
-    @params = params
+  def initialize(game:)
+    @game = game
   end
 end

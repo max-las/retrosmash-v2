@@ -33,12 +33,4 @@ class Console < Bridgetown::Model::Base
   def image_alt
     "console #{full_name}"
   end
-
-  def game_collection_version_path
-    File.join(relative_url, '/game-collection/version.txt')
-  end
-
-  def game_collection_path
-    File.join(relative_url, '/game-collection/games.json')
-  end
 end
