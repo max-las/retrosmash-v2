@@ -1,3 +1,5 @@
+import { insert, grab } from '../templating';
+
 export const gameCard = (game) => {
   const gameCard = document.getElementById('game-card-template').content.cloneNode(true);
 
@@ -19,10 +21,3 @@ const insertPegi = (gameCard, game) => {
   insert(pegi, 'pegi', game.pegi);
   insert(gameCard, 'pegi', pegi);
 };
-
-const insert = (parent, slotName, content) => {
-  const slot = parent.querySelector(`[data-slot="${slotName}"]`);
-  slot.append(content);
-};
-
-const grab = (parent, partName) => parent.querySelector(`[data-handle="${partName}"]`);

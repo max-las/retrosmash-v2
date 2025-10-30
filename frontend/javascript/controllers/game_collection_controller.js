@@ -22,8 +22,8 @@ export default class extends Controller {
     this.#fetchLatestCollection();
     if (!this.activeCollection) return;
 
-    const games = db.games.where({ game_collection_id: this.activeCollection.id });
-    this.#renderGamesFromCollection(games);
+    // const games = db.games.where({ game_collection_id: this.activeCollection.id });
+    // this.#renderGamesFromCollection(games);
   }
 
   filterByLetter(event) {

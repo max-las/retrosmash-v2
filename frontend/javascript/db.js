@@ -1,6 +1,6 @@
 import Dexie from 'dexie';
 
-Dexie.debug = true;
+Dexie.debug = true; // TODO
 
 export const db = new Dexie('retrosmash');
 
