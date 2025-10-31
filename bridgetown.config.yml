@@ -37,7 +37,7 @@ collections:
       has_many: games
   games:
     output: false
-    sort_by: letter
+    sort_by: transliterated_title
     relations:
       belongs_to: console
   photo_events:

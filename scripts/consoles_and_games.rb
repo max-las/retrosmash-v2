@@ -22,10 +22,11 @@ end
 
 def add_console(console_dir)
   data = parse_console_data(console_dir)
-  enrich_console_data(console_dir, data)
+  enrich_console_data(data, console_dir:)
   convert_console_image(console_dir, data['slug'])
   copy_console_logo(console_dir, data['slug'])
-  add_game_collection(console_dir, data)
+  games = create_game_resources(console_dir, data)
+  add_available_filters(data, games)
   create_console_resource(data)
 end
 
@@ -36,7 +37,7 @@ def parse_console_data(console_dir)
   YAML.load_file(data_file)
 end
 
-def enrich_console_data(console_dir, data)
+def enrich_console_data(data, console_dir:)
   data['layout'] = 'console'
   data['slug'] = data['name'].parameterize
   logo = source_logo(console_dir)
@@ -72,38 +73,24 @@ def source_logo(console_dir)
   logo
 end
 
-def add_game_collection(console_dir, console_data)
+def create_game_resources(console_dir, console_data)
   games_dir = File.join(console_dir, 'games')
   unless File.directory?(games_dir)
-    return # raise "missing games directory in #{quote(console_dir)}"
+    return [] # raise "missing games directory in #{quote(console_dir)}"
   end
 
-  games = build_games_list(games_dir, console_data)
-  game_collection_path = File.join('_data/game_collections', "#{console_data['slug']}.yml")
-  previous_game_collection = parse_potential_yaml_file(File.join(OUTPUT_DIR, game_collection_path))
-  return if games == previous_game_collection&.fetch('games')
-
-  game_collection = { 'version' => Time.now.to_i, 'games' => games }
-  output_game_collection_path = make_file_path(game_collection_path)
-  File.write(output_game_collection_path, game_collection.to_yaml)
+  expanded_children(games_dir).filter_map do |game_dir|
+    create_game_resource(game_dir, console_data['slug']) if File.directory?(game_dir)
+  end
 end
 
-def build_games_list(games_dir, console_data)
-  games = []
-  expanded_children(games_dir).each do |child|
-    add_game(games, child, console_data['slug']) if File.directory?(child)
+def create_game_resource(game_dir, console_slug)
+  parse_game_data(game_dir).tap do |data|
+    enrich_game_data(data, console_slug:)
+    convert_game_image(game_dir, data['slug'], console_slug)
+    resource = make_file_path('_games', console_slug, "#{data['slug']}.html")
+    File.write(resource, "#{data.to_yaml}---")
   end
-  FILTER_GAMES_ON.each do |filter|
-    console_data["available_#{filter}_filters"] = games.pluck(filter).uniq.sort
-  end
-  games.sort_by! { |game| game['transliterated_title'] }
-end
-
-def add_game(games, game_dir, console_slug)
-  data = parse_game_data(game_dir)
-  enrich_game_data(data)
-  games << data
-  convert_game_image(game_dir, data['slug'], console_slug)
 end
 
 def parse_game_data(game_dir)
@@ -113,12 +100,13 @@ def parse_game_data(game_dir)
   YAML.load_file(data_file)
 end
 
-def enrich_game_data(data)
+def enrich_game_data(data, console_slug:)
   data['slug'] = data['title'].parameterize
   data['transliterated_title'] = I18n.transliterate(data['title'])
   data['letter'] = data['transliterated_title'].chr.upcase.then do |letter|
     LETTERS.include?(letter) ? letter : SPECIAL_LETTER
   end
+  data['console'] = console_slug
 end
 
 def convert_game_image(game_dir, game_slug, console_slug)
@@ -129,11 +117,10 @@ def convert_game_image(game_dir, game_slug, console_slug)
   convert_and_resize_image(input_path: image, output_path: output_image, height: 500, quality: 80)
 end
 
-def parse_potential_yaml_file(file_path)
-  raise "#{quote(file_path)} is a directory" if File.directory?(file_path)
-  return unless File.file?(file_path)
-
-  YAML.load_file(file_path)
+def add_available_filters(console_data, games)
+  FILTER_GAMES_ON.each do |filter|
+    console_data["available_#{filter}_filters"] = games.pluck(filter).uniq.sort
+  end
 end
 
 run_with_context
