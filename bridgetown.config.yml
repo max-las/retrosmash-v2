@@ -33,6 +33,13 @@ collections:
   consoles:
     output: true
     sort_by: publisher
+    relations:
+      has_many: games
+  games:
+    output: false
+    sort_by: letter
+    relations:
+      belongs_to: console
   photo_events:
     output: true
     permalink: /photo-events/:slug/
