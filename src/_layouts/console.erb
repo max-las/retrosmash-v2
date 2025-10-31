@@ -2,19 +2,19 @@
 layout: section
 ---
 
-<% console = resource.model %>
+<% console = resource %>
 
 <div class="card border-0 mb-2 console-summary-card">
   <img
     class="card-img-top"
-    src="<%= console.image_path %>"
-    alt="<%= console.image_alt %>">
+    src="<%= console.data.image_path %>"
+    alt="<%= console.data.image_alt %>">
   <div class="card-body px-0 pb-0">
     <table class="table">
       <tbody>
         <tr>
           <th scope="row">Consoles disponibles</th>
-          <td><%= console.quantity %></td>
+          <td><%= console.data.quantity %></td>
         </tr>
       </tbody>
     </table>
@@ -45,7 +45,7 @@ layout: section
     <%= render Consoles::LetterFiltersComponent.new(console) %>
 
     <div class="d-flex flex-wrap gap-2" data-game-collection-target="gamesList">
-      <% console.games.each do |game| %>
+      <% console.relations.games.each do |game| %>
         <%= render GameCardComponent.new(game:) %>
       <% end %>
     </div>

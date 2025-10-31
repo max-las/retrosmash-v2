@@ -39,9 +39,22 @@ end
 
 def enrich_console_data(data, console_dir:)
   data['layout'] = 'console'
-  data['slug'] = data['name'].parameterize
+  name, publisher = data.values_at('name', 'publisher')
+  data['slug'] = name.parameterize
+  slug, full_name = data.values_at('slug', 'full_name')
+  data['full_name'] ||= name.include?(publisher) ? name : "#{publisher} #{name}"
+  data['title'] = full_name
+  data['subtitle'] = "Découvrez notre catalogue #{name}"
+  data['breadcrumb'] = {
+    'Accueil' => '.',
+    'Inventaire' => 'inventory/',
+    name => nil
+  }
   logo = source_logo(console_dir)
-  data['logo_path'] = File.join('images/consoles/', data['slug'], File.basename(logo))
+  data['logo_path'] = File.join('images', 'consoles', slug, File.basename(logo))
+  data['logo_alt'] = "logo de la #{name}"
+  data['image_path'] = File.join('images', 'consoles', slug, 'console.webp')
+  data['image_alt'] = "console #{full_name}"
 end
 
 def create_console_resource(console_data)
@@ -101,12 +114,16 @@ def parse_game_data(game_dir)
 end
 
 def enrich_game_data(data, console_slug:)
-  data['slug'] = data['title'].parameterize
-  data['transliterated_title'] = I18n.transliterate(data['title'])
-  data['letter'] = data['transliterated_title'].chr.upcase.then do |letter|
+  title = data['title']
+  data['slug'] = title.parameterize
+  data['transliterated_title'] = I18n.transliterate(title)
+  slug, transliterated_title = data.values_at('slug', 'transliterated_title')
+  data['letter'] = transliterated_title.chr.upcase.then do |letter|
     LETTERS.include?(letter) ? letter : SPECIAL_LETTER
   end
   data['console'] = console_slug
+  data['cover_path'] = "images/consoles/#{console_slug}/games/#{slug}.webp"
+  data['cover_alt'] = "converture de #{title}"
 end
 
 def convert_game_image(game_dir, game_slug, console_slug)
