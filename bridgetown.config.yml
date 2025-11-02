@@ -21,9 +21,10 @@ permalink: pretty
 
 template_engine: erb
 
-autoload_paths:
-  - path: models
-    eager: true
+# Uncomment to use models
+# autoload_paths:
+#   - path: models
+#     eager: true
 
 collections:
   sections:
@@ -33,6 +34,7 @@ collections:
   consoles:
     output: true
     sort_by: publisher
+    permalink: /consoles/:slug/
     relations:
       has_many: games
   games:
@@ -44,6 +46,12 @@ collections:
     output: true
     permalink: /photo-events/:slug/
     sort_by: title
+    relations:
+      has_many: photos
+  photos:
+    output: false
+    relations:
+      belongs_to: photo_event
 
 # Other options you might want to investigate:
 #

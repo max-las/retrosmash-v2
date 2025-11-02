@@ -27,8 +27,8 @@ def add_photo_event(event_dir)
     data['title'] => nil
   }
   convert_event_logo(event_dir, data['slug'])
-  add_photos(event_dir, data)
   create_photo_event_resource(data)
+  create_photo_resources(event_dir, data)
 end
 
 def parse_photo_event_data(event_dir)
@@ -51,33 +51,25 @@ def convert_event_logo(event_dir, event_slug)
   convert_and_resize_image(input_path: image, output_path: output_image, height: 500, quality: 80)
 end
 
-def add_photos(event_dir, event_data)
+def create_photo_resources(event_dir, event_data)
   photos_dir = File.join(event_dir, 'photos')
   raise "missing photos directory in #{quote(event_dir)}" unless File.directory?(photos_dir)
 
-  event_photos_data = expanded_children(photos_dir).map do |child|
-    raise "found incompatible file #{quote(child)} in #{quote(photos_dir)}" unless convertable_image?(child)
+  expanded_children(photos_dir).filter_map do |photo|
+    next unless File.file?(photo)
+    raise "found incompatible file #{quote(photo)} in #{quote(photos_dir)}" unless convertable_image?(photo)
 
-    add_photo(child, event_data)
+    create_photo_resource(photo, event_data['slug'])
   end
-  event_photos_data_file = make_file_path('_data/photos/', "#{event_data['slug']}.yml")
-  File.write(event_photos_data_file, event_photos_data.to_yaml(stringify_names: true))
 end
 
-def add_photo(photo, event_data)
-  photo_name = File.basename(photo, File.extname(photo))
-  output_image = make_file_path(
-    'images/photo-events/',
-    event_data['slug'],
-    'photos',
-    "#{photo_name}.webp"
-  )
-  output_thumbnail_image = make_file_path(
-    'images/photo-events/',
-    event_data['slug'],
-    'thumbnails',
-    "#{photo_name}.webp"
-  )
+def create_photo_resource(photo, event_slug)
+  name = File.basename(photo, File.extname(photo))
+  slug = name.parameterize
+  image_path = "images/photo-events/#{event_slug}/photos/#{slug}.webp"
+  output_image = make_file_path(image_path)
+  thumbnail_path = "images/photo-events/#{event_slug}/thumbnails/#{slug}.webp"
+  output_thumbnail_image = make_file_path(thumbnail_path)
   convert_and_resize_image(
     input_path: photo,
     output_path: output_thumbnail_image,
@@ -90,7 +82,9 @@ def add_photo(photo, event_data)
     height: 900,
     quality: 90
   )
-  { name: photo_name, **dimensions }
+  data = { name:, slug:, **dimensions, photo_event: event_slug, image_path:, thumbnail_path: }
+  resource = make_file_path('_photos', event_slug, "#{slug}.html")
+  File.write(resource, "#{data.to_yaml(stringify_names: true)}---")
 end
 
 run_with_context

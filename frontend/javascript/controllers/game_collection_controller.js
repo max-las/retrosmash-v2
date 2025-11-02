@@ -31,7 +31,7 @@ export default class extends Controller {
     this.filters.players = [];
     this.filterCheckboxTargets.forEach((checkbox) => {
       if (checkbox.checked) {
-        const players = parseInt(checkbox.dataset.gameCollectionPlayersParam);
+        const players = checkbox.dataset.players;
         this.filters.players.push(players);
       }
     });
@@ -75,30 +75,35 @@ export default class extends Controller {
   }
 
   async #applyFilters() {
-    const selectors = [];
-    if (this.filters.letter) {
-      selectors.push(`[data-letter="${this.filters.letter}"]`);
-    }
-    if (this.filters.players.length > 0) {
-      this.filters.players.forEach((number) => selectors.push(`[data-players="${number}"]`));
-    }
     this.#showHiddenGameCards();
-    this.#hideGameCards(selectors);
+    this.#hideGameCardsNotMatchingFilters();
   }
 
   #showHiddenGameCards() {
     const selector = `.${this.gameCardClass}.${this.hiddenClass}`;
-    this.gamesListTarget.querySelectorAll(selector).forEach((gameCard) => {
-      gameCard.classList.remove(this.hiddenClass);
+    this.gamesListTarget.querySelectorAll(selector).forEach((gameCard) => this.#show(gameCard));
+  }
+
+  #hideGameCardsNotMatchingFilters() {
+    this.gamesListTarget.querySelectorAll(`.${this.gameCardClass}`).forEach((gameCard) => {
+      if (this.filters.letter) {
+        if (this.filters.letter !== gameCard.dataset.letter) {
+          return this.#hide(gameCard);
+        }
+      }
+      if (this.filters.players.length > 0) {
+        if (!this.filters.players.includes(gameCard.dataset.players)) {
+          return this.#hide(gameCard);
+        }
+      }
     });
   }
 
-  #hideGameCards(selectors) {
-    if (selectors.length === 0) return;
+  #hide(element) {
+    element.classList.add(this.hiddenClass);
+  }
 
-    const selector = `.${this.gameCardClass}:not(${selectors.join(', ')})`;
-    this.gamesListTarget.querySelectorAll(selector).forEach((gameCard) => {
-      gameCard.classList.add(this.hiddenClass);
-    });
+  #show(element) {
+    element.classList.remove(this.hiddenClass);
   }
 }
