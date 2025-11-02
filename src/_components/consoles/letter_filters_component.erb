@@ -1,6 +1,6 @@
 <div class="mb-3 d-flex flex-wrap gap-1">
   <% ['#', *('A'..'Z')].each do |letter| %>
-    <% if @console.available_letter_filters.include?(letter) %>
+    <% if @console.data.available_letter_filters.include?(letter) %>
       <button
         type="button"
         class="letter btn btn-sm btn-outline-primary"

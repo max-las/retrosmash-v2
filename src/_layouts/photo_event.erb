@@ -2,14 +2,19 @@
 layout: section
 ---
 
+<% photo_event = resource %>
+
 <div
-  id="<%= "#{resource.model.slug}-gallery" %>"
+  id="<%= "#{photo_event.data.slug}-gallery" %>"
   class="d-flex flex-wrap justify-content-start gap-2"
   data-controller="photoswipe">
-  <% resource.model.photos.each do |photo| %>
+  <% resource.relations.photos.each do |photo| %>
     <div class="d-flex align-items-center">
-      <a href="<%= photo.path %>" data-pswp-width="<%= photo.width %>" data-pswp-height="<%= photo.height %>">
-        <img class="event-photo" src="<%= photo.thumbnail_path %>" alt="<%= photo.name %>">
+      <a
+        href="<%= photo.data.image_path %>"
+        data-pswp-width="<%= photo.data.width %>"
+        data-pswp-height="<%= photo.data.height %>">
+        <img class="event-photo" src="<%= photo.data.thumbnail_path %>" alt="<%= photo.data.name %>">
       </a>
     </div>
   <% end %>

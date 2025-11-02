@@ -2,19 +2,19 @@
 layout: section
 ---
 
-<% console = resource.model %>
+<% console = resource %>
 
 <div class="card border-0 mb-2 console-summary-card">
   <img
     class="card-img-top"
-    src="<%= console.image_path %>"
-    alt="<%= console.image_alt %>">
+    src="<%= console.data.image_path %>"
+    alt="<%= console.data.image_alt %>">
   <div class="card-body px-0 pb-0">
     <table class="table">
       <tbody>
         <tr>
           <th scope="row">Consoles disponibles</th>
-          <td><%= console.quantity %></td>
+          <td><%= console.data.quantity %></td>
         </tr>
       </tbody>
     </table>
@@ -33,12 +33,8 @@ layout: section
 <% else %>
   <div
     data-controller="game-collection"
-    data-game-collection-console-slug-value="<%= console.slug %>"
-    data-game-collection-metadata-url-value="<%= console.game_collection_metadata_path %>"
-    data-game-collection-collection-url-value="<%= console.game_collection_path %>"
-    data-game-collection-first-chunk-url-value="<%= console.game_collection_chunk_path(0) %>"
-    data-game-collection-chunk-size-value="<%= Console::GAMES_CHUNK_SIZE %>"
-    data-action="scroll@document->game-collection#monitorScrollForChunks">
+    data-game-collection-game-card-class="game-card"
+    data-game-collection-hidden-class="d-none">
     <div class="d-flex align-items-center justify-content-between">
       <h2 class="fs-3 mb-0">Jeux disponibles</h2>
       <%= render Consoles::PlayersFiltersComponent.new(console) %>
@@ -48,10 +44,10 @@ layout: section
 
     <%= render Consoles::LetterFiltersComponent.new(console) %>
 
-    <div class="d-flex flex-wrap gap-2" data-game-collection-target="gamesList"></div>
-
-    <template data-game-collection-target="gamePlaceholderTemplate">
-      <%= render_js_template_with_model(:gameCardPlaceholder, console.first_games_chunk.first) %>
-    </template>
+    <div class="d-flex flex-wrap gap-2" data-game-collection-target="gamesList">
+      <% console.relations.games.each do |game| %>
+        <%= render GameCardComponent.new(game:) %>
+      <% end %>
+    </div>
   </div>
 <% end %>

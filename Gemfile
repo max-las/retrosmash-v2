@@ -35,8 +35,6 @@ gem "puma", "< 7"
 # Or for faster parsing of HTML-only resources via Inspectors, use Nokolexbor:
 # gem "nokolexbor", "~> 0.4"
 
-gem "node-runner", "~> 1.2"
-
 gem "rubocop", "~> 1.75"
 
 gem "rmagick", "~> 6.1"
