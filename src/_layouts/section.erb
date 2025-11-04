@@ -2,12 +2,31 @@
 layout: base
 ---
 
-<%= slotted :breadcrumb %>
+<%= slotted :breadcrumb do %>
+  <% if data.breadcrumb%>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <% data.breadcrumb.each do |title, url| %>
+          <% if url.present? %>
+            <li class="breadcrumb-item"><a href="<%= url %>"><%= title %></a></li>
+          <% else %>
+            <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+          <% end %>
+        <% end %>
+      </ol>
+    </nav>
+  <% end %>
+<% end %>
 
-<h1 class="fs-2"><%= data.section_title || data.title %></h1>
-<% subtitle = data.section_title.present? ? data.title : data.subtitle %>
-<% if subtitle.present? %>
-  <p class="lead"><%= subtitle %></p>
+<%= slotted :title do %>
+  <h1 class="fs-2"><%= data.section_title || data.title %></h1>
+<% end %>
+
+<%= slotted :subtitle do %>
+  <% subtitle = data.section_title.present? ? data.title : data.subtitle %>
+  <% if subtitle.present? %>
+    <p class="lead"><%= subtitle %></p>
+  <% end %>
 <% end %>
 
 <hr>

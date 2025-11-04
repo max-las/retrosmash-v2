@@ -1,8 +1,7 @@
 require_relative '_shared'
 
+POSSIBLE_LOGO_FORMATS = %w[svg webp].freeze
 FILTER_GAMES_ON = %w[players letter].freeze
-LETTERS = ('A'..'Z').to_a.freeze
-SPECIAL_LETTER = '#'.freeze
 
 @source_dir = ARGV[0]
 
@@ -15,19 +14,27 @@ unless File.directory?(@source_dir)
 end
 
 def run
+  %w[
+    _consoles
+    _games
+    images/consoles
+  ].each do |dir_to_remove|
+    FileUtils.remove_dir(File.join(OUTPUT_DIR, dir_to_remove))
+  end
   expanded_children(@source_dir).each do |child|
-    add_console(child) if File.directory?(child)
+    create_console_resource(child) if File.directory?(child)
   end
 end
 
-def add_console(console_dir)
-  data = parse_console_data(console_dir)
-  enrich_console_data(data, console_dir:)
-  convert_console_image(console_dir, data)
-  copy_console_logo(console_dir, data)
-  games = create_game_resources(console_dir, data)
+def create_console_resource(dir)
+  data = parse_console_data(dir)
+  slug = slugify(data['name'])
+  games = create_game_resources(dir, slug)
   add_available_filters(data, games)
-  create_console_resource(data)
+  data['image_path'] = convert_console_image(dir, slug)
+  data['logo_path'] = copy_console_logo(dir, slug)
+  resource = make_file_path('_consoles', "#{slug}.html")
+  File.write(resource, "#{data.to_yaml}---")
 end
 
 def parse_console_data(console_dir)
@@ -37,61 +44,25 @@ def parse_console_data(console_dir)
   YAML.load_file(data_file)
 end
 
-def enrich_console_data(data, console_dir:)
-  slug = data['name'].parameterize
-  data['slug'] = slug
-  logo = source_logo(console_dir)
-  data['logo_path'] = "images/consoles/#{slug}/#{File.basename(logo)}"
-  data['image_path'] = "images/consoles/#{slug}/console.webp"
-end
-
-def create_console_resource(console_data)
-  resource = make_file_path('_consoles', "#{console_data['slug']}.html")
-  File.write(resource, "#{console_data.to_yaml}---")
-end
-
-def convert_console_image(console_dir, console_data)
-  image = find_convertable_image(console_dir, 'console')
-  raise "missing console image in #{quote(console_dir)}" if image.nil?
-
-  output_image = make_file_path(console_data['image_path'])
-  convert_and_resize_image(input_path: image, output_path: output_image, height: 500, quality: 80)
-end
-
-def copy_console_logo(console_dir, console_data)
-  logo = source_logo(console_dir)
-  output_logo = make_file_path(console_data['logo_path'])
-  FileUtils.cp(logo, output_logo)
-end
-
-def source_logo(console_dir)
-  logo = File.join(console_dir, 'logo.svg')
-  return logo if File.file?(logo)
-
-  logo = File.join(console_dir, 'logo.webp')
-  raise "missing console logo in #{quote(console_dir)}" unless File.file?(logo)
-
-  logo
-end
-
-def create_game_resources(console_dir, console_data)
+def create_game_resources(console_dir, console_slug)
   games_dir = File.join(console_dir, 'games')
   unless File.directory?(games_dir)
-    return [] # raise "missing games directory in #{quote(console_dir)}"
+    return [] # TODO: raise "missing games directory in #{quote(console_dir)}"
   end
 
   expanded_children(games_dir).filter_map do |game_dir|
-    create_game_resource(game_dir, console_data['slug']) if File.directory?(game_dir)
+    create_game_resource(console_slug, game_dir) if File.directory?(game_dir)
   end
 end
 
-def create_game_resource(game_dir, console_slug)
-  parse_game_data(game_dir).tap do |data|
-    enrich_game_data(data, console_slug:)
-    convert_game_image(game_dir, data)
-    resource = make_file_path('_games', console_slug, "#{data['slug']}.html")
-    File.write(resource, "#{data.to_yaml}---")
-  end
+def create_game_resource(console_slug, dir)
+  data = parse_game_data(dir)
+  slug = slugify(data['title'])
+  data['console'] = console_slug
+  data['cover_path'] = convert_game_image(console_slug, dir, slug)
+  resource = make_file_path('_games', console_slug, "#{slug}.html")
+  File.write(resource, "#{data.to_yaml}---")
+  Game.new(**data)
 end
 
 def parse_game_data(game_dir)
@@ -101,31 +72,47 @@ def parse_game_data(game_dir)
   YAML.load_file(data_file)
 end
 
-def enrich_game_data(data, console_slug:)
-  title = data['title']
-  data['slug'] = title.parameterize
-  data['transliterated_title'] = I18n.transliterate(title)
-  slug, transliterated_title = data.values_at('slug', 'transliterated_title')
-  data['letter'] = transliterated_title.chr.upcase.then do |letter|
-    LETTERS.include?(letter) ? letter : SPECIAL_LETTER
-  end
-  data['console'] = console_slug
-  data['cover_path'] = "images/consoles/#{console_slug}/games/#{slug}.webp"
-  data['cover_alt'] = "converture de #{title}"
-end
+def convert_game_image(console_slug, game_dir, game_slug)
+  input_image = find_convertable_image(game_dir, 'cover')
+  raise "missing game image in #{quote(game_dir)}" if input_image.nil?
 
-def convert_game_image(game_dir, game_data)
-  image = find_convertable_image(game_dir, 'cover')
-  raise "missing game image in #{quote(game_dir)}" if image.nil?
-
-  output_image = make_file_path(game_data['cover_path'])
-  convert_and_resize_image(input_path: image, output_path: output_image, height: 500, quality: 80)
+  relative_path = "images/consoles/#{console_slug}/games/#{game_slug}.webp"
+  output_image = make_file_path(relative_path)
+  convert_and_resize_image(input_path: input_image, output_path: output_image, height: 500, quality: 80)
+  relative_path
 end
 
 def add_available_filters(console_data, games)
   FILTER_GAMES_ON.each do |filter|
-    console_data["available_#{filter}_filters"] = games.pluck(filter).uniq.sort
+    console_data["available_#{filter}_filters"] = games.map { it.public_send(filter) }.uniq.sort
   end
+end
+
+def convert_console_image(console_dir, console_slug)
+  input_image = find_convertable_image(console_dir, 'console')
+  raise "missing console image in #{quote(console_dir)}" if input_image.nil?
+
+  relative_path = "images/consoles/#{console_slug}/console.webp"
+  output_image = make_file_path(relative_path)
+  convert_and_resize_image(input_path: input_image, output_path: output_image, height: 500, quality: 80)
+  relative_path
+end
+
+def copy_console_logo(console_dir, console_slug)
+  input_logo = input_logo(console_dir)
+  relative_path = "images/consoles/#{console_slug}/#{File.basename(input_logo)}"
+  output_logo = make_file_path(relative_path)
+  FileUtils.cp(input_logo, output_logo)
+  relative_path
+end
+
+def input_logo(console_dir)
+  POSSIBLE_LOGO_FORMATS.each do |format|
+    candidate = File.join(console_dir, "logo.#{format}")
+    return candidate if File.file?(candidate)
+  end
+
+  raise "missing console logo in #{quote(console_dir)}"
 end
 
 run_with_context

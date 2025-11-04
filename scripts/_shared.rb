@@ -1,8 +1,12 @@
 # not a script, this is common logic to be included in actual scripts
 
-require 'active_support'
-require 'active_support/core_ext'
+require 'bridgetown-core'
+require 'active_support/all'
 require 'rmagick'
+
+Dir.glob(File.join(Dir.pwd, 'models', '**', '*.rb')).each do |file|
+  require file
+end
 
 CONVERTABLE_IMAGE_EXTENSIONS = %w[jpg jpeg png].freeze
 OUTPUT_DIR = 'src'.freeze
@@ -17,6 +21,10 @@ end
 
 def expanded_children(dir)
   Dir.children(dir).map { |child| File.join(dir, child) }
+end
+
+def slugify(string)
+  string.parameterize # removes special characters, unlike Bridgetown::Utils.slugify
 end
 
 def quote(string)

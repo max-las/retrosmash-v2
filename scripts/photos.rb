@@ -11,6 +11,13 @@ unless File.directory?(@source_dir)
 end
 
 def run
+  %w[
+    _photo_events
+    _photos
+    images/photo-events
+  ].each do |dir_to_remove|
+    FileUtils.remove_dir(File.join(OUTPUT_DIR, dir_to_remove))
+  end
   expanded_children(@source_dir).each do |child|
     add_photo_event(child) if File.directory?(child)
   end
