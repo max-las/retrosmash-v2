@@ -28,7 +28,6 @@
     "@hotwired/turbo": "^8.0.13",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "5.3.3",
-    "dexie": "^4.0.11",
     "photoswipe": "^5.4.4",
     "turbo-shadow": "^1.2.0"
   }

@@ -4,6 +4,20 @@ layout: section
 
 <% console = resource %>
 
+<% slot :breadcrumb do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <% console.data.breadcrumb.each do |title, url| %>
+        <% if url.present? %>
+          <li class="breadcrumb-item"><a href="<%= url %>"><%= title %></a></li>
+        <% else %>
+          <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+        <% end %>
+      <% end %>
+    </ol>
+  </nav>
+<% end %>
+
 <div class="card border-0 mb-2 console-summary-card">
   <img
     class="card-img-top"

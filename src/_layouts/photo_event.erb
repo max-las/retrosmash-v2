@@ -4,11 +4,25 @@ layout: section
 
 <% photo_event = resource %>
 
+<% slot :breadcrumb do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <% photo_event.data.breadcrumb.each do |title, url| %>
+        <% if url.present? %>
+          <li class="breadcrumb-item"><a href="<%= url %>"><%= title %></a></li>
+        <% else %>
+          <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
+        <% end %>
+      <% end %>
+    </ol>
+  </nav>
+<% end %>
+
 <div
   id="<%= "#{photo_event.data.slug}-gallery" %>"
   class="d-flex flex-wrap justify-content-start gap-2"
   data-controller="photoswipe">
-  <% resource.relations.photos.each do |photo| %>
+  <% photo_event.relations.photos.each do |photo| %>
     <div class="d-flex align-items-center">
       <a
         href="<%= photo.data.image_path %>"
