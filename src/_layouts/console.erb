@@ -18,6 +18,14 @@ layout: section
   </nav>
 <% end %>
 
+<% slot :title do %>
+  <% console.full_name %>
+<% end %>
+
+<% slot :subtitle do %>
+  Découvrez notre catalogue <%= console.name %>
+<% end %>
+
 <div class="card border-0 mb-2 console-summary-card">
   <img
     class="card-img-top"

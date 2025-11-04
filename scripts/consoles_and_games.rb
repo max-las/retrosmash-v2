@@ -38,23 +38,11 @@ def parse_console_data(console_dir)
 end
 
 def enrich_console_data(data, console_dir:)
-  data['layout'] = 'console'
-  name, publisher = data.values_at('name', 'publisher')
-  data['slug'] = name.parameterize
-  data['full_name'] ||= name.include?(publisher) ? name : "#{publisher} #{name}"
-  slug, full_name = data.values_at('slug', 'full_name')
-  data['title'] = full_name
-  data['subtitle'] = "Découvrez notre catalogue #{name}"
-  data['breadcrumb'] = {
-    'Accueil' => '.',
-    'Inventaire' => 'inventory/',
-    name => nil
-  }
+  slug = data['name'].parameterize
+  data['slug'] = slug
   logo = source_logo(console_dir)
   data['logo_path'] = "images/consoles/#{slug}/#{File.basename(logo)}"
-  data['logo_alt'] = "logo de la #{name}"
   data['image_path'] = "images/consoles/#{slug}/console.webp"
-  data['image_alt'] = "console #{full_name}"
 end
 
 def create_console_resource(console_data)
