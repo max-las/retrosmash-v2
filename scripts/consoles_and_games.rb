@@ -1,5 +1,10 @@
 require_relative '_shared'
 
+DIRS_TO_REPLACE = %w[
+  _consoles
+  _games
+  images/consoles
+].freeze
 POSSIBLE_LOGO_FORMATS = %w[svg webp].freeze
 FILTER_GAMES_ON = %w[players letter].freeze
 
@@ -14,13 +19,6 @@ unless File.directory?(@source_dir)
 end
 
 def run
-  %w[
-    _consoles
-    _games
-    images/consoles
-  ].each do |dir_to_remove|
-    FileUtils.remove_dir(File.join(OUTPUT_DIR, dir_to_remove))
-  end
   expanded_children(@source_dir).each do |child|
     create_console_resource(child) if File.directory?(child)
   end

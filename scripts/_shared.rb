@@ -15,6 +15,9 @@ CONSTRUCTION_DIR = File.join('under_construction', OUTPUT_DIR)
 def run_with_context
   FileUtils.remove_entry(CONSTRUCTION_DIR) if File.exist?(CONSTRUCTION_DIR)
   run
+  if self.class.const_defined?(:DIRS_TO_REPLACE)
+    DIRS_TO_REPLACE.each { FileUtils.remove_dir(File.join(OUTPUT_DIR, it)) }
+  end
   FileUtils.copy_entry(CONSTRUCTION_DIR, 'src')
   FileUtils.remove_dir(CONSTRUCTION_DIR)
 end
