@@ -4,28 +4,15 @@ layout: section
 
 <% console = resource.model %>
 
-<% slot :breadcrumb do %>
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <a href=".">Accueil</a>
-      </li>
-      <li class="breadcrumb-item">
-        <a href="/inventory">Inventaire</a>
-      </li>
-      <li class="breadcrumb-item active" aria-current="page">
-        <%= console.name %>
-      </li>
-    </ol>
-  </nav>
-<% end %>
-
-<% slot :title do %>
-  <h1 class="fs-2"><%= console.full_name %></h1>
-<% end %>
-
-<% slot :subtitle do %>
-  <p class="lead">Découvrez notre catalogue <%= console.name %></p>
+<% slot :section_head do %>
+  <%= render Sections::HeadComponent.new(
+    breadcrumb: [
+      ['Inventaire', '/inventory'],
+      console.name
+    ],
+    title: console.full_name,
+    subtitle: "Découvrez notre catalogue #{console.name}"
+  ) %>
 <% end %>
 
 <div class="card border-0 mb-2 console-summary-card">
