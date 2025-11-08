@@ -3,7 +3,7 @@ layout: base
 ---
 
 <%= slotted :section_head do %>
-  <%= render Sections::HeadComponent.new(title: data.title) %>
+  <%= render Sections::HeadComponent.new(title: data.title, subtitle: data.subtitle) %>
 <% end %>
 
 <hr>
