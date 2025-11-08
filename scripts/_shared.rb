@@ -22,7 +22,7 @@ def run_with_context
   FileUtils.remove_dir(CONSTRUCTION_DIR)
 end
 
-def expanded_children(dir)
+def dir_children(dir)
   Dir.children(dir).map { |child| File.join(dir, child) }
 end
 

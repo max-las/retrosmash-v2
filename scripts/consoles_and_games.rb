@@ -5,6 +5,7 @@ DIRS_TO_REPLACE = %w[
   _games
   images/consoles
 ].freeze
+CONSOLE_DEFAULTS = { layout: 'console' }.freeze
 POSSIBLE_LOGO_FORMATS = %w[svg webp].freeze
 FILTER_GAMES_ON = %w[players letter].freeze
 
@@ -19,9 +20,15 @@ unless File.directory?(@source_dir)
 end
 
 def run
-  expanded_children(@source_dir).each do |child|
+  create_console_defaults
+  dir_children(@source_dir).each do |child|
     create_console_resource(child) if File.directory?(child)
   end
+end
+
+def create_console_defaults
+  defaults_file = make_file_path('_consoles', '_defaults.yml')
+  File.write(defaults_file, CONSOLE_DEFAULTS.to_yaml(stringify_names: true))
 end
 
 def create_console_resource(dir)
@@ -48,15 +55,21 @@ def create_game_resources(console_dir, console_slug)
     return [] # TODO: raise "missing games directory in #{quote(console_dir)}"
   end
 
-  expanded_children(games_dir).filter_map do |game_dir|
+  create_game_defaults(console_slug)
+  dir_children(games_dir).filter_map do |game_dir|
     create_game_resource(console_slug, game_dir) if File.directory?(game_dir)
   end
+end
+
+def create_game_defaults(console_slug)
+  defaults = { console: console_slug }
+  defaults_file = make_file_path('_games', console_slug, '_defaults.yml')
+  File.write(defaults_file, defaults.to_yaml(stringify_names: true))
 end
 
 def create_game_resource(console_slug, dir)
   data = parse_game_data(dir)
   slug = slugify(data['title'])
-  data['console'] = console_slug
   data['cover_path'] = convert_game_image(console_slug, dir, slug)
   resource = make_file_path('_games', console_slug, "#{slug}.html")
   File.write(resource, "#{data.to_yaml}---")

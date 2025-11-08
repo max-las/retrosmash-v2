@@ -11,7 +11,7 @@ unless File.directory?(@source_dir)
 end
 
 def run
-  expanded_children(@source_dir).each do |child|
+  dir_children(@source_dir).each do |child|
     convert(child) if File.file?(child)
   end
 end
