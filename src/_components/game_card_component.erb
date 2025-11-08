@@ -1,22 +1,22 @@
 <div
   class="card game-card mb-3"
-  data-letter="<%= @game.data.letter %>"
-  data-players="<%= @game.data.players %>">
-  <img src="<%= @game.data.cover_path %>" alt="<%= @game.data.cover_alt %>" class="card-img-top">
+  data-letter="<%= @game.letter %>"
+  data-players="<%= @game.players %>">
+  <img src="<%= @game.cover_path %>" alt="<%= @game.cover_alt %>" class="card-img-top">
   <div class="card-body">
     <h5
       class="card-title fs-5 text-truncate"
       data-controller="tooltip"
-      data-tooltip-title-value="<%= @game.data.title %>">
-      <%= @game.data.title %>
+      data-tooltip-title-value="<%= @game.title %>">
+      <%= @game.title %>
     </h5>
     <table class="table table-sm mb-0">
       <tr>
-        <td><%= @game.data.players %> joueurs</td>
+        <td><%= @game.players %> joueurs</td>
       </tr>
-      <% if @game.data.pegi %>
+      <% if @game.pegi %>
         <tr>
-          <td>PEGI <%= @game.data.pegi %></td>
+          <td>PEGI <%= @game.pegi %></td>
         </tr>
       <% end %>
     </table>

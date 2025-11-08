@@ -1,0 +1,26 @@
+<% if @breadcrumb %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href=".">Accueil</a>
+      </li>
+      <% @breadcrumb.each_with_index do |segment, index| %>
+        <% if index + 1 < @breadcrumb.size %>
+          <li class="breadcrumb-item">
+            <a href="<%= segment[1] %>"><%= segment[0] %></a>
+          </li>
+        <% else %>
+          <li class="breadcrumb-item active" aria-current="page">
+            <%= segment %>
+          </li>
+        <% end %>
+      <% end %>
+    </ol>
+  </nav>
+<% end %>
+
+<h1 class="fs-2"><%= @title %></h1>
+
+<% if @subtitle %>
+  <p class="lead"><%= @subtitle %></p>
+<% end %>

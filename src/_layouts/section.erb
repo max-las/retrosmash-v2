@@ -2,12 +2,8 @@
 layout: base
 ---
 
-<%= slotted :breadcrumb %>
-
-<h1 class="fs-2"><%= data.section_title || data.title %></h1>
-<% subtitle = data.section_title.present? ? data.title : data.subtitle %>
-<% if subtitle.present? %>
-  <p class="lead"><%= subtitle %></p>
+<%= slotted :section_head do %>
+  <%= render Sections::HeadComponent.new(title: data.title, subtitle: data.subtitle) %>
 <% end %>
 
 <hr>

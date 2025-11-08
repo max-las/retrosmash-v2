@@ -2,33 +2,30 @@
 layout: section
 ---
 
-<% photo_event = resource %>
+<% photo_event = resource.model %>
 
-<% slot :breadcrumb do %>
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <% photo_event.data.breadcrumb.each do |title, url| %>
-        <% if url.present? %>
-          <li class="breadcrumb-item"><a href="<%= url %>"><%= title %></a></li>
-        <% else %>
-          <li class="breadcrumb-item active" aria-current="page"><%= title %></li>
-        <% end %>
-      <% end %>
-    </ol>
-  </nav>
+<% slot :section_head do %>
+  <%= render Sections::HeadComponent.new(
+    breadcrumb: [
+      ['Galerie photo', '/gallery'],
+      photo_event.title
+    ],
+    title: 'Galerie photo',
+    subtitle: photo_event.title
+  ) %>
 <% end %>
 
 <div
-  id="<%= "#{photo_event.data.slug}-gallery" %>"
+  id="<%= photo_event.gallery_id %>"
   class="d-flex flex-wrap justify-content-start gap-2"
   data-controller="photoswipe">
-  <% photo_event.relations.photos.each do |photo| %>
+  <% resource.relations.photos.map(&:model).each do |photo| %>
     <div class="d-flex align-items-center">
       <a
-        href="<%= photo.data.image_path %>"
-        data-pswp-width="<%= photo.data.width %>"
-        data-pswp-height="<%= photo.data.height %>">
-        <img class="event-photo" src="<%= photo.data.thumbnail_path %>" alt="<%= photo.data.name %>">
+        href="<%= photo.image_path %>"
+        data-pswp-width="<%= photo.width %>"
+        data-pswp-height="<%= photo.height %>">
+        <img class="event-photo" src="<%= photo.thumbnail_path %>" alt="<%= photo.name %>">
       </a>
     </div>
   <% end %>

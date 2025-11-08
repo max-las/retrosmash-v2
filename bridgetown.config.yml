@@ -21,10 +21,9 @@ permalink: pretty
 
 template_engine: erb
 
-# Uncomment to use models
-# autoload_paths:
-#   - path: models
-#     eager: true
+autoload_paths:
+  - path: models
+    eager: true
 
 collections:
   sections:

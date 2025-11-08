@@ -1,8 +1,12 @@
 # not a script, this is common logic to be included in actual scripts
 
-require 'active_support'
-require 'active_support/core_ext'
+require 'bridgetown-core'
+require 'active_support/all'
 require 'rmagick'
+
+Dir.glob(File.join(Dir.pwd, 'models', '**', '*.rb')).each do |file|
+  require file
+end
 
 CONVERTABLE_IMAGE_EXTENSIONS = %w[jpg jpeg png].freeze
 OUTPUT_DIR = 'src'.freeze
@@ -11,12 +15,19 @@ CONSTRUCTION_DIR = File.join('under_construction', OUTPUT_DIR)
 def run_with_context
   FileUtils.remove_entry(CONSTRUCTION_DIR) if File.exist?(CONSTRUCTION_DIR)
   run
+  if self.class.const_defined?(:DIRS_TO_REPLACE)
+    DIRS_TO_REPLACE.each { FileUtils.remove_dir(File.join(OUTPUT_DIR, it)) }
+  end
   FileUtils.copy_entry(CONSTRUCTION_DIR, 'src')
   FileUtils.remove_dir(CONSTRUCTION_DIR)
 end
 
-def expanded_children(dir)
+def dir_children(dir)
   Dir.children(dir).map { |child| File.join(dir, child) }
+end
+
+def slugify(string)
+  string.parameterize # removes special characters, unlike Bridgetown::Utils.slugify
 end
 
 def quote(string)

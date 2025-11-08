@@ -12,7 +12,7 @@
   <form class="dropdown-menu p-4">
     <h6 class="dropdown-header px-0">Nombre de joueurs</h6>
     <div class="mb-3">
-      <% @console.data.available_players_filters.each do |players| %>
+      <% @console.available_players_filters.each do |players| %>
         <% id = "players_filter_#{players}_checkbox" %>
         <div class="form-check">
           <input
