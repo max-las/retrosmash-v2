@@ -15,4 +15,8 @@ class Game < Bridgetown::Model::Base
   def cover_alt
     "converture de #{title}"
   end
+
+  def pegi?
+    attributes.key?('pegi')
+  end
 end

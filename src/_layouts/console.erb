@@ -17,7 +17,7 @@ layout: section
 
 <div class="card border-0 mb-2 console-summary-card">
   <img
-    class="card-img-top"
+    class="card-img-top console-summary-card__image"
     src="<%= console.image_path %>"
     alt="<%= console.image_alt %>">
   <div class="card-body px-0 pb-0">
@@ -32,7 +32,7 @@ layout: section
   </div>
 </div>
 
-<% under_construction = true %>
+<% under_construction = !['PlayStation 1'].include?(console.name) %>
 <% if under_construction %>
   <h2 class="fs-3 mb-0">Jeux disponibles</h2>
   <hr>

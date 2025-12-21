@@ -1,5 +1,10 @@
 .console-summary-card {
   width: 16rem;
+
+  &__image {
+    max-height: 8rem;
+    object-fit: contain;
+  }
 }
 
 .letter {
@@ -8,5 +13,11 @@
 
 .game-card {
   width: 14rem;
+
+  &__image {
+    &--square {
+      aspect-ratio: 1 / 1;
+    }
+  }
 }
 
