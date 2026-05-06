@@ -15,9 +15,7 @@ CONSTRUCTION_DIR = File.join('under_construction', OUTPUT_DIR)
 def run_with_context
   FileUtils.remove_entry(CONSTRUCTION_DIR) if File.exist?(CONSTRUCTION_DIR)
   run
-  if self.class.const_defined?(:DIRS_TO_REPLACE)
-    DIRS_TO_REPLACE.each { FileUtils.remove_dir(File.join(OUTPUT_DIR, it)) }
-  end
+  remove_dirs_to_replace if self.class.const_defined?(:DIRS_TO_REPLACE)
   FileUtils.copy_entry(CONSTRUCTION_DIR, 'src')
   FileUtils.remove_dir(CONSTRUCTION_DIR)
 end
@@ -64,4 +62,11 @@ def convert_and_resize_image(input_path:, output_path:, quality:, height: nil)
   end
   image.write(output_path) { |options| options.quality = quality }
   dimensions
+end
+
+def remove_dirs_to_replace
+  DIRS_TO_REPLACE.each do |dir_to_replace|
+    dir_to_remove = File.join(OUTPUT_DIR, dir_to_replace)
+    FileUtils.remove_dir(dir_to_remove) if File.directory?(dir_to_remove)
+  end
 end

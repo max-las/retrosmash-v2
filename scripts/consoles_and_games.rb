@@ -1,13 +1,32 @@
 require_relative '_shared'
 
-DIRS_TO_REPLACE = %w[
-  _consoles
-  _games
-  images/consoles
-].freeze
 CONSOLE_DEFAULTS = { layout: 'console' }.freeze
 POSSIBLE_LOGO_FORMATS = %w[svg webp].freeze
 FILTER_GAMES_ON = %w[players letter].freeze
+
+ONLY = [
+  {
+    source: 'xbox-series',
+    slug_to_replace: 'xbox-series'
+  }
+].freeze
+
+DIRS_TO_REPLACE =
+  if self.class.const_defined?(:ONLY)
+    ONLY.each_with_object([]) do |console, array|
+      slug = console[:slug_to_replace]
+      array.push(
+        "games/#{slug}",
+        "images/consoles/#{slug}"
+      )
+    end.freeze
+  else
+    %w[
+      _consoles
+      _games
+      images/consoles
+    ].freeze
+  end
 
 @source_dir = ARGV[0]
 
@@ -22,7 +41,10 @@ end
 def run
   create_console_defaults
   dir_children(@source_dir).each do |child|
-    create_console_resource(child) if File.directory?(child)
+    next unless File.directory?(child)
+    next if self.class.const_defined?(:ONLY) && ONLY.none? { it[:source] == File.basename(child) }
+
+    create_console_resource(child)
   end
 end
 
