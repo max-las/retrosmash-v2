@@ -3,6 +3,7 @@ layout: section
 ---
 
 <% console = resource.model %>
+<% slug = resource.data.slug %>
 
 <% slot :section_head do %>
   <%= render Sections::HeadComponent.new(
@@ -32,7 +33,7 @@ layout: section
   </div>
 </div>
 
-<% under_construction = !['PlayStation 1'].include?(console.name) %>
+<% under_construction = !['playstation-1', 'super-nintendo'].include?(slug) %>
 <% if under_construction %>
   <h2 class="fs-3 mb-0">Jeux disponibles</h2>
   <hr>
@@ -57,7 +58,7 @@ layout: section
 
     <div class="d-flex flex-wrap gap-2" data-game-collection-target="gamesList">
       <% resource.relations.games.each do |game| %>
-        <%= render GameCardComponent.new(game: game.model) %>
+        <%= render GameCardComponent.new(game: game.model, console: slug) %>
       <% end %>
     </div>
   </div>

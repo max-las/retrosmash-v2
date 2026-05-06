@@ -15,8 +15,16 @@
   width: 14rem;
 
   &__image {
-    &--square {
+    &--playstation-1 {
       aspect-ratio: 1 / 1;
+    }
+
+    &--super-nintendo {
+      aspect-ratio: 7 / 5;
+    }
+
+    &--nintendo-64 {
+      aspect-ratio: 7 / 5;
     }
   }
 }
