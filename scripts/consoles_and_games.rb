@@ -4,12 +4,12 @@ CONSOLE_DEFAULTS = { layout: 'console' }.freeze
 POSSIBLE_LOGO_FORMATS = %w[svg webp].freeze
 FILTER_GAMES_ON = %w[players letter].freeze
 
-ONLY = [
-  {
-    source: 'xbox-series',
-    slug_to_replace: 'xbox-series'
-  }
-].freeze
+# ONLY = [
+#   {
+#     source: 'n64',
+#     slug_to_replace: 'nintendo-64'
+#   }
+# ].freeze
 
 DIRS_TO_REPLACE =
   if self.class.const_defined?(:ONLY)
