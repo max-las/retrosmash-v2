@@ -17,11 +17,12 @@ Welcome to your new Bridgetown website! You can update this README file to provi
 - [Make](https://www.gnu.org/software/make/)
 - [Ruby](https://www.ruby-lang.org/en/downloads/)
   - `>= 3.1.4`
-- [Bridgetown Gem](https://rubygems.org/gems/bridgetown)
+- [Bridgetown gem](https://rubygems.org/gems/bridgetown)
   - `gem install bridgetown -N`
 - [Node](https://nodejs.org)
   - `>= 22`
 - [Yarn](https://yarnpkg.com)
+- [RMagick dependencies](https://github.com/rmagick/rmagick#prerequisites)
 
 ## Install
 

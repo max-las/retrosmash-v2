@@ -37,4 +37,4 @@ gem "puma", "< 7"
 
 gem "rubocop", "~> 1.75"
 
-gem "rmagick", "~> 6.1"
+gem "rmagick", "~> 6.3"

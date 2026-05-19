@@ -117,7 +117,7 @@ GEM
     parser (3.3.7.4)
       ast (~> 2.4.1)
       racc
-    pkg-config (1.6.0)
+    pkg-config (1.6.5)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -145,7 +145,7 @@ GEM
     reline (0.6.2)
       io-console (~> 0.5)
     rexml (3.4.4)
-    rmagick (6.1.1)
+    rmagick (6.3.0)
       observer (~> 0.1)
       pkg-config (~> 1.4)
     roda (3.97.0)
@@ -204,7 +204,7 @@ PLATFORMS
 DEPENDENCIES
   bridgetown (~> 2.0.3)
   puma (< 7)
-  rmagick (~> 6.1)
+  rmagick (~> 6.3)
   rubocop (~> 1.75)
 
 BUNDLED WITH

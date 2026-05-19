@@ -8,7 +8,7 @@ Dir.glob(File.join(Dir.pwd, 'models', '**', '*.rb')).each do |file|
   require file
 end
 
-CONVERTABLE_IMAGE_EXTENSIONS = %w[jpg jpeg png].freeze
+CONVERTABLE_IMAGE_EXTENSIONS = %w[jpg jpeg png webp].freeze
 OUTPUT_DIR = 'src'.freeze
 CONSTRUCTION_DIR = File.join('under_construction', OUTPUT_DIR)
 
