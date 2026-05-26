@@ -15,8 +15,12 @@
   width: 14rem;
 
   &__image {
+    &--gamecube {
+      aspect-ratio: 72 / 100;
+    }
+
     &--nintendo-64 {
-      aspect-ratio: 143 / 100;;
+      aspect-ratio: 143 / 100;
     }
 
     &--playstation-1 {
