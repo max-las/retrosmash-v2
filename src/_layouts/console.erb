@@ -33,14 +33,7 @@ layout: section
   </div>
 </div>
 
-<% under_construction = !%w[
-  playstation-1
-  playstation-4
-  super-nintendo
-  nintendo-64
-  gamecube
-].include?(slug) %>
-<% if under_construction %>
+<% if resource.data.games_under_construction %>
   <h2 class="fs-3 mb-0">Jeux disponibles</h2>
   <hr>
   <div class="d-flex align-items-center gap-2 fs-4 mb-3">
