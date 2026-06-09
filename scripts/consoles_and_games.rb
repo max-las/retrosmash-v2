@@ -1,6 +1,9 @@
 require_relative '_shared'
 
-CONSOLE_DEFAULTS = { layout: 'console' }.freeze
+CONSOLE_DEFAULTS = {
+  layout: 'console',
+  games_under_construction: false
+}.freeze
 POSSIBLE_LOGO_FORMATS = %w[svg webp].freeze
 FILTER_GAMES_ON = %w[players letter].freeze
 
