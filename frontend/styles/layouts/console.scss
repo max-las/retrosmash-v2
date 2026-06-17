@@ -15,6 +15,10 @@
   width: 14rem;
 
   &__image {
+    &--dreamcast {
+      aspect-ratio: 1 / 1;
+    }
+
     &--gamecube {
       aspect-ratio: 72 / 100;
     }
@@ -31,6 +35,10 @@
       aspect-ratio: 80 / 100;
     }
 
+    &--playstation-5 {
+      aspect-ratio: 80 / 100;
+    }
+
     &--super-nintendo {
       aspect-ratio: 143 / 100;
     }
@@ -41,6 +49,10 @@
 
     &--wii-u {
       aspect-ratio: 72 / 100;
+    }
+
+    &--xbox {
+      aspect-ratio: 80 / 100;
     }
 
     &--xbox-one {
