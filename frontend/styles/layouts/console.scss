@@ -23,6 +23,14 @@
       aspect-ratio: 72 / 100;
     }
 
+    &--master-system {
+      aspect-ratio: 72 / 100;
+    }
+
+    &--nes {
+      aspect-ratio: 72 / 100;
+    }
+
     &--nintendo-64 {
       aspect-ratio: 143 / 100;
     }
@@ -41,6 +49,10 @@
 
     &--super-nintendo {
       aspect-ratio: 143 / 100;
+    }
+
+    &--switch {
+      aspect-ratio: 67 / 100;
     }
 
     &--wii {
