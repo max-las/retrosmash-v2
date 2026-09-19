@@ -56,8 +56,8 @@ layout: section
     <%= render Consoles::LetterFiltersComponent.new(console) %>
 
     <div class="d-flex flex-wrap gap-2" data-game-collection-target="gamesList">
-      <% resource.relations.games.each do |game| %>
-        <%= render GameCardComponent.new(game: game.model, console: slug) %>
+      <% resource.relations.games.map(&:model).sort_by(&:sort_key).each do |game| %>
+        <%= render GameCardComponent.new(game:, console: slug) %>
       <% end %>
     </div>
   </div>

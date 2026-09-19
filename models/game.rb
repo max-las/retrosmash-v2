@@ -3,7 +3,15 @@ class Game < Bridgetown::Model::Base
   SPECIAL_LETTER = '#'.freeze
 
   def transliterated_title
-    I18n.transliterate(title)
+    @transliterated_title ||= I18n.transliterate(title)
+  end
+
+  def sort_key
+    if transliterated_title.match?(/ \d\z/)
+      transliterated_title
+    else
+      "#{transliterated_title} 0"
+    end
   end
 
   def letter
