@@ -7,6 +7,8 @@ CONSOLE_DEFAULTS = {
 POSSIBLE_LOGO_FORMATS = %w[svg webp].freeze
 FILTER_GAMES_ON = %w[players letter].freeze
 
+# FIXME: src/_games/ is not regenerated
+
 # ONLY = [
 #   {
 #     source: 'n64',
