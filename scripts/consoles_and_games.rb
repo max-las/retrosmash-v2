@@ -7,8 +7,6 @@ CONSOLE_DEFAULTS = {
 POSSIBLE_LOGO_FORMATS = %w[svg webp].freeze
 FILTER_GAMES_ON = %w[players letter].freeze
 
-# FIXME: src/_games/ is not regenerated
-
 # ONLY = [
 #   {
 #     source: 'n64',
@@ -21,7 +19,7 @@ DIRS_TO_REPLACE =
     ONLY.each_with_object([]) do |console, array|
       slug = console[:slug_to_replace]
       array.push(
-        "games/#{slug}",
+        "_games/#{slug}",
         "images/consoles/#{slug}"
       )
     end.freeze
