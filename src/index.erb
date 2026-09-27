@@ -2,8 +2,8 @@
 layout: base
 ---
 
-<div class="row">
-  <div class="col-12 col-md-8">
+<div class="row" id="welcome" data-controller="photoswipe">
+  <div class="col-12 col-md-6">
     <div class="d-flex justify-content-start align-items-center h-100">
       <div>
         <p class="display-3 text-primary fw-bold">
@@ -16,29 +16,41 @@ layout: base
     </div>
   </div>
 
-  <% upcoming = false %>
-  <div class="col-12 col-md-4">
-    <div class="d-flex justify-content-center align-items-center">
-      <div class="card upcoming-flyer">
-        <img
-          src="<%= site.data.current_event['flyer_path'] %>"
-          class="card-img-top"
-          alt="<%= site.data.current_event['name'] %>">
-        <div class="card-body">
-          <h5 class="card-title text-danger">
-            <% icon = upcoming ? 'bi-bell-fill' : 'bi-clock-history' %>
-            <i class="<%= class_names('bi', icon, 'me-1') %>"></i>
-            <%= upcoming ? 'Prochainement' : 'Précédemment' %>
-          </h5>
-          <% if upcoming %>
-            <p class="card-text">À vos agendas !</p>
-            <a href="tournament-registration" class="btn btn-primary">
-              <i class="bi-trophy-fill text-warning me-2"></i>
-              S'inscrire
-            </a>
-          <% end %>
+  <% site.data.current_events.each do |current_event| %>
+    <% upcoming = true %>
+    <% registration = false %>
+    <div class="col-12 col-md-3">
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="card upcoming-flyer">
+          <a
+            href="<%= current_event['flyer_path'] %>"
+            data-pswp-width="<%= current_event['flyer_width'] %>"
+            data-pswp-height="<%= current_event['flyer_height'] %>">
+            <img
+              class="card-img-top"
+              src="<%= current_event['flyer_path'] %>"
+              alt="<%= current_event['name'] %>">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title text-danger">
+              <% icon = upcoming ? 'bi-bell-fill' : 'bi-clock-history' %>
+              <i class="<%= class_names('bi', icon, 'me-1') %>"></i>
+              <%= upcoming ? 'Prochainement' : 'Précédemment' %>
+            </h5>
+            <% if upcoming %>
+              <% if registration %>
+                <p class="card-text">À vos agendas !</p>
+                <a href="tournament-registration" class="btn btn-primary">
+                  <i class="bi-trophy-fill text-warning me-2"></i>
+                  S'inscrire
+                </a>
+              <% else %>
+                  <p class="card-text"><%= current_event['name'] %></p>
+              <% end %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  <% end %>
 </div>
