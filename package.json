@@ -27,7 +27,7 @@
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo": "^8.0.13",
     "@popperjs/core": "^2.11.8",
-    "bootstrap": "5.3.3",
+    "bootstrap": "5.3.8",
     "photoswipe": "^5.4.4",
     "turbo-shadow": "^1.2.0"
   }
