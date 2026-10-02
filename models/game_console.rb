@@ -1,4 +1,4 @@
-class Console < Bridgetown::Model::Base
+class GameConsole < Bridgetown::Model::Base
   def full_name
     name.include?(publisher) ? name : "#{publisher} #{name}"
   end

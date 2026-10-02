@@ -25,7 +25,7 @@ DIRS_TO_REPLACE =
     end.freeze
   else
     %w[
-      _consoles
+      _game_consoles
       _games
       images/consoles
     ].freeze
@@ -52,7 +52,7 @@ def run
 end
 
 def create_console_defaults
-  defaults_file = make_file_path('_consoles', '_defaults.yml')
+  defaults_file = make_file_path('_game_consoles', '_defaults.yml')
   File.write(defaults_file, CONSOLE_DEFAULTS.to_yaml(stringify_names: true))
 end
 
@@ -63,7 +63,7 @@ def create_console_resource(dir)
   add_available_filters(data, games)
   data['image_path'] = convert_console_image(dir, slug)
   data['logo_path'] = copy_console_logo(dir, slug)
-  resource = make_file_path('_consoles', "#{slug}.html")
+  resource = make_file_path('_game_consoles', "#{slug}.html")
   File.write(resource, "#{data.to_yaml}---")
 end
 
@@ -87,7 +87,7 @@ def create_game_resources(console_dir, console_slug)
 end
 
 def create_game_defaults(console_slug)
-  defaults = { console: console_slug }
+  defaults = { game_console: console_slug }
   defaults_file = make_file_path('_games', console_slug, '_defaults.yml')
   File.write(defaults_file, defaults.to_yaml(stringify_names: true))
 end

@@ -5,7 +5,7 @@ title: Inventaire
 subtitle: Parcourez la liste des consoles et des jeux dont nous disposons
 ---
 
-<% collections.consoles.resources.group_by { it.model.publisher }.each do |publisher, resources| %>
+<% collections.game_consoles.resources.group_by { it.model.publisher }.each do |publisher, resources| %>
   <h2 class="fs-3"><%= publisher %></h2>
   <div class="d-flex flex-wrap gap-2 mb-3">
     <% resources.sort_by { it.model.generation }.each do |resource| %>

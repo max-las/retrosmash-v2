@@ -1,4 +1,4 @@
-module Consoles
+module GameConsoles
   class PlayersFiltersComponent < Bridgetown::Component
     def initialize(console)
       @console = console

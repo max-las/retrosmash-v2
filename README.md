@@ -16,7 +16,7 @@ Welcome to your new Bridgetown website! You can update this README file to provi
 - [GCC](https://gcc.gnu.org/install/)
 - [Make](https://www.gnu.org/software/make/)
 - [Ruby](https://www.ruby-lang.org/en/downloads/)
-  - `>= 3.1.4`
+  - `>= 3.2`
 - [Bridgetown gem](https://rubygems.org/gems/bridgetown)
   - `gem install bridgetown -N`
 - [Node](https://nodejs.org)
