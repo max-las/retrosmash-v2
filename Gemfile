@@ -38,4 +38,4 @@ gem "bridgetown", "~> 2.2.2"
 gem "puma", "< 7"
 
 gem "rmagick", "~> 6.3"
-gem "rubocop", "~> 1.75"
+gem "rubocop", "~> 1.91"
