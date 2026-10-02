@@ -35,7 +35,7 @@ gem "bridgetown", "~> 2.2.2"
 
 # Puma is the Rack-compatible web server used by Bridgetown
 # (you can optionally limit this to the "development" group)
-gem "puma", "< 7"
+gem "puma", "< 9"
 
 gem "rmagick", "~> 6.3"
 gem "rubocop", "~> 1.75"
