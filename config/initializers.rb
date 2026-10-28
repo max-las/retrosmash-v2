@@ -5,46 +5,46 @@ Bridgetown.configure do |config|
   # visit: https://www.bridgetownrb.com/docs/configuration/initializers/
 
   config.autoload_paths << {
-    path: "models",
+    path: 'models',
     eager: true
   }
 
   collections do
     sections do
       output true
-      permalink "/:slug/"
-      sort_by "rank"
+      permalink '/:slug/'
+      sort_by 'rank'
     end
 
     game_consoles do
       output true
-      permalink "/consoles/:slug/"
-      sort_by "publisher"
+      permalink '/consoles/:slug/'
+      sort_by 'publisher'
       relations do
-        has_many "games"
+        has_many 'games'
       end
     end
 
     games do
       output false
       relations do
-        belongs_to "game_console"
+        belongs_to 'game_console'
       end
     end
 
     photo_events do
       output true
-      permalink "/photo-events/:slug/"
-      sort_by "title"
+      permalink '/photo-events/:slug/'
+      sort_by 'title'
       relations do
-        has_many "photos"
+        has_many 'photos'
       end
     end
 
     photos do
       output false
       relations do
-        belongs_to "photo_event"
+        belongs_to 'photo_event'
       end
     end
   end
