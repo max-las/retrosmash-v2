@@ -1,12 +1,17 @@
 AllCops:
   Exclude:
-   - Gemfile
-   - Rakefile
+    - 'bin/**/*'
+    - Gemfile
+    - Rakefile
+  NewCops: enable
 
 Lint/MissingSuper:
   Enabled: false
 
 Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
   Enabled: false
 
 Metrics/MethodLength:
@@ -20,3 +25,10 @@ Style/FrozenStringLiteralComment:
 
 Style/IfUnlessModifier:
   Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/SymbolProc:
+  Exclude:
+    - server/roda_app.rb

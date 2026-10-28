@@ -13,7 +13,7 @@ OUTPUT_DIR = 'src'.freeze
 CONSTRUCTION_DIR = File.join('under_construction', OUTPUT_DIR)
 
 def run_with_context
-  FileUtils.remove_entry(CONSTRUCTION_DIR) if File.exist?(CONSTRUCTION_DIR)
+  FileUtils.rm_rf(CONSTRUCTION_DIR)
   run
   remove_dirs_to_replace if self.class.const_defined?(:DIRS_TO_REPLACE)
   FileUtils.copy_entry(CONSTRUCTION_DIR, 'src')
