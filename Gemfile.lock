@@ -160,7 +160,7 @@ GEM
     reline (0.7.0)
       io-console (~> 0.5)
     rexml (3.4.4)
-    rmagick (6.3.0)
+    rmagick (7.1.6)
       observer (~> 0.1)
       pkg-config (~> 1.4)
     roda (3.108.0)
@@ -222,7 +222,7 @@ DEPENDENCIES
   activesupport (~> 7.2)
   bridgetown (~> 2.2.2)
   puma (< 7)
-  rmagick (~> 6.3)
+  rmagick (~> 7.1)
   rubocop (~> 1.75)
 
 BUNDLED WITH
