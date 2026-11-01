@@ -17,7 +17,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # This will help ensure the proper Bridgetown version is running.
 ####
 
-gem "activesupport", "~> 7.2"
+gem "activesupport", "~> 8.1"
 
 # If you need to upgrade/switch Bridgetown versions, change the line below
 # and then run `bundle update bridgetown`
