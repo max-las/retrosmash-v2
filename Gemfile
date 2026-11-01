@@ -37,5 +37,5 @@ gem "bridgetown", "~> 2.2.2"
 # (you can optionally limit this to the "development" group)
 gem "puma", "< 9"
 
-gem "rmagick", "~> 7.1"
+gem "rmagick", "~> 7.2"
 gem "rubocop", "~> 1.92"
