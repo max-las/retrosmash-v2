@@ -8,11 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # The development group holds content tooling (bridgetown-prep, rmagick) the build doesn't need.
+      BUNDLE_WITHOUT: development
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install RMagick dependencies
-        run: sudo apt update && sudo apt install libmagickwand-dev
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1

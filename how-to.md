@@ -17,6 +17,48 @@ Chaque jeu comprend les champs suivants :
 |players|Nombre de joueurs|
 |pegi|PEGI (facultatif)|
 
+# Import du contenu
+
+Les consoles, jeux, événements et photos sont gérés avec [bridgetown-prep](../bridgetown-prep), déclaré dans `config/prep.rb`. Le gem n'est pas publié : il doit être cloné à côté de ce projet. Il crée les ressources (`src/_game_consoles`, `src/_games`, `src/_photo_events`, `src/_photos`) et optimise leurs images dans `src/assets`.
+
+Le dossier source est organisé ainsi :
+
+```
+consoles/
+├── import.yml                  # collection: game_consoles
+└── n64/
+    ├── data.yml                # name, publisher, generation, quantity
+    ├── images/
+    │   ├── image.png           # photo de la console (png, jpg ou webp)
+    │   └── logo.svg            # logo (svg ou webp), copié tel quel
+    └── games/
+        ├── import.yml          # collection: games
+        └── 007 GoldenEye/
+            ├── data.yml        # title, players
+            └── images/
+                └── cover.jpg
+photos/
+├── import.yml                  # collection: photo_events
+└── ribérac - jeux m'amuse/
+    ├── data.yml                # title
+    ├── images/
+    │   └── logo.png
+    └── photos/                 # seulement s'il y a des photos
+        ├── import.yml          # collection: photos
+        └── IMG_20241019_155144.jpg
+```
+
+Les noms des dossiers sont libres : les slugs (et donc les URLs) découlent du `name` des consoles et du `title` des jeux et événements.
+
+```sh
+bin/bridgetown "prep:import[../retrosmash_src_prep/consoles]"            # importer (DRY_RUN=1 pour simuler)
+bin/bridgetown "prep:attach[games,nintendo-64/f-zero-x,~/cover.png]"     # remplacer une image
+bin/bridgetown "prep:reslug[games,nintendo-64/f-zero-x]"                 # renommer après un changement de titre
+bin/bridgetown "prep:remove[games,nintendo-64/f-zero-x]"                 # supprimer un jeu et ses images
+```
+
+Un import refuse d'écraser une ressource existante : pour tout réimporter, supprimer d'abord les ressources (en gardant les `_defaults.yml`) et `src/assets`.
+
 # Resources
 
 ## Pour les images des consoles

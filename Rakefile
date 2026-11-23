@@ -2,6 +2,14 @@ require "bridgetown"
 
 Bridgetown.load_tasks
 
+# Content tasks (prep:import, prep:reslug, prep:attach, prep:remove), declared in config/prep.rb.
+begin
+  require "bridgetown-prep"
+  Bridgetown::Prep.load_tasks
+rescue LoadError
+  # Prep is a development tool: deploy bundles go without it.
+end
+
 # Run rake without specifying any command to execute a deploy build by default.
 task default: :deploy
 
