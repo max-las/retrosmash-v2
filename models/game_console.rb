@@ -1,6 +1,7 @@
 class GameConsole < Bridgetown::Model::Base
+  # The full_name data, when given, overrides the name derived from the publisher.
   def full_name
-    name.include?(publisher) ? name : "#{publisher} #{name}"
+    attributes['full_name'].presence || (name.include?(publisher) ? name : "#{publisher} #{name}")
   end
 
   def logo_alt
