@@ -50,6 +50,8 @@ photos/
 
 Les noms des dossiers sont libres : les slugs (et donc les URLs) découlent du `name` des consoles et du `title` des jeux et événements.
 
+Les jeux d'une console vont dans `src/_games/<console>`, dont le `_defaults.yml` (créé par l'import) indique la console : `game_console: nintendo-64`. De même pour les photos d'un événement, dans `src/_photos/<événement>`. Les `data.yml` n'ont donc pas à indiquer la console ou l'événement.
+
 ```sh
 bin/bridgetown "prep:import[../retrosmash_src_prep/consoles]"            # importer (DRY_RUN=1 pour simuler)
 bin/bridgetown "prep:attach[games,nintendo-64/f-zero-x,~/cover.png]"     # remplacer une image
@@ -57,7 +59,7 @@ bin/bridgetown "prep:reslug[games,nintendo-64/f-zero-x]"                 # renom
 bin/bridgetown "prep:remove[games,nintendo-64/f-zero-x]"                 # supprimer un jeu et ses images
 ```
 
-Un import refuse d'écraser une ressource existante : pour tout réimporter, supprimer d'abord les ressources (en gardant les `_defaults.yml`) et `src/assets`.
+Un import refuse d'écraser une ressource existante : pour tout réimporter, supprimer d'abord les ressources et `src/assets`, en gardant `src/_game_consoles/_defaults.yml` et `src/_photo_events/_defaults.yml` (les `_defaults.yml` des sous-dossiers sont recréés par l'import).
 
 # Resources
 
