@@ -1,22 +1,16 @@
 # not a script, this is common logic to be included in actual scripts
+# consoles, games and photos are handled by bridgetown-prep instead, see how-to.md
 
-require 'bridgetown-core'
 require 'active_support/all'
 require 'rmagick'
 
-Dir.glob(File.join(Dir.pwd, 'models', '**', '*.rb')).each do |file|
-  require file
-end
-
-CONVERTABLE_IMAGE_EXTENSIONS = %w[jpg jpeg png webp].freeze
 OUTPUT_DIR = 'src'.freeze
 CONSTRUCTION_DIR = File.join('under_construction', OUTPUT_DIR)
 
 def run_with_context
   FileUtils.rm_rf(CONSTRUCTION_DIR)
   run
-  remove_dirs_to_replace if self.class.const_defined?(:DIRS_TO_REPLACE)
-  FileUtils.copy_entry(CONSTRUCTION_DIR, 'src')
+  FileUtils.copy_entry(CONSTRUCTION_DIR, OUTPUT_DIR)
   FileUtils.remove_dir(CONSTRUCTION_DIR)
 end
 
@@ -24,30 +18,10 @@ def dir_children(dir)
   Dir.children(dir).map { |child| File.join(dir, child) }
 end
 
-def slugify(string)
-  string.parameterize # removes special characters, unlike Bridgetown::Utils.slugify
-end
-
-def quote(string)
-  "\"#{string}\""
-end
-
 def make_file_path(*segments)
   File.join(CONSTRUCTION_DIR, *segments).tap do |output_path|
     FileUtils.mkpath(File.dirname(output_path))
   end
-end
-
-def find_convertable_image(dir, filename)
-  CONVERTABLE_IMAGE_EXTENSIONS.each do |extension|
-    candidate = File.join(dir, "#{filename}.#{extension}")
-    return candidate if File.file?(candidate)
-  end
-  nil
-end
-
-def convertable_image?(filename)
-  File.file?(filename) && CONVERTABLE_IMAGE_EXTENSIONS.include?(File.extname(filename).delete('.'))
 end
 
 def convert_and_resize_image(input_path:, output_path:, quality:, height: nil)
@@ -62,11 +36,4 @@ def convert_and_resize_image(input_path:, output_path:, quality:, height: nil)
   end
   image.write(output_path) { |options| options.quality = quality }
   dimensions
-end
-
-def remove_dirs_to_replace
-  DIRS_TO_REPLACE.each do |dir_to_replace|
-    dir_to_remove = File.join(OUTPUT_DIR, dir_to_replace)
-    FileUtils.remove_dir(dir_to_remove) if File.directory?(dir_to_remove)
-  end
 end

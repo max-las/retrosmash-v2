@@ -1,3 +1,10 @@
+PATH
+  remote: ../bridgetown-prep
+  specs:
+    bridgetown-prep (0.1.0)
+      bridgetown-core (>= 2.0, < 3)
+      hash_with_dot_access (~> 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -223,6 +230,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport (~> 8.1)
   bridgetown (~> 2.2.2)
+  bridgetown-prep!
   puma (< 9)
   rmagick (~> 7.2)
   rubocop (~> 1.92)

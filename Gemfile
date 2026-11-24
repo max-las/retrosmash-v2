@@ -37,5 +37,11 @@ gem "bridgetown", "~> 2.2.2"
 # (you can optionally limit this to the "development" group)
 gem "puma", "< 9"
 
-gem "rmagick", "~> 7.2"
 gem "rubocop", "~> 1.92"
+
+# Content tooling, not needed to build the site: deploys run with BUNDLE_WITHOUT=development.
+group :development do
+  # Not published: expects a checkout of bridgetown-prep next to this project.
+  gem "bridgetown-prep", path: "../bridgetown-prep"
+  gem "rmagick", "~> 7.2"
+end

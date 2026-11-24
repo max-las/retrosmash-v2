@@ -4,6 +4,7 @@ layout: section
 
 <% console = resource.model %>
 <% slug = resource.data.slug %>
+<% games = resource.relations.games.map(&:model).sort_by(&:sort_key) %>
 
 <% slot :section_head do %>
   <%= render Sections::HeadComponent.new(
@@ -19,7 +20,7 @@ layout: section
 <div class="card border-0 mb-2 console-summary-card">
   <img
     class="card-img-top console-summary-card__image"
-    src="<%= console.image_path %>"
+    src="<%= console.image %>"
     alt="<%= console.image_alt %>">
   <div class="card-body px-0 pb-0">
     <table class="table">
@@ -48,15 +49,15 @@ layout: section
     data-game-collection-hidden-class="d-none">
     <div class="d-flex align-items-center justify-content-between">
       <h2 class="fs-3 mb-0">Jeux disponibles</h2>
-      <%= render GameConsoles::PlayersFiltersComponent.new(console) %>
+      <%= render GameConsoles::PlayersFiltersComponent.new(games) %>
     </div>
 
     <hr>
 
-    <%= render GameConsoles::LetterFiltersComponent.new(console) %>
+    <%= render GameConsoles::LetterFiltersComponent.new(games) %>
 
     <div class="d-flex flex-wrap gap-2" data-game-collection-target="gamesList">
-      <% resource.relations.games.map(&:model).sort_by(&:sort_key).each do |game| %>
+      <% games.each do |game| %>
         <%= render GameCardComponent.new(game:, console: slug) %>
       <% end %>
     </div>

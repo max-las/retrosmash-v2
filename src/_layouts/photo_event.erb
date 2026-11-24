@@ -22,10 +22,10 @@ layout: section
   <% resource.relations.photos.map(&:model).each do |photo| %>
     <div class="d-flex align-items-center">
       <a
-        href="<%= photo.image_path %>"
+        href="<%= photo.image %>"
         data-pswp-width="<%= photo.width %>"
         data-pswp-height="<%= photo.height %>">
-        <img class="event-photo" src="<%= photo.thumbnail_path %>" alt="<%= photo.name %>">
+        <img class="event-photo" src="<%= photo.thumbnail %>" alt="<%= photo.name %>">
       </a>
     </div>
   <% end %>
